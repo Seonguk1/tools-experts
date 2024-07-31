@@ -1,0 +1,71 @@
+body {
+    padding-top: 100px;
+}
+.header {
+    font-size: 30px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+}
+::placeholder {
+    color: lightgray;
+    font-size: 16px;
+    padding-left: 10px;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+.nav>div {
+    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 45px;
+    border-bottom: solid black 2px;
+}
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main>div {
+    margin: 7px;
+}
+.losang {
+    display: flex;
+    align-self: flex-start;
+    padding-left: 86px;
+}
+.submitbutton {
+    width: 455px;
+    height: 55px;
+    background-color: black;
+    border: solid black;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+.footer {
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    padding-top: 7px;
+}
+.leftfooter {
+    display: flex;
+    color: gray;
+}
+.leftfooter>div {
+    padding-right: 11px;
+}
+.rightfooter {
+    color: dodgerblue;
+    padding-left: 20px;
+}
+.navitem:active {
+    color: gray;
+    border-bottom: solid gray 2px;
+}
