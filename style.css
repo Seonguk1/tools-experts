@@ -1,0 +1,28 @@
+.nexon{
+    font-size: 30px;
+    text-align: center;
+    margin-top: 11.5%;
+    font-weight: 1000;
+    
+}
+
+.item{
+    font-size: 13px;
+    display: flex;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.item>div {
+
+    padding: 20px;
+}
+
+.id{
+    width: 440px;
+    height: 50px;
+}
+.button{
+    padding-left: 26%;
+    
+}
