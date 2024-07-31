@@ -25,9 +25,16 @@ const postLogin = asyncHandler(async(req,res)=>{
     const token = jwt.sign({id: user._id}, jwtSecret);
     res.cookie("token", token, {httpOnly:true});
 
-    res.redirect("home");
+    res.redirect("/");
 })
+
+const getLogout = asyncHandler(async(req,res)=>{
+    res.clearCookie("token");
+    res.redirect("/");
+})
+
 module.exports = {
     getLogin,
     postLogin,
+    getLogout,
 };
