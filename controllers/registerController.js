@@ -4,7 +4,10 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 const getRegister = asyncHandler(async (req,res)=>{
-    res.render("register",{layout:mainLayout})
+    const locals = {
+        title:"Register",
+    }
+    res.render("register",{locals, layout:mainLayout})
 })
 
 const postRegister = asyncHandler(async (req,res)=>{

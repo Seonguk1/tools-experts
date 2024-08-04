@@ -6,9 +6,6 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 const mongoose = require("mongoose");
 
-
-
-
 const getRecord = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
     if (!token) {
@@ -28,7 +25,7 @@ const getRecord = asyncHandler(async (req,res)=>{
         running.push(await Running.findById(user.runnings[i]));
     }
 
-    console.log(running);
+    // console.log(running);
     const locals = {
         title:"Record",
     }

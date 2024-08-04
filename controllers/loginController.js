@@ -7,7 +7,10 @@ const jwtSecret = process.env.JWT_SECRET;
 
 
 const getLogin = asyncHandler(async (req,res)=>{
-    res.render("login",{layout:mainLayout})
+    const locals = {
+        title:"Login",
+    }
+    res.render("login",{locals, layout:mainLayout})
 })
 
 const postLogin = asyncHandler(async(req,res)=>{
