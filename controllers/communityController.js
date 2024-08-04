@@ -4,6 +4,7 @@ const mainLayout = "../views/layouts/main.ejs";
 const Post = require("../models/Post"); 
 
 const getCommunity = asyncHandler(async (req,res)=>{
+<<<<<<< HEAD
     const locals = {
         title : "Community"
     }
@@ -12,6 +13,12 @@ const getCommunity = asyncHandler(async (req,res)=>{
     console.log(data);
 
     res.render("community", {locals, data, layout : mainLayout}) // 게시물 가져오기
+=======
+    const locals ={
+        title:"Community",
+    }
+    res.render("community",{localsl, layout: mainLayout});
+>>>>>>> 4c6d13809f5fafe2911075b26ead2a07f09f87e8
 })
 
 const postCommunity = asyncHandler(async (req, res) => {

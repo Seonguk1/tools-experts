@@ -25,6 +25,7 @@ app.use("/",require("./routes/record"))
 app.use("/",require("./routes/community"))
 app.use("/",require("./routes/login"))
 app.use("/",require("./routes/register"))
+app.use("/",require("./routes/addFriends"))
 
 app.listen(port, ()=>{
     console.log(`server listened for ${port}`);
