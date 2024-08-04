@@ -14,8 +14,7 @@ const getLogin = asyncHandler(async (req,res)=>{
 })
 
 const postLogin = asyncHandler(async(req,res)=>{
-    const {email, password} = req.body;
-    console.log(password)   
+    const {email, password} = req.body;   
     const user = await User.findOne({email});
     if(!user){
         return res.status(401).json("일치하는 이메일이 없습니다.");

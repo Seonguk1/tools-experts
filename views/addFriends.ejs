@@ -1,0 +1,17 @@
+<h1 style="margin: auto; width: 220px;">친구 찾기</h1>
+<br>
+
+<form action="/addFriends" method="POST">
+    <div class="main">
+        <div><input style="width: 450px; height: 50px; border-radius: 0%; border: solid lightgray 2px;" type="text" name="friend" placeholder="이메일 또는 닉네임으로 검색"></div>
+    </div>
+    </form>
+
+
+    <% if(friends){ %>
+        <% Array.from(friends).forEach(friend => { %>
+    <div class="main">
+        <div style="width: 450px; height: 50px; border-radius: 0%; border: solid lightgray 2px;"> <%= friend %></div>
+    </div>
+        <% }) %>
+    <% } %> 
