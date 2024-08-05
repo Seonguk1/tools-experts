@@ -23,7 +23,7 @@ const getAddPost = asyncHandler(async(req, res) => {
     const locals = {
         title: "게시물 작성"
     }
-    res.render("add", {locals, layout: mainLayout});
+    res.render("addPost", {locals, layout: mainLayout});
 })
 
 const postAddPost = asyncHandler(async (req, res)=> {
@@ -40,7 +40,7 @@ const postAddPost = asyncHandler(async (req, res)=> {
 const getEditPost = asyncHandler(async (req, res) => {
     const locals = { title : "게시물 편집"};
     const data = await Post.findOne( { _id: req.params.id});
-    res.render("edit", {locals, data, layout : mainLayout});
+    res.render("editPost", {locals, data, layout : mainLayout});
 })
 
 const putEditPost = asyncHandler(async(req, res) => {
