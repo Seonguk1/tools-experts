@@ -1,0 +1,20 @@
+<div style="margin-left: 700px;">
+<h1>친구 목록</h1>
+
+<ul>
+    <% Array.from(friendsList).forEach(friend => { %>
+    <li>
+        <a href="#" style="display: block;">
+            <%= friend.nickname %>
+        </a>
+        <div style="display: block; margin-top: 10px;">
+            <!-- <a href="/friends/edit/<%= friend._id %>" class="btn">편집</a>  -->
+            <form action="/friends/delete/<%= friend._id %>?_method=DELETE" method="POST" style="display: inline;">
+                <input type="submit" value="삭제" class="btn-delete btn">
+            </form>
+        </div>
+        <br>
+    </li>
+    <% }) %>
+</ul>
+</div>

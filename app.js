@@ -22,10 +22,10 @@ app.use(methodOverride("_method"));
 
 app.use("/",require("./routes/home"))
 app.use("/",require("./routes/record"))
-app.use("/",require("./routes/community"))
+app.use("/community",require("./routes/community"))
 app.use("/",require("./routes/login"))
 app.use("/",require("./routes/register"))
-app.use("/",require("./routes/addFriends"))
+app.use("/friends",require("./routes/Friends"))
 
 app.listen(port, ()=>{
     console.log(`server listened for ${port}`);

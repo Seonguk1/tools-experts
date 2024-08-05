@@ -5,12 +5,12 @@
 <ul class= = "admin-posts">
     <% data.forEach(post => { %>
     <li>
-        <a href="/post/<%= post._id%>">
+        <a href="/community/post/<%= post._id%>">
             <%= post.title %>
         </a>
         <div class = "admin-post-controls">
-            <a href="/edit/<%= post._id %>" class="btn">편집</a> 
-            <form action = "/delete/<%= post._id %>?_method=DELETE" method="POST"> 
+            <a href="/community/edit/<%= post._id %>" class="btn">편집</a> 
+            <form action = "/community/delete/<%= post._id %>?_method=DELETE" method="POST"> 
                 <input type="submit" value="삭제" class="btn-delete btn">
             </form>
         </div>
@@ -18,4 +18,4 @@
  <% }) %>
 </ul>
 
-    <a href="/add" class="button">+ 새 게시물</a>
+    <a href="/community/add" class="button">+ 새 게시물</a>
