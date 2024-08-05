@@ -2,12 +2,9 @@
     font-family: ethnocentric-font;
     src: url('font/ethnocentric\ rg.ttf');
 }
-body {
-    padding-top: 100px;
-}
-.header {
+.d_header {
     font-family: ethnocentric-font;
-    color: #007fff;
+    color: #fcb101;
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
     font-size: 50px;
     font-weight: 900;
@@ -20,30 +17,30 @@ body {
     font-size: 16px;
     padding-left: 10px;
 }
-.main {
+.d_main {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.main>div {
+.d_main>div {
     margin: 7px;
 }
-.losang {
+.d_losang {
     width: 360px;
     padding: 0%;
     display: flex;
     margin: auto;
 }
-.submitbutton {
+.d_submitbutton {
     width: 355px;
     height: 55px;
-    background-color: #007fff;
+    background-color: #fcb101;
     border: solid black 1px;
     color: #ffffff;
     font-size: 20px;
     font-weight: 700;
 }
-.footer {
+.d_footer {
     width: 360px;
     display: flex;
     justify-content: space-between;
@@ -51,17 +48,17 @@ body {
     font-size: 12px;
     padding-top: 7px;
 }
-.leftfooter {
+.d_leftfooter {
     display: flex;
     color: gray;
 }
-.rightfooter>div {
+.d_rightfooter>div {
     display: flex;
     padding-left: 11px;
 }
-.rightfooter {
+.d_rightfooter {
     display: flex;
-    color: dodgerblue;
+    color: gray;
 }
 .navitem:active {
     color: gray;
