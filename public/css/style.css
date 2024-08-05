@@ -1,6 +1,6 @@
 @font-face {
     font-family: ethnocentric-font;
-    src: url('public/font/ethnocentric\ rg.ttf');
+    src: url('/font/ethnocentric\ rg.ttf');
 }
 .d_header {
     font-family: ethnocentric-font;
