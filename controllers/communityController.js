@@ -9,8 +9,6 @@ const getCommunity = asyncHandler(async (req,res)=>{
     }
     const data = await Post.find();
 
-    console.log(data);
-
     res.render("community", {locals, data, layout : mainLayout}) // 게시물 가져오기
 })
 
