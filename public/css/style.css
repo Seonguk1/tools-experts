@@ -1,155 +1,17 @@
-/*** 임시 myBlog  ***/
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
-
-:root {
-  --black: #1c1c1c;
-  --gray: #7E7E7E;
-  --gray-light: #E4E4E4;
-  --red: #b30000;
-  --font-size-base: 1rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.5rem;
-  --font-size-xl: 2rem;
-  --border-radius: 10px;
+@font-face {
+    font-family: ethnocentric-font;
+    src: url('font/ethnocentric\ rg.ttf');
 }
-
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  color: var(--black);
-  font-size: var(--font-size-base);
-  background-color: rgb(236, 235, 234);
-  margin: 0;
-}
-
-a { color: var(--black); }
-h1 { font-size: var(--font-size-xl); }
-h2 { font-size: var(--font-size-lg); }
-h3 { font-size: var(--font-size-md); }
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="search"],
-select,
-textarea {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 1rem;
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0.7rem 0.75rem;
-  margin-bottom: 1rem;
-}
-
-/* 레이아웃 */
-.container {
-    max-width: 982px;
-    margin: 0 auto;
-    padding: 0 10px;
-  }
-  
-  .main {
-    padding: 20px 0;
-  }
-  
-  /* 메인 헤더 */
-  .header {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas: 
-    "logo button"
-    "menu menu";
-    padding-top: 10px;
-  }
-  
-  @media only screen and (min-width: 768px) {
-    .header {
-      grid-template-columns: auto 1fr auto;
-      grid-template-areas: 
-      "logo menu button";
-    }
-  }
-  
-  .header-logo {
-    font-weight: 800;
-    font-size: 25px;
-    text-decoration: none;
-    grid-area: logo;
-  }
-  
-  .header-logo:hover {
-    text-decoration: underline;
-  }
-  
-  .header-nav {
-    justify-content: center;
-    display: flex;
-    grid-area: menu;
-  }
-  
-  .header-logo, .header-nav, .header-button {
-    width: 100%;
-  }
-  
-  .header-button {
-    display: flex;
-    justify-content: end;
-    grid-area: button;
-  }
-  
-  .header-button button {
-    display: flex;
-    gap: 0.3rem;
-    align-items: center;
-    border: 0;
-    padding: 6px 12px;
-    background: none;
-    border-radius: 10px;
-    border: 2px solid transparent;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--black);
-  }
-  
-  .header-button button:hover {
-    border: 2px solid var(--black);
-  }
-  
-  /* 헤더의 내비게이션 */
-  .header-nav ul {
-    list-style-type: none;
-    display: flex;
-    gap: 1rem;
-    font-weight: 600;
-    padding: 0;
-  }
-  
-  .header-nav ul a {
-    padding: 10px;
-    text-decoration: none;
-  }
-  
-  .header-nav ul a.active {
-    color: rgb(126, 126, 126);
-  }
-  
-  .header-nav ul a:hover {
-    text-decoration: underline;
-  }
-  
-
-/*** 임시 ***/
-
-
 body {
     padding-top: 100px;
 }
 .header {
-    font-size: 30px;
+    font-family: ethnocentric-font;
+    color: #007fff;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    font-size: 50px;
     font-weight: 900;
+    padding-bottom: 50px;
     display: flex;
     justify-content: center;
 }
@@ -157,20 +19,6 @@ body {
     color: lightgray;
     font-size: 16px;
     padding-left: 10px;
-}
-.nav {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 15px;
-}
-.nav>div {
-    padding-bottom: 10px;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-bottom: 45px;
-    border-bottom: solid black 2px;
 }
 .main {
     display: flex;
@@ -181,22 +29,25 @@ body {
     margin: 7px;
 }
 .losang {
+    width: 360px;
+    padding: 0%;
     display: flex;
-    align-self: flex-start;
-    padding-left: 86px;
+    margin: auto;
 }
 .submitbutton {
-    width: 455px;
+    width: 355px;
     height: 55px;
-    background-color: black;
-    border: solid black;
-    color: white;
+    background-color: #007fff;
+    border: solid black 1px;
+    color: #ffffff;
     font-size: 20px;
     font-weight: 700;
 }
 .footer {
+    width: 360px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin: auto;
     font-size: 12px;
     padding-top: 7px;
 }
@@ -204,15 +55,15 @@ body {
     display: flex;
     color: gray;
 }
-.leftfooter>div {
-    padding-right: 11px;
+.rightfooter>div {
+    display: flex;
+    padding-left: 11px;
 }
 .rightfooter {
+    display: flex;
     color: dodgerblue;
-    padding-left: 20px;
 }
 .navitem:active {
     color: gray;
     border-bottom: solid gray 2px;
 }
-
