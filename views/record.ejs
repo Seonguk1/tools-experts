@@ -1,8 +1,116 @@
-
-    <% running.forEach(record => { %>
-        <h2> 뛴 시각: <%= record.date %> </h2>  
-        <h3> 뛴 거리: <%= record.distance %> </h2>
-        <h3> 뛴 시간: <%= record.time %> </h2>
-          
-        <br>
-    <% }) %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="calender.css" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" rel="stylesheet">
+    <style>
+        #s_fullcalendar {
+            width: 340px;
+            height: 340px;
+            font-size: 10px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="s_background">
+    <div style="font-family: ethnocentric-font; font-weight: 900; color: #fcb101; font-size: 30px; margin-left: 6px;">RUNUS</div>
+    <div class="s_head" style="font-weight: 700;">
+         사용자 이름's 활동
+    </div>
+    <div class="s_container-1" style="margin-top: 20px;">
+        <button class="s_button-1" value="0">
+              Daily
+         </button>
+          <button class="s_button-1" value="1">
+             Weekly
+         </button>
+         <button class="s_button-1" value="2">
+            Monthly
+         </button>
+    </div>
+    <div id="s_Daily" class="s_mode">
+        <div style="margin-top: 30px; padding: 10px;">
+            <div style="font-size: 30px; font-weight: 700;">Overview</div>
+            <div class="s_container-2">
+                <button class="s_button-2">
+                    키로수
+                </button>
+                <button class="s_button-2">
+                    발걸음 수
+                </button>
+            </div>
+            <div class="s_container-3">
+                <button class="s_button-2">
+                    칼로리
+                </button>
+                <button class="s_button-2">
+                    시간
+                </button>
+                <button class="s_button-2">
+                    bpm
+                </button>
+            </div>
+        </div>
+        <div id="s_map"></div>
+    </div>
+    <div id="s_Weekly" class="s_mode" class="s_buttoncontainer" style="text-align: center;">
+        <div>
+            <button id="s_originalbutton" class="s_calendar" style="display: none;">
+                <div class="s_upper">
+                    <div id="s_month"></div>
+                </div>
+                <div class="s_lower">
+                    <div id="s_day"></div>
+                    <div id="s_date"></div>
+                    <div id="s_year"></div>
+                </div>
+            </button>
+        </div>
+        <script asyn src="calender.js"></script>
+        <div style="margin-top: 40px; margin-bottom: 70px;">
+            <div class="s_container-2 ">
+                <button class="s_button-2">
+                    키로수
+                </button>
+                <button class="s_button-2">
+                    발걸음 수
+                </button>
+            </div>
+            <div class="s_container-3">
+                <button class="s_button-2">
+                    칼로리
+                </button>
+                <button class="s_button-2">
+                    시간
+                </button>
+                <button class="s_button-2">
+                    bpm
+                </button>
+            </div>
+        </div>
+    </div>
+        <div id="s_Month" class="s_mode">
+            <div id="s_fullcalendar"></div>
+        </div>
+    </div>
+      <script src="button.js"></script>
+      <script src="map.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js"></script>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('s_fullcalendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+            });
+            calendar.render();
+            calendar.updateSize();
+        });
+    </script>
+</body>
+</html>
