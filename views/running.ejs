@@ -1,8 +1,40 @@
+<script>
+    
+// navigator.geolocation API를 사용하여 GPS 데이터 수집
+function getGPSData() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+}
 
+async function sendGPSData() {
+    try {
+        const position = await getGPSData();
+        const { latitude, longitude } = position.coords;
 
+        // Node.js 서버로 데이터 전송
+        await fetch('http://localhost:3000/running', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                latitude,
+                longitude,
+                timestamp: Date.now(),
+            }),
+        });
+    } catch (error) {
+        console.error('Error getting GPS data:', error);
+    }
+}
 
+// 2초마다 GPS 데이터를 수집하고 전송
+setInterval(sendGPSData, 2000);
 
-<h3>러닝 기록</h3>
+</script>
+
+<!-- <h3>러닝 기록</h3>
 
 <form action="/running" method="POST">
   <label for="distance"><b>뛴 거리</b></label>
@@ -12,7 +44,7 @@
   <input type="text" name="time" id="time">
 
   <input type="submit" value="로그인" class="btn">
-</form> 
+</form>  -->
 
 
 

@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 
+
 connectDB();
 
 app.use(express.static("public"));
@@ -26,6 +27,7 @@ app.use("/community",require("./routes/community"))
 app.use("/",require("./routes/login"))
 app.use("/",require("./routes/register"))
 app.use("/friends",require("./routes/Friends"))
+
 
 app.listen(port, ()=>{
     console.log(`server listened for ${port}`);
