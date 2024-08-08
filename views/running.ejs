@@ -13,7 +13,8 @@ async function sendGPSData() {
         const { latitude, longitude } = position.coords;
 
         // Node.js 서버로 데이터 전송
-        await fetch('https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running', {
+        // port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/
+        await fetch('http://localhost:3000/running', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

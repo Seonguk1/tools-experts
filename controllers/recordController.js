@@ -40,7 +40,7 @@ const getRunning = asyncHandler(async (req,res)=>{
 })
 
 const postRunning = asyncHandler(async (req,res)=>{
-    const {distance, time} = req.body;
+    
     const token = req.cookies.token;
     if (!token) {
         res.redirect("/login");
@@ -53,32 +53,40 @@ const postRunning = asyncHandler(async (req,res)=>{
             res.redirect("/login");
         }
     }
-    // const user = await User.findById(req.userID);
+    const user = await User.findById(req.userID);
+
+    // const {distance, time} = req.body;
     // const createdRunning = await Running.create({
     //     distance : distance,
     //     time : time,
     //     creator: user._id
     // });
 
-    // const session = await mongoose.startSession();
-    // session.startTransaction();
     // try {
+    //     const session = await mongoose.startSession();
+    //     session.startTransaction();
     //     await createdRunning.save({ session: session });
     //     user.runnings.push(createdRunning._id);
     //     await user.save({ session: session });
     //     await session.commitTransaction();
     // } catch (error) {
     //     await session.abortTransaction();
-    //     throw error;
+    //     throw error;    
     // } finally {
     //     session.endSession();
-    // }
+    // }   
 
     // res.redirect("/");
-    const gpsData= [];
+    // const gpsData= [];
     const { latitude, longitude, timestamp } = req.body;
-    gpsData.push({ latitude, longitude, timestamp });
-    console.log('Received GPS data:', req.body);
+    user.latitude.push(latitude);
+    console.log(user.latitude);
+    user.longitude.push(longitude);
+    user.timestamp.push(timestamp);
+    user.save();
+    console.log(user.timestamp);
+    // gpsData.push({ latitude, longitude, timestamp });
+    // console.log('Received GPS data:', req.body);
     res.sendStatus(200);
 })
 
