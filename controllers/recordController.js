@@ -53,28 +53,33 @@ const postRunning = asyncHandler(async (req,res)=>{
             res.redirect("/login");
         }
     }
-    const user = await User.findById(req.userID);
-    const createdRunning = await Running.create({
-        distance : distance,
-        time : time,
-        creator: user._id
-    });
+    // const user = await User.findById(req.userID);
+    // const createdRunning = await Running.create({
+    //     distance : distance,
+    //     time : time,
+    //     creator: user._id
+    // });
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    try {
-        await createdRunning.save({ session: session });
-        user.runnings.push(createdRunning._id);
-        await user.save({ session: session });
-        await session.commitTransaction();
-    } catch (error) {
-        await session.abortTransaction();
-        throw error;
-    } finally {
-        session.endSession();
-    }
+    // const session = await mongoose.startSession();
+    // session.startTransaction();
+    // try {
+    //     await createdRunning.save({ session: session });
+    //     user.runnings.push(createdRunning._id);
+    //     await user.save({ session: session });
+    //     await session.commitTransaction();
+    // } catch (error) {
+    //     await session.abortTransaction();
+    //     throw error;
+    // } finally {
+    //     session.endSession();
+    // }
 
-    res.redirect("/");
+    // res.redirect("/");
+    const gpsData= [];
+    const { latitude, longitude, timestamp } = req.body;
+    gpsData.push({ latitude, longitude, timestamp });
+    console.log('Received GPS data:', req.body);
+    res.sendStatus(200);
 })
 
 module.exports = {
