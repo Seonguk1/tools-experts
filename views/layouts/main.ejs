@@ -16,28 +16,24 @@
     <!-- 헤더 : 로고, 상단 메뉴, 로그인 -->
     <header class="header">
       <!-- 로고 -->
-      <a href="/" class="header-logo"><h1>RUNUS</h1></a>
-
+      <a href="/" style="text-decoration: none;">
+        <div class="d_header">
+          <span>RUN</span>
+          <span style="text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; color: #ffffff;">US</span>
+        </div>
+      </a>
       <!-- 상단 메뉴 -->
-      <nav class="header-nav">
-        <ul>
-          <li>
-            <a href="/home">Home</a>
-          </li>
-          <li>
-            <a href="/community">Community</a>
-          </li>
-          <li>
-            <a href="/friends">Friend</a>
-          </li>
-        </ul>
+      <nav style="display: flex; padding-right: 10px; justify-content: center;">
+            <a href="/home">홈</a>
+            <a href="/community">커뮤니티</a>
+            <a href="/friends">친구</a>
+            <a href="/record">기록</a>
       </nav>
 
       <!-- 관리자 로그인 -->
-      <div class="header-button">
+      <div style="display: flex; justify-content: center;">
         
         <a href="/login"><h3>로그인</h3></a>
-        <a>  │  </a>
         <a href="/register"><h3>회원가입</h3></a>
       
       </div>

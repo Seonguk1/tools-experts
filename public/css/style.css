@@ -2,6 +2,16 @@
     font-family: ethnocentric-font;
     src: url('/font/ethnocentric\ rg.ttf');
 }
+nav>a {
+    padding-left: 7px;
+    text-decoration: none;
+    color: gray;
+}
+.header>div>a {
+    padding-left: 7px;
+    text-decoration: none;
+    color: gray;
+}
 .d_header {
     font-family: ethnocentric-font;
     color: #fcb101;
