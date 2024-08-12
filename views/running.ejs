@@ -1,5 +1,5 @@
-<!-- http://localhost:3000/running -->
 <!-- https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running -->
+<!-- http://localhost:3000/running -->
 <div id="display"></div>
 <script>
     let cnt = false;
@@ -10,17 +10,7 @@
 // navigator.geolocation API를 사용하여 GPS 데이터 수집
 function getGPSData() {
     return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                if (position.coords.accuracy <= 20) { // 20미터 이내의 정확도만 허용
-                    resolve(position);
-                } else {
-                    reject(new Error("Low accuracy GPS data"));
-                }
-            },
-            reject,
-            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-        );
+        navigator.geolocation.getCurrentPosition(resolve, reject);
     });
 }
 
@@ -67,9 +57,7 @@ async function sendGPSData() {
                         longitude
                     );
 
-                    if (distance > 0.005) { // 5미터 이상 이동했을 때만 거리 추가
-                        totalDistance += distance;
-                     }
+                    totalDistance += distance;
                     const totalTime = (currentTimestamp - startTime) / 1000; // 초 단위
                     const pace = calculatePace(totalDistance, totalTime);
 
@@ -97,7 +85,7 @@ async function sendGPSData() {
             }
         }
 
-const intervalId = setInterval(sendGPSData, 2000);
+const intervalId = setInterval(sendGPSData, 5000);
 
 // End 버튼 클릭 이벤트 처리
 async function handleEndButtonClick() {
