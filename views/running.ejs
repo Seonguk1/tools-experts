@@ -36,7 +36,7 @@ function timeDifference(timestamp1, timestamp2) {
 
 function calculatePace(distance, timeSeconds) {
     if (distance === 0) return 0;
-    return timeSeconds / distance; // 초/킬로미터
+    return timeSeconds / distance / 60; // 초/킬로미터
 }
 
 async function sendGPSData() {
@@ -61,8 +61,8 @@ async function sendGPSData() {
                     const totalTime = (currentTimestamp - startTime) / 1000; // 초 단위
                     const pace = calculatePace(totalDistance, totalTime);
 
-                    console.log(`Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} s/km`);
-                    document.getElementById('display').innerText = `Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} s/km`;
+                    console.log(`Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} min/km`);
+                    document.getElementById('display').innerText = `Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} min/km`;
                 }
 
                 previousPosition = { latitude, longitude };
@@ -85,7 +85,7 @@ async function sendGPSData() {
             }
         }
 
-const intervalId = setInterval(sendGPSData, 5000);
+const intervalId = setInterval(sendGPSData, 1000);
 
 // End 버튼 클릭 이벤트 처리
 async function handleEndButtonClick() {
