@@ -1,52 +1,146 @@
+<div id="display"></div>
 <script>
-    
+    let cnt = false;
+    let previousPosition = null;
+    let previousTimestamp = null;
+    let totalDistance = 0;
+    let startTime = null;
 // navigator.geolocation API를 사용하여 GPS 데이터 수집
 function getGPSData() {
     return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                if (position.coords.accuracy <= 20) { // 20미터 이내의 정확도만 허용
+                    resolve(position);
+                } else {
+                    reject(new Error("Low accuracy GPS data"));
+                }
+            },
+            reject,
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
     });
 }
 
-async function sendGPSData() {
-    try {
-        const position = await getGPSData();
-        const { latitude, longitude } = position.coords;
+function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371.0; // 지구 반지름 (킬로미터)
+    const toRadians = (degree) => degree * (Math.PI / 180);
 
-        // Node.js 서버로 데이터 전송
-        // port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/
-        await fetch('https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running', {
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+
+    const a = Math.sin(dLat / 2) ** 2 +
+              Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+              Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // 킬로미터 단위 거리 반환
+}
+
+function timeDifference(timestamp1, timestamp2) {
+    return (new Date(timestamp2) - new Date(timestamp1)) / 1000; // 초 단위 시간 차이
+}
+
+function calculatePace(distance, timeSeconds) {
+    if (distance === 0) return 0;
+    return timeSeconds / distance; // 초/킬로미터
+}
+
+async function sendGPSData() {
+            try {
+                const position = await getGPSData();
+                const { latitude, longitude } = position.coords;
+                const currentTimestamp = Date.now();
+
+                if (!startTime) {
+                    startTime = currentTimestamp;
+                }
+
+                if (previousPosition) {
+                    const distance = haversine(
+                        previousPosition.latitude, 
+                        previousPosition.longitude, 
+                        latitude, 
+                        longitude
+                    );
+
+                    if (distance > 0.005) { // 5미터 이상 이동했을 때만 거리 추가
+                        totalDistance += distance;
+                     }
+                    const totalTime = (currentTimestamp - startTime) / 1000; // 초 단위
+                    const pace = calculatePace(totalDistance, totalTime);
+
+                    console.log(`Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} s/km`);
+                    document.getElementById('display').innerText = `Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} s/km`;
+                }
+
+                previousPosition = { latitude, longitude };
+                previousTimestamp = currentTimestamp;
+
+                await fetch('http://localhost:3000/running', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude,
+                        longitude,
+                        timestamp: currentTimestamp,
+                        cnt
+                    }),
+                });
+            } catch (error) {
+                console.error('Error getting GPS data:', error);
+            }
+        }
+
+const intervalId = setInterval(sendGPSData, 2000);
+
+// End 버튼 클릭 이벤트 처리
+async function handleEndButtonClick() {
+    cnt = true;
+    console.log("Running ended. cnt:", cnt);
+    clearInterval(intervalId); // GPS 데이터 수집 중지
+    document.getElementById('endButton').disabled = true; // 버튼 비활성화
+
+    try {
+        // 서버로 종료 요청 전송
+        const response = await fetch('http://localhost:3000/running', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                latitude,
-                longitude,
-                timestamp: Date.now(),
+                endTime: Date.now(),
+                cnt: cnt,
+                message: "Running session ended"
             }),
         });
+
+        if (response.ok) {
+            console.log("End running request sent successfully");
+            // document.getElementById('display').innerText = "Running session ended successfully";
+        } else {
+            console.error("Failed to send end running request");
+            // document.getElementById('display').innerText = "Failed to end running session";
+        }
     } catch (error) {
-        console.error('Error getting GPS data:', error);
+        console.error('Error sending end running request:', error);
+        // document.getElementById('display').innerText = "Error ending running session";
     }
 }
 
-// 2초마다 GPS 데이터를 수집하고 전송
-setInterval(sendGPSData, 5000);
+// 페이지 로드 완료 후 실행
+window.onload = function() {
+    // End 버튼 생성 및 이벤트 리스너 추가
+    const endButton = document.createElement('button');
+    endButton.id = 'endButton';
+    endButton.innerText = 'End';
+    endButton.onclick = handleEndButtonClick;
+    document.body.appendChild(endButton);
+};
 
 </script>
-
-<!-- <h3>러닝 기록</h3>
-
-<form action="/running" method="POST">
-  <label for="distance"><b>뛴 거리</b></label>
-  <input type="text" name="distance" id="distance">
-
-  <label for="time"><b>뛴 시간</b></label>
-  <input type="text" name="time" id="time">
-
-  <input type="submit" value="로그인" class="btn">
-</form>  -->
-
-
 
 <!-- AIzaSyB-L0HphgWGfUgsf6_YeM08QJvhFmx3wmc -->

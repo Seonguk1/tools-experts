@@ -41,16 +41,6 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,  
         ref: 'Running'
     }],
-
-    latitude: [{
-        type: String,
-    }],
-    longitude: [{
-        type: String,
-    }], 
-    timestamp: [{
-        type: String,
-    }],
 });
 
 // pre-save 미들웨어를 사용하여 친구 목록에 자기 자신을 추가
