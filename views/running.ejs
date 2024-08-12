@@ -1,3 +1,5 @@
+<!-- http://localhost:3000/running -->
+<!-- https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running -->
 <div id="display"></div>
 <script>
     let cnt = false;
@@ -78,7 +80,7 @@ async function sendGPSData() {
                 previousPosition = { latitude, longitude };
                 previousTimestamp = currentTimestamp;
 
-                await fetch('http://localhost:3000/running', {
+                await fetch('https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -106,7 +108,7 @@ async function handleEndButtonClick() {
 
     try {
         // 서버로 종료 요청 전송
-        const response = await fetch('http://localhost:3000/running', {
+        const response = await fetch('https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
