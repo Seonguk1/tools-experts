@@ -75,6 +75,7 @@ const postRunning = asyncHandler(async (req,res)=>{
         latitudeArray.push(latitude);
         longitudeArray.push(longitude);
         timestampArray.push(timestamp);
+        console.log(`Latitude: ${latitudeArray}, Longitude: ${longitudeArray}, Timestamp: ${timestampArray}`);
     }
     else if(cnt){
         const newRunning = new Running({
