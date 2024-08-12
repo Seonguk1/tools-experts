@@ -1,14 +1,20 @@
 const mongoose = require("mongoose");
 
 const runningSchema = new mongoose.Schema({
-    distance:{
-        type:String,
-        require:true
-    },
-    time:{
-        type:String,
-        require:true
-    },
+    timestamp: [{
+        type: String,
+        required: true
+    }],
+    location: [{
+        latitude: {
+            type: Number,
+            required: true
+        },
+        longitude: {
+            type: Number,
+            required: true
+        }
+    }],
     date:{
         type:Date,
         default:Date.now()
@@ -17,3 +23,4 @@ const runningSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Running",runningSchema);
+

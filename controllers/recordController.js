@@ -39,6 +39,10 @@ const getRunning = asyncHandler(async (req,res)=>{
     res.render("running",{locals, layout: mainLayout});
 })
 
+
+let latitudeArray = [];
+let longitudeArray = [];
+let timestampArray = [];
 const postRunning = asyncHandler(async (req,res)=>{
     
     const token = req.cookies.token;
@@ -62,32 +66,49 @@ const postRunning = asyncHandler(async (req,res)=>{
     //     creator: user._id
     // });
 
-    // try {
-    //     const session = await mongoose.startSession();
-    //     session.startTransaction();
-    //     await createdRunning.save({ session: session });
-    //     user.runnings.push(createdRunning._id);
-    //     await user.save({ session: session });
-    //     await session.commitTransaction();
-    // } catch (error) {
-    //     await session.abortTransaction();
-    //     throw error;    
-    // } finally {
-    //     session.endSession();
-    // }   
+    
 
     // res.redirect("/");
     // const gpsData= [];
-    const { latitude, longitude, timestamp } = req.body;
-    user.latitude.push(latitude);
-    console.log(user.latitude);
-    user.longitude.push(longitude);
-    user.timestamp.push(timestamp);
-    user.save();
-    console.log(user.timestamp);
-    // gpsData.push({ latitude, longitude, timestamp });
-    // console.log('Received GPS data:', req.body);
-    res.sendStatus(200);
+    const { latitude, longitude, timestamp, cnt } = req.body;
+    if(!cnt){
+        latitudeArray.push(latitude);
+        longitudeArray.push(longitude);
+        timestampArray.push(timestamp);
+    }
+    else if(cnt){
+        const newRunning = new Running({
+            creator: req.userID
+        });
+        for(let i=0;i<latitudeArray.length;i++){
+            newRunning.location.push({
+                latitude: latitudeArray[i],
+                longitude: longitudeArray[i]
+            });
+            newRunning.timestamp.push(timestampArray[i]);
+        }
+
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            await newRunning.save({ session: session });
+            user.runnings.push(newRunning._id);
+            await user.save({ session: session });
+            await session.commitTransaction();
+            latitudeArray = [];
+            longitudeArray = [];
+            timestampArray = [];
+        } catch (error) {
+            await session.abortTransaction();
+            throw error;    
+        } finally {
+            session.endSession();
+        }
+    
+        res.sendStatus(200);
+        
+        // res.redirect("/");
+    }
 })
 
 module.exports = {
