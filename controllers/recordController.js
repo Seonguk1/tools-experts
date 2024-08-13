@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 const getRecord = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
+    
     if (!token) {
         res.redirect("/login");
     } else {
@@ -33,19 +34,8 @@ const getRecord = asyncHandler(async (req,res)=>{
 })
 
 const getRunning = asyncHandler(async (req,res)=>{
-    const locals = {
-        title:"Running",
-    }
-    res.render("running",{locals, layout: mainLayout});
-})
-
-
-let latitudeArray = [];
-let longitudeArray = [];
-let timestampArray = [];
-const postRunning = asyncHandler(async (req,res)=>{
-    
     const token = req.cookies.token;
+    
     if (!token) {
         res.redirect("/login");
     } else {
@@ -59,27 +49,45 @@ const postRunning = asyncHandler(async (req,res)=>{
     }
     const user = await User.findById(req.userID);
 
-    // const {distance, time} = req.body;
-    // const createdRunning = await Running.create({
-    //     distance : distance,
-    //     time : time,
-    //     creator: user._id
-    // });
+    const locals = {
+        title:"Running",
+    }
+    res.render("running",{locals, layout: mainLayout});
+})
 
+
+let latitudeArray = [];
+let longitudeArray = [];
+let timestampArray = [];
+const postRunning = asyncHandler(async (req,res)=>{
+    const token = req.cookies.token;
+    console.log(token)
     
+    if (!token) {
+        res.redirect("/login");
+    } else {
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userID = decoded.id;
+            
+        } catch (error) {
+            res.redirect("/login");
+        }
+    }
+    const user = await User.findById(req.userID);
 
-    // res.redirect("/");
-    // const gpsData= [];
     const { latitude, longitude, timestamp, cnt } = req.body;
     if(!cnt){
         latitudeArray.push(latitude);
         longitudeArray.push(longitude);
         timestampArray.push(timestamp);
+        // console.log(`${latitudeArray}  ${longitudeArray}  ${timestampArray}`);
     }
     else if(cnt){
         const newRunning = new Running({
             creator: req.userID
         });
+        console.log(req.userID);
         for(let i=0;i<latitudeArray.length;i++){
             newRunning.location.push({
                 latitude: latitudeArray[i],
@@ -98,6 +106,7 @@ const postRunning = asyncHandler(async (req,res)=>{
             latitudeArray = [];
             longitudeArray = [];
             timestampArray = [];
+            console.log("세션");
         } catch (error) {
             await session.abortTransaction();
             throw error;    

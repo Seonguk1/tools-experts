@@ -6,9 +6,11 @@ const expressLayouts = require("express-ejs-layouts");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
-
+const cors = require('cors');
 
 connectDB();
+
+app.use(cors());
 
 app.use(express.static("public"));
 

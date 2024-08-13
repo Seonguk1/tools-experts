@@ -1,12 +1,16 @@
 <!-- https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running -->
 <!-- http://localhost:3000/running -->
+<!-- http://172.20.10.4:3000/running -->
 <div id="display"></div>
 <script>
+    const address = "http://localhost:3000/running";
     let cnt = false;
     let previousPosition = null;
     let previousTimestamp = null;
     let totalDistance = 0;
     let startTime = null;
+    let intervalId = null;
+    let isRunning = false;
 // navigator.geolocation API를 사용하여 GPS 데이터 수집
 function getGPSData() {
     return new Promise((resolve, reject) => {
@@ -40,6 +44,7 @@ function calculatePace(distance, timeSeconds) {
 }
 
 async function sendGPSData() {
+    if (!isRunning) return;
             try {
                 const position = await getGPSData();
                 const { latitude, longitude } = position.coords;
@@ -68,7 +73,7 @@ async function sendGPSData() {
                 previousPosition = { latitude, longitude };
                 previousTimestamp = currentTimestamp;
 
-                await fetch('https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running', {
+                await fetch(address, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -85,18 +90,30 @@ async function sendGPSData() {
             }
         }
 
-const intervalId = setInterval(sendGPSData, 1000);
+        function startRunning() {
+        if (!isRunning) {
+            isRunning = true;
+            startTime = Date.now();
+            intervalId = setInterval(sendGPSData, 1000);
+            document.getElementById('startButton').disabled = true;
+            document.getElementById('endButton').disabled = false;
+        }
+    }
 
 // End 버튼 클릭 이벤트 처리
 async function handleEndButtonClick() {
-    cnt = true;
-    console.log("Running ended. cnt:", cnt);
-    clearInterval(intervalId); // GPS 데이터 수집 중지
-    document.getElementById('endButton').disabled = true; // 버튼 비활성화
+    if (!isRunning) return;
+        
+        isRunning = false;
+        cnt = true;
+        console.log("Running ended. cnt:", cnt);
+        clearInterval(intervalId);
+        document.getElementById('startButton').disabled = false;
+        document.getElementById('endButton').disabled = true;
 
     try {
         // 서버로 종료 요청 전송
-        const response = await fetch('https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running', {
+        const response = await fetch(address, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -107,7 +124,7 @@ async function handleEndButtonClick() {
                 message: "Running session ended"
             }),
         });
-
+        
         if (response.ok) {
             console.log("End running request sent successfully");
             // document.getElementById('display').innerText = "Running session ended successfully";
@@ -123,6 +140,12 @@ async function handleEndButtonClick() {
 
 // 페이지 로드 완료 후 실행
 window.onload = function() {
+    const startButton = document.createElement('button');
+    startButton.id = 'startButton';
+    startButton.innerText = 'Start';
+    startButton.onclick = startRunning;
+    document.body.appendChild(startButton);
+
     // End 버튼 생성 및 이벤트 리스너 추가
     const endButton = document.createElement('button');
     endButton.id = 'endButton';
