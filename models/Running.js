@@ -15,15 +15,20 @@ const runningSchema = new mongoose.Schema({
             required: true
         }
     }],
-    date:{
-        type:Date,
-        default:Date.now()
+    score: {
+        type: Number,
+        required: true
     },
-    creator:{
-        type: mongoose.Types.ObjectId, 
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+    creator: {
+        type: mongoose.Types.ObjectId,
         // required:true, 
-        ref: 'User'}
+        ref: 'User'
+    }
 });
 
-module.exports = mongoose.model("Running",runningSchema);
+module.exports = mongoose.model("Running", runningSchema);
 

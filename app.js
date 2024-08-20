@@ -14,8 +14,8 @@ app.use(cors());
 
 app.use(express.static("public"));
 
-app.set("view engine","ejs");
-app.set("views","./views");
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,14 +23,14 @@ app.use(expressLayouts);
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
-app.use("/",require("./routes/home"))
-app.use("/",require("./routes/record"))
-app.use("/community",require("./routes/community"))
-app.use("/",require("./routes/login"))
-app.use("/",require("./routes/register"))
-app.use("/friends",require("./routes/Friends"))
+app.use("/", require("./routes/home"))
+app.use("/", require("./routes/record"))
+app.use("/community", require("./routes/community"))
+app.use("/", require("./routes/login"))
+app.use("/", require("./routes/register"))
+app.use("/friends", require("./routes/Friends"))
 
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })

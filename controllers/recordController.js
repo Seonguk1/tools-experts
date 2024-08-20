@@ -55,13 +55,11 @@ const getRunning = asyncHandler(async (req,res)=>{
     res.render("running",{locals, layout: mainLayout});
 })
 
-
 let latitudeArray = [];
 let longitudeArray = [];
 let timestampArray = [];
 const postRunning = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
-    console.log(token)
     
     if (!token) {
         res.redirect("/login");
@@ -76,11 +74,12 @@ const postRunning = asyncHandler(async (req,res)=>{
     }
     const user = await User.findById(req.userID);
 
-    const { latitude, longitude, timestamp, cnt } = req.body;
+    const { latitude, longitude, timestamp, cnt, score } = req.body;
     if(!cnt){
         latitudeArray.push(latitude);
         longitudeArray.push(longitude);
         timestampArray.push(timestamp);
+        
         // console.log(`${latitudeArray}  ${longitudeArray}  ${timestampArray}`);
     }
     else if(cnt){
@@ -94,6 +93,8 @@ const postRunning = asyncHandler(async (req,res)=>{
                 longitude: longitudeArray[i]
             });
             newRunning.timestamp.push(timestampArray[i]);
+            // console.log(score);
+            newRunning.score.push(score);   
         }
 
         const session = await mongoose.startSession();
@@ -112,11 +113,12 @@ const postRunning = asyncHandler(async (req,res)=>{
             throw error;    
         } finally {
             session.endSession();
+
+            console.log("Redirecting to /record after session end");
+            return res.redirect("/");
         }
-    
-        res.sendStatus(200);
         
-        // res.redirect("/");
+        
     }
 })
 
