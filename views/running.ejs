@@ -48,6 +48,10 @@
 
     async function sendGPSData() {
         if (!isRunning) return;
+        if(cnt){
+            console.log("cnt가 참입니다.");
+            return ;
+        }
         try {
             score++;
             if((score-bonus*k)%20==0){
@@ -80,7 +84,7 @@
 
             previousPosition = { latitude, longitude };
             previousTimestamp = currentTimestamp;
-            if (score % 10 == 0) {
+            // if (totalTime%10 == 0) {
                 await fetch(address, {
                     method: 'POST',
                     headers: {
@@ -94,7 +98,8 @@
                         score
                     }),
                 });
-            }
+                console.log(`Post success at ${timestamp}`);
+            // }
         } catch (error) {
             console.error('Error getting GPS data:', error);
         }
@@ -136,7 +141,7 @@
                     message: "Running session ended"
                 }),
             });
-
+            console.log("포스트 엔드 버튼");
             if (response.ok) {
                 console.log("End running request sent successfully");
                 // document.getElementById('display').innerText = "Running session ended successfully";
@@ -146,7 +151,7 @@
             }
         } catch (error) {
             console.error('Error sending end running request:', error);
-            // document.getElementById('display').innerText = "Error ending running session";
+            document.getElementById('display').innerText = "Error ending running session";
         }
     }
 

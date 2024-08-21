@@ -93,8 +93,8 @@ const postRunning = asyncHandler(async (req,res)=>{
                 longitude: longitudeArray[i]
             });
             newRunning.timestamp.push(timestampArray[i]);
-            // console.log(score);
-            newRunning.score.push(score);   
+            console.log(score);
+            newRunning.score = score;   
         }
 
         const session = await mongoose.startSession();
@@ -113,7 +113,6 @@ const postRunning = asyncHandler(async (req,res)=>{
             throw error;    
         } finally {
             session.endSession();
-
             console.log("Redirecting to /record after session end");
             return res.redirect("/");
         }

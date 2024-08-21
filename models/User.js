@@ -12,25 +12,25 @@ const userSchema = new mongoose.Schema({
     },
     nickname:{
         type: String,
-        require: true,
-        unique: true
+        // require: true,
+        // unique: true
     },
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other'],
-        required: true
+        // required: true
       },
     age:{
         type: Number,
-        require: true
+        // require: true
     },
     height:{
         type: Number,
-        require: true
+        // require: true
     },
     weight:{
         type: Number,
-        require: true
+        // require: true
     },
     friends: [{
         type: mongoose.Schema.Types.ObjectId, // 친구 목록은 ObjectId 타입이어야 합니다
