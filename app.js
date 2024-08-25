@@ -30,6 +30,13 @@ app.use("/", require("./routes/login"))
 app.use("/", require("./routes/register"))
 app.use("/friends", require("./routes/Friends"))
 
+const mainLayout = "../views/layouts/main.ejs";
+app.get("/community_1",(req,res)=>{
+    res.render("community_1",{layout:mainLayout});
+})
+app.get("/community_2",(req,res)=>{
+    res.render("community_2",{layout:mainLayout});
+})
 
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
