@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="calender.css" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" rel="stylesheet">
     <style>
@@ -18,88 +18,126 @@
     </style>
 </head>
 <body class="s_background">
-    <div style="font-family: ethnocentric-font; font-weight: 900; color: #fcb101; font-size: 30px; margin-left: 6px;">RUNUS</div>
-    <div class="s_head" style="font-weight: 700;">
-         사용자 이름's 활동
+    <div class="s_recent">
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 10px;">나의 최근 기록</div>
+        <div style="font-size: 14px; color: #595959; margin-top: 6.3px; font-weight: 520; margin-right: 20px;" onclick="location.href='index1.html'">더보기 ></div>
     </div>
-    <div class="s_container-1" style="margin-top: 20px;">
-        <button class="s_button-1" value="0">
-              Daily
-         </button>
-          <button class="s_button-1" value="1">
-             Weekly
-         </button>
-         <button class="s_button-1" value="2">
-            Monthly
-         </button>
+    <div style="display: flex; justify-content: center;">
+        <div  style="background-color: #D9D9D9; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+            <div style="font-size: 14px; color: #595959; padding-top: 6px; margin-left: 10px;">
+                2024-08-09
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="font-size: 12px; color: #595959; margin-left: 10px; margin-top: 10px;">
+                    반포한강공원>여의도
+                </div>
+                <div style="font-size: 12px; color: #595959; margin-right: 20px; margin-top: 10px;">
+                    총 1.6km
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">나의 베스트 기록</div>
+    <div class="s_container-4" style="margin-top: 20px; border: 1px solid #E3E3E3; border-radius: 999px; margin-left: 8px; width: 180px; height: 32px;">
+        <button class="s_button-3" value="0">
+            거리순
+        </button>
+        <button class="s_button-3" value="1">
+             속도순
+        </button>
+        <button class="s_button-3" value="2">
+            기타
+        </button>
+    </div>
+    <div id="s_distance" class="s_mode_2">
+        <div style="display: flex; justify-content: center;">
+            <div  style="background-color: #D9D9D9; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+                <div style="font-size: 14px; color: #595959; padding-top: 6px; margin-left: 10px;">
+                    2024-08-09
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="font-size: 12px; color: #595959; margin-left: 10px; margin-top: 10px;">
+                        반포한강공원>여의도
+                    </div>
+                    <div style="font-size: 12px; color: #595959; margin-right: 20px; margin-top: 10px;">
+                        총 1.6km
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="s_velocity" class="s_mode_2">
+        <div style="display: flex; justify-content: center;">
+            <div  style="background-color: #D9D9D9; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+                <div style="font-size: 14px; color: #595959; padding-top: 6px; margin-left: 10px;">
+                    2024-07-09
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="font-size: 12px; color: #595959; margin-left: 10px; margin-top: 10px;">
+                        서울과학기술대학교>노원구
+                    </div>
+                    <div style="font-size: 12px; color: #595959; margin-right: 20px; margin-top: 10px;">
+                        총 3.2km
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="s_etc" class="s_mode_2">
+        <div style="display: flex; justify-content: center;">
+            <div  style="background-color: #D9D9D9; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+                <div style="font-size: 14px; color: #595959; padding-top: 6px; margin-left: 10px;">
+                    2024-08-09
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="font-size: 12px; color: #595959; margin-left: 10px; margin-top: 10px;">
+                        뚝섬한강공원>뚝섬
+                    </div>
+                    <div style="font-size: 12px; color: #595959; margin-right: 20px; margin-top: 10px;">
+                        총 1.6km
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="s_container-1" style="margin-top: 20px; background-color: #D9D9D9; border-radius: 999px; margin: 7%; height: 35px;border: 1px solid #E3E3E3;">
+            <button class="s_button-1" value="0">
+                1일
+            </button>
+            <button class="s_button-1" value="1">
+                 1주
+            </button>
+            <button     class="s_button-1" value="2">
+                1개월
+            </button>
     </div>
     <div id="s_Daily" class="s_mode">
-        <div style="margin-top: 30px; padding: 10px;">
-            <div style="font-size: 30px; font-weight: 700;">Overview</div>
-            <div class="s_container-2">
-                <button class="s_button-2">
-                    키로수
-                </button>
-                <button class="s_button-2">
-                    발걸음 수
-                </button>
-            </div>
-            <div class="s_container-3">
-                <button class="s_button-2">
-                    칼로리
-                </button>
-                <button class="s_button-2">
-                    시간
-                </button>
-                <button class="s_button-2">
-                    bpm
-                </button>
-            </div>
-        </div>
-        <div id="s_map"></div>
-    </div>
-    <div id="s_Weekly" class="s_mode" class="s_buttoncontainer" style="text-align: center;">
-        <div>
-            <button id="s_originalbutton" class="s_calendar" style="display: none;">
-                <div class="s_upper">
-                    <div id="s_month"></div>
-                </div>
-                <div class="s_lower">
-                    <div id="s_day"></div>
-                    <div id="s_date"></div>
-                    <div id="s_year"></div>
-                </div>
-            </button>
-        </div>
-        <script asyn src="/js/calender.js"></script>
-        <div style="margin-top: 40px; margin-bottom: 70px;">
-            <div class="s_container-2 ">
-                <button class="s_button-2">
-                    키로수
-                </button>
-                <button class="s_button-2">
-                    발걸음 수
-                </button>
-            </div>
-            <div class="s_container-3">
-                <button class="s_button-2">
-                    칼로리
-                </button>
-                <button class="s_button-2">
-                    시간
-                </button>
-                <button class="s_button-2">
-                    bpm
-                </button>
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">오늘 이만큼 달렸어요.</div>
+        <div style="display: flex; justify-content: center;">
+            <div  style="background-color: #D9D9D9; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
+            
             </div>
         </div>
     </div>
-        <div id="s_Month" class="s_mode">
-            <div id="s_fullcalendar"></div>
+    <div id="s_Weekly" class="s_mode" class="s_buttoncontainer">
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번주 이만큼 달렸어요.</div>
+        <div style="display: flex; justify-content: center;">
+            <div  style="background-color: #D9D9D9; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
+            
+            </div>
         </div>
     </div>
-      <script src="/js/button.js"></script>
-      <script src="/js/map.js"></script>
+    <div id="s_Month" class="s_mode">
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번달 이만큼 달렸아요.</div>
+        <div style="display: flex; justify-content: center;">
+            <div  style="background-color: #D9D9D9; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
+            
+            </div>
+        </div>
+    </div>
+</div>
+      <script src="button.js"></script>
+      <script src="map.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js"></script>
       
       <script>
