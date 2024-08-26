@@ -30,7 +30,6 @@ app.use("/", require("./routes/login"))
 app.use("/", require("./routes/register"))
 app.use("/friends", require("./routes/Friends"))
 
-
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
