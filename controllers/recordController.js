@@ -74,7 +74,7 @@ const postRunning = asyncHandler(async (req,res)=>{
     }
     const user = await User.findById(req.userID);
 
-    const { latitude, longitude, timestamp, cnt, score } = req.body;
+    const { latitude, longitude, timestamp, cnt, score, distance } = req.body;
     if(!cnt){
         latitudeArray.push(latitude);
         longitudeArray.push(longitude);
@@ -94,7 +94,8 @@ const postRunning = asyncHandler(async (req,res)=>{
             });
             newRunning.timestamp.push(timestampArray[i]);
             console.log(score);
-            newRunning.score = score;   
+            newRunning.score = score;
+            newRunning.distance = distance;   
         }
 
         const session = await mongoose.startSession();

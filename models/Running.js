@@ -15,6 +15,10 @@ const runningSchema = new mongoose.Schema({
             required: true
         }
     }],
+    distance:{
+        type: Number,
+        required: true
+    },
     score: {
         type: Number,
         required: true

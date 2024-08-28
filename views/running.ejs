@@ -13,8 +13,8 @@
     let intervalId = null;
     let isRunning = false;
     let score = 0;
-    let k=0;
-    let bonus=10;
+    let k = 0;
+    let bonus = 10;
     // navigator.geolocation API를 사용하여 GPS 데이터 수집
     function getGPSData() {
         return new Promise((resolve, reject) => {
@@ -49,15 +49,15 @@
 
     async function sendGPSData() {
         if (!isRunning) return;
-        if(cnt){
+        if (cnt) {
             console.log("cnt가 참입니다.");
-            return ;
+            return;
         }
         try {
             score++;
-            if((score-bonus*k)%20==0){
+            if ((score - bonus * k) % 20 == 0) {
                 k++;
-                score+=bonus;
+                score += bonus;
             }
             const position = await getGPSData();
             const { latitude, longitude } = position.coords;
@@ -86,20 +86,20 @@
             previousPosition = { latitude, longitude };
             previousTimestamp = currentTimestamp;
             // if (totalTime%10 == 0) {
-                await fetch(address, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        latitude,
-                        longitude,
-                        timestamp: currentTimestamp,
-                        cnt,
-                        score
-                    }),
-                });
-                console.log(`Post success at ${timestamp}`);
+            await fetch(address, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    latitude,
+                    longitude,
+                    timestamp: currentTimestamp,
+                    cnt,
+                    score
+                }),
+            });
+            console.log(`Post success at ${timestamp}`);
             // }
         } catch (error) {
             console.error('Error getting GPS data:', error);
@@ -139,6 +139,7 @@
                     endTime: Date.now(),
                     cnt: cnt,
                     score: score,
+                    distance: totalDistance,
                     message: "Running session ended"
                 }),
             });
