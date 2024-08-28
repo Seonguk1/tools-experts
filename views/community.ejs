@@ -1,4 +1,4 @@
-<div class="admin-title">
+<!-- <div class="admin-title">
     <h2> <%= locals.title%></h2>
 </div>
 
@@ -18,4 +18,42 @@
  <% }) %>
 </ul>
 
-    <a href="/community/add" class="button">+ 새 게시물</a>
+    <a href="/community/add" class="button">+ 새 게시물</a> -->
+<div class="comunity_nav">
+    <div style="color: #595959; border-bottom: solid #738DAB 2px; cursor: default;" onclick="location.href='/community';">나의 러닝메이트</div>
+    <div style="cursor: default;" onclick="location.href='/community_1';">러닝 코스</div>
+    <div style="cursor: default;" onclick="location.href='/community_2';">게시판</div>
+</div>
+<div style="padding-top: 30px; background-color: #F9FBFE;">
+    <div style="display: flex; justify-content: space-between; padding-left: 10px; padding-right: 10px;">
+        <div style="font-size: 20px; font-weight: 600; color: #4A719E;">최근 나의 러닝기록</div>
+        <div>더보기 ></div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+        <div class="myCurrentRecord">
+            <div>xxxx-xx-xx</div>
+            <div>반포한강공원 > 여의도</div>
+            <div>1.6 km</div>
+        </div>
+        <div class="myCurrentRecord">
+            <div>xxxx-xx-xx</div>
+            <div>반포한강공원</div>
+            <div>0.9 km</div>
+        </div>
+        <div class="myCurrentRecord">
+            <div>xxxx-xx-xx</div>
+            <div>동광로 3길 > 잠원 27번...</div>
+            <div>1.2 km</div>
+        </div>
+    </div>
+    <div class="runningmate_main">
+        <div class="profile">러닝프로필</div>
+        <div class="profile">러닝메이트</div>
+        <div class="profile">러닝 모임</div>
+    </div>
+    <div class="runningmate_footer">
+        <div style="font-weight: 600;">함께 달려요, RUNUS</div>
+        <div style="">인근 지역 러닝메이트 찾아보기</div>
+        <div style="color: #595959; height: 80px; display: flex; justify-content: end; align-items: end;">더보기 ></div>
+    </div>
+</div>

@@ -9,42 +9,57 @@
   <meta name="description" content="My first application using Node.js, Express and MongoDB">
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body style="width: 375px; height: 812px;">
+<body style="width: 375px; height: 812px; margin: auto;">
   
-  <div class="container">   
+  <div class="container">
 
     <!-- 헤더 : 로고, 상단 메뉴, 로그인 -->
-    <header class="header">
       <!-- 로고 -->
-      <a href="/" style="text-decoration: none;">
-        <div class="d_header">
-          <span>RUN</span>
-          <span style="text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; color: #ffffff;">US</span>
-        </div>
-      </a>
+      <div>
+        <!-- <img style="cursor: default;" onclick="location.href='myinfor.html';" class="top_infor" src="images/User_cicrle_light.png" alt=""> -->
+        <div class="current_page">RUNUS</div>
+      </div>
       <!-- 상단 메뉴 -->
-      <nav style="display: flex; padding-right: 10px; justify-content: center;">
+      <!-- <nav style="display: flex; padding-right: 10px; justify-content: center;">
             <a href="/">홈</a>
             <a href="/community">커뮤니티</a>
             <a href="/friends">친구</a>
             <a href="/running">측정</a>
             <a href="/record">기록</a>
-      </nav>
+      </nav> -->
 
       <!-- 관리자 로그인 -->
-      <div style="display: flex; justify-content: center;">
+      <!-- <div style="display: flex; justify-content: center;">
         
         <a href="/login"><h3>로그인</h3></a>
         <a href="/register"><h3>회원가입</h3></a>
       
-      </div>
-    </header>
+      </div> -->
 
     <!-- 메인 : 실제 내용이 들어갈 부분 -->    
-    <main class="main">
+    <main>
       <%- body %>
     </main>
-  </div>  
+    <nav>
+      <div class="d_under_nav">
+        <div style="cursor: default;" onclick="location.href='myhome.html';">
+            <img style=" width: 25px; height: 25px;" src="images/undernav_home.png" alt="">
+        </div>
+        <div style="cursor: default;" onclick="location.href='myrun.html';">
+            <img style=" width: 25px; height: 25px;" src="images/undernav_timer.png" alt="">
+        </div>
+        <div style="cursor: default;" onclick="location.href='mywrite.html';">
+            <img style=" width: 25px; height: 25px;" src="images/undernav_record.png" alt="">
+        </div>
+        <div style="cursor: default;" onclick="location.href='/community';">
+            <img style=" width: 25px; height: 25px;" src="images/comunity.png" alt="">
+        </div>
+        <div style="cursor: default;" onclick="location.href='mysetting.html';">
+            <img style=" width: 25px; height: 25px;" src="images/setting.png" alt="">
+        </div>
+    </div>
+    </nav>
+  </div>
 
 </body>
 </html>
