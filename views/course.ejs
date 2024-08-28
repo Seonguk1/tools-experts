@@ -1,5 +1,5 @@
 <div id="map" style="width:500px;height:400px;"></div>
-<button id="submit" onclick="buttonClick()"> 저장 </button>
+<button id="submit" onclick="buttonClick()"> 저장 </button> 
 
 <script type="text/javascript"
     src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61b19c021919a02b04aee285f2550b3a&libraries=services,clusterer,drawing"></script>
@@ -265,8 +265,9 @@
         return content;
     }
     async function buttonClick() {
-        console.log("fuck: "+map.getCenter())
-        console.log(map.getCenter().getLat())
+        var distance = Math.round(clickLine.getLength());
+
+        console.log(distance);
         const response = await fetch("http://localhost:3000/course/add",{
             method: 'POST',
             headers: {
@@ -276,6 +277,7 @@
                 line: clickLine.getPath(),
                 centerLat: map.getCenter().getLat(),
                 centerLng: map.getCenter().getLng(),
+                distance: distance
             }),
         });
         

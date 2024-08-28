@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 
 const getRecord = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
-    
     if (!token) {
         res.redirect("/login");
     } else {
@@ -93,10 +92,10 @@ const postRunning = asyncHandler(async (req,res)=>{
                 longitude: longitudeArray[i]
             });
             newRunning.timestamp.push(timestampArray[i]);
-            console.log(score);
-            newRunning.score = score;
-            newRunning.distance = distance;   
         }
+        console.log(score);
+        newRunning.score = score;
+        newRunning.distance = distance;   
 
         const session = await mongoose.startSession();
         session.startTransaction();

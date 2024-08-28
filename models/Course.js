@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const CourseSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        // required: true,
     },
     course: [{
         la: {
@@ -18,7 +18,7 @@ const CourseSchema = new mongoose.Schema({
     center: {
         la: {
             type: Number,
-            required:true,
+            required:true,  
         },
         ma: {   
             type: Number,
@@ -27,14 +27,18 @@ const CourseSchema = new mongoose.Schema({
     },
     distance:{
         type: Number,
-        required: true,
+        // required: true,
     },
     description: {
         type: String,
     },
     createAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now() 
+    },
+    creator: {
+        type: mongoose.Types.ObjectId, 
+        ref: 'User'
     }
 })
 

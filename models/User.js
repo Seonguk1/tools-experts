@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,  
         ref: 'Running'
     }],
+    courses: [{
+        type: mongoose.Types.ObjectId,  
+        ref: 'Course'
+    }],
 });
 
 // pre-save 미들웨어를 사용하여 친구 목록에 자기 자신을 추가
