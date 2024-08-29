@@ -32,15 +32,8 @@ const getRecord = asyncHandler(async (req,res)=>{
 })
 
 const getRunning = asyncHandler(async (req,res)=>{
-    const locals = {
-        title:"Running",
-    }
-    res.render("running",{locals, layout: mainLayout});
-})
-
-const postRunning = asyncHandler(async (req,res)=>{
-    const {distance, time} = req.body;
     const token = req.cookies.token;
+    
     if (!token) {
         res.redirect("/login");
     } else {
@@ -53,27 +46,78 @@ const postRunning = asyncHandler(async (req,res)=>{
         }
     }
     const user = await User.findById(req.userID);
-    const createdRunning = await Running.create({
-        distance : distance,
-        time : time,
-        creator: user._id
-    });
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    try {
-        await createdRunning.save({ session: session });
-        user.runnings.push(createdRunning._id);
-        await user.save({ session: session });
-        await session.commitTransaction();
-    } catch (error) {
-        await session.abortTransaction();
-        throw error;
-    } finally {
-        session.endSession();
+    const locals = {
+        title:"Running",
     }
+    res.render("running",{locals, layout: mainLayout});
+})
 
-    res.redirect("/");
+let latitudeArray = [];
+let longitudeArray = [];
+let timestampArray = [];
+const postRunning = asyncHandler(async (req,res)=>{
+    const token = req.cookies.token;
+    
+    if (!token) {
+        res.redirect("/login");
+    } else {
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userID = decoded.id;
+            
+        } catch (error) {
+            res.redirect("/login");
+        }
+    }
+    const user = await User.findById(req.userID);
+
+    const { latitude, longitude, timestamp, cnt, score, distance } = req.body;
+    if(!cnt){
+        latitudeArray.push(latitude);
+        longitudeArray.push(longitude);
+        timestampArray.push(timestamp);
+        
+        // console.log(`${latitudeArray}  ${longitudeArray}  ${timestampArray}`);
+    }
+    else if(cnt){
+        const newRunning = new Running({
+            creator: req.userID
+        });
+        console.log(req.userID);
+        for(let i=0;i<latitudeArray.length;i++){
+            newRunning.location.push({
+                latitude: latitudeArray[i],
+                longitude: longitudeArray[i]
+            });
+            newRunning.timestamp.push(timestampArray[i]);
+        }
+        console.log(score);
+        newRunning.score = score;
+        newRunning.distance = distance;   
+
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            await newRunning.save({ session: session });
+            user.runnings.push(newRunning._id);
+            await user.save({ session: session });
+            await session.commitTransaction();
+            latitudeArray = [];
+            longitudeArray = [];
+            timestampArray = [];
+            console.log("세션");
+        } catch (error) {
+            await session.abortTransaction();
+            throw error;    
+        } finally {
+            session.endSession();
+            console.log("Redirecting to /record after session end");
+            return res.redirect("/");
+        }
+        
+        
+    }
 })
 
 module.exports = {

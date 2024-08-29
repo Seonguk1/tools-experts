@@ -49,7 +49,6 @@ res.render("post", {data, layout : mainLayout}); // 게시물 보기
 })
 
 const getAddPost = asyncHandler(async(req, res) => {
-    const { title, body } = req.body;
 
     const token = req.cookies.token;
     if (!token) {
@@ -67,7 +66,7 @@ const getAddPost = asyncHandler(async(req, res) => {
     const locals = {
         title: "게시물 작성"
     }
-    res.render("add", {locals, layout: mainLayout});
+    res.render("addPost", {locals, layout: mainLayout});
 })
 
 const postAddPost = asyncHandler(async (req, res) => {
@@ -117,7 +116,7 @@ const postAddPost = asyncHandler(async (req, res) => {
 const getEditPost = asyncHandler(async (req, res) => {
     const locals = { title : "게시물 편집"};
     const data = await Post.findOne( { _id: req.params.id});
-    res.render("edit", {locals, data, layout : mainLayout});
+    res.render("editPost", {locals, data, layout : mainLayout});
 })
 
 const putEditPost = asyncHandler(async(req, res) => {
@@ -126,12 +125,12 @@ const putEditPost = asyncHandler(async(req, res) => {
         body : req.body.body,
         createdAt : Date.now()
     })
-    res.redirect("/community");
+    res.redirect("/community/myPosts");
 });
 
 const deletePost = asyncHandler(async(req, res) => {
     await Post.deleteOne({ _id:req.params.id});
-    res.redirect("/community");
+    res.redirect("/community/myPosts");
 });
 
 

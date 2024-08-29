@@ -4,7 +4,7 @@ const {getCommunity, postCommunity, getAddPost, postAddPost, getEditPost, putEdi
 = require("../controllers/communityController");
 
 router
-    .route("/community")
+    .route("/")
     .get(getCommunity);
 
 router
@@ -14,10 +14,18 @@ router
 router.route("/post/:id")
 .get(postCommunity);
 
-router.route("/add").get(getAddPost).post(postAddPost);
+router
+    .route("/add")
+    .get(getAddPost)
+    .post(postAddPost);
 
-router.route("/edit/:id").get(getEditPost).put(putEditPost);
+router
+    .route("/edit/:id")
+    .get(getEditPost)
+    .put(putEditPost);
 
-router.route("/delete/:id").delete(deletePost);
+router
+    .route("/delete/:id")
+    .delete(deletePost);
 
 module.exports = router;

@@ -98,12 +98,12 @@
             <% if (posts && posts.length > 0) { %>
                 <% posts.forEach(post => { %>
                     <li>
-                        <a href="/post/<%= post._id %>" style="font-weight: bold; color: #007bff;">
+                        <a href="/community/post/<%= post._id %>" style="font-weight: bold; color: #007bff;">
                             <%= post.title %>
                         </a>
                         <div class="admin-post-controls">
-                            <a href="/edit/<%= post._id %>" class="btn">편집</a>
-                            <form action="/delete/<%= post._id %>?_method=DELETE" method="POST">
+                            <a href="/community/edit/<%= post._id %>" class="btn">편집</a>
+                            <form action="/community/delete/<%= post._id %>?_method=DELETE" method="POST">
                                 <input type="submit" value="삭제" class="btn-delete btn">
                             </form>
                         </div>

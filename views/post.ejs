@@ -85,13 +85,6 @@
                 <%= data.body %>
             </div>
         </article>
-
-        <div class="article-controls">
-            <a href="/edit/<%= data._id %>" class="btn">편집</a>
-            <form action="/delete/<%= data._id %>?_method=DELETE" method="POST" style="display:inline;">
-                <input type="submit" value="삭제" class="btn-delete btn">
-            </form>
-        </div>
     </div>
 </body>
 </html>

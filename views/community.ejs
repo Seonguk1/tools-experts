@@ -93,13 +93,13 @@
         <h2><%= locals.title %></h2>
     </div>
 
-    <a href="/myPosts" class="button">내 게시물</a>
+    <a href="/community/myPosts" class="button">내 게시물</a>
 
     <ul class="admin-posts">
         <% if (data && data.length > 0) { %>
             <% data.forEach(post => { %>
                 <li>
-                    <a href="/post/<%= post._id %>">
+                    <a href="/community/post/<%= post._id %>">
                         <%= post.title %>
                     </a>
                 </li>
@@ -109,6 +109,6 @@
         <% } %>
     </ul>
 
-    <a href="/add" class="button">+ 새 게시물</a>
+    <a href="/community/add" class="button">+ 새 게시물</a>
 </body>
 </html>
