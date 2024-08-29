@@ -1,15 +1,98 @@
-<a href="/community">&larr; 뒤로</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= locals.title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
 
-<div class="admin-title">
-    <h2> <%= locals.title %> </h2>
-</div>
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1em;
+        }
 
-<form action="/add" method="POST">
-    <label for="title"> <b>제목</b></label>
-    <input type="text" placeholder="게시물 제목" name="title" id="title">
+        a:hover {
+            text-decoration: underline;
+        }
 
-    <label for="body"><b>내용</b></label>
-    <textarea name="body" id="body" cols="50" rows="10" placeholder="게시물 내용"></textarea>
+        .admin-title {
+            text-align: center;
+            margin: 20px 0;
+        }
 
-    <input type="submit" value="등록" class="btn">
-	</form>
+        .admin-title h2 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="/community">&larr; 뒤로</a>
+
+    <div class="admin-title">
+        <h2><%= locals.title %></h2>
+    </div>
+
+    <form action="/add" method="POST">
+        <label for="title"><b>제목</b></label>
+        <input type="text" placeholder="게시물 제목" name="title" id="title" required>
+
+        <label for="body"><b>내용</b></label>
+        <textarea name="body" id="body" cols="50" rows="10" placeholder="게시물 내용" required></textarea>
+
+        <input type="submit" value="등록" class="btn">
+    </form>
+</body>
+</html>

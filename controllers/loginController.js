@@ -1,9 +1,11 @@
+require("dotenv").config();
 const asyncHandler = require("express-async-handler");
 const mainLayout = "../views/layouts/main.ejs";
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;  
+
 
 
 const getLogin = asyncHandler(async (req,res)=>{

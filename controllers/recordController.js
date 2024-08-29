@@ -25,7 +25,6 @@ const getRecord = asyncHandler(async (req,res)=>{
         running.push(await Running.findById(user.runnings[i]));
     }
 
-    // console.log(running);
     const locals = {
         title:"Record",
     }

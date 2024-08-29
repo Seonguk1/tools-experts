@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other'],
-        required: true
+        require: true
       },
     age:{
         type: Number,
@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema({
         require: true
     },
     
-    runnings: [{type: mongoose.Types.ObjectId, required:true, ref: 'Running'}]
+    runnings: [{type: mongoose.Types.ObjectId, required:true, ref: 'Running'}],
+    posts: [{type: mongoose.Types.ObjectId, required:true, ref: 'Post'}]
 });
 
 module.exports = mongoose.model("User",userSchema);
