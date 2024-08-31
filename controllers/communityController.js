@@ -7,14 +7,29 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
-const getCommunity = asyncHandler(async (req,res)=>{
-    const locals ={
-        title:"Community",
-    }
-    const posts = await Post.find();
+const getCommunity = asyncHandler(async (req, res) => {
+    const page = Number(req.query.page || 1);
+    const perPage = Number(req.query.perPage || 10);
 
-    res.render("community",{data: posts, locals, layout: mainLayout});
-})
+    const totalPosts = await Post.countDocuments();  // 전체 게시물 수
+    const totalPages = Math.ceil(totalPosts / perPage); // 페이지가 부족하면 안되기에 올림
+
+    const posts = await Post.find()
+        .sort({ createdAt: -1 }) // 역순으로 저장
+        .skip((page - 1) * perPage) // 현재 페이지에 맞춰 skip
+        .limit(perPage)
+        .exec();
+
+    const locals = {
+        title: "Community",
+        currentPage: page,
+        totalPages: totalPages,
+        perPage: perPage
+    };
+
+    res.render("community", { data: posts, locals, layout: mainLayout });
+});
+
 const getMyPosts = asyncHandler(async (req, res)=> {
 
     const token = req.cookies.token;

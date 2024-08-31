@@ -5,92 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= locals.title %></title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
-
-        .admin-title {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .admin-title h2 {
-            font-size: 2em;
-            margin: 0;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1em;
-            color: white;
-            background-color: #007bff;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 10px 0;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-
-        .admin-posts {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .admin-posts li {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f9f9f9;
-        }
-
-        .admin-post-controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 5px 10px;
-            font-size: 0.9em;
-            color: white;
-            background-color: #007bff;
-            border-radius: 3px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-        }
-
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-
-        .btn-submit {
-            padding: 5px 10px;
-            font-size: 0.9em;
-            border: none;
-            cursor: pointer;
-        }
+        /* 스타일링 코드 생략 (기존 코드 유지) */
     </style>
 </head>
 <body>
     <div class="admin-title">
         <h2><%= locals.title %></h2>
+        <p>Page <%= locals.currentPage %> of <%= locals.totalPages %></p> <!-- totalPages 표시 -->
     </div>
 
     <a href="/community/myPosts" class="button">내 게시물</a>
@@ -110,5 +31,16 @@
     </ul>
 
     <a href="/community/add" class="button">+ 새 게시물</a>
+
+    <!-- 페이지네이션 버튼 -->
+    <div>
+        <% if (locals.currentPage > 1) { %>
+            <a href="/community?page=<%= locals.currentPage - 1 %>&perPage=<%= locals.perPage %>" class="button">Previous</a>
+        <% } %>
+    
+        <% if (locals.currentPage < locals.totalPages) { %>
+            <a href="/community?page=<%= locals.currentPage + 1 %>&perPage=<%= locals.perPage %>" class="button">Next</a>
+        <% } %>
+    </div>
 </body>
 </html>
