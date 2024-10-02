@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other'],
-        // required: true
+        //required: true
       },
     age:{
         type: Number,
@@ -32,16 +32,20 @@ const userSchema = new mongoose.Schema({
         type: Number,
         // require: true
     },
-    friends: [{
-        type: mongoose.Schema.Types.ObjectId, // 친구 목록은 ObjectId 타입이어야 합니다
-        ref: 'User'
-    }],
     
     runnings: [{
         type: mongoose.Types.ObjectId,  
         ref: 'Running'
     }],
-});
+    courses: [{
+        type: mongoose.Types.ObjectId,  
+        ref: 'Course'
+    }],
+    posts: [{
+        type: mongoose.Types.ObjectId, 
+        required:true, 
+        ref: 'Post'}]
+    });
 
 // pre-save 미들웨어를 사용하여 친구 목록에 자기 자신을 추가
 userSchema.pre('save', function(next) {

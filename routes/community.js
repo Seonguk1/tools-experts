@@ -1,22 +1,18 @@
 const express = require("express");
 const router = express.Router(); 
-const {
-    getCommunity, 
-    postCommunity, 
-    getAddPost, 
-    postAddPost, 
-    getEditPost, 
-    putEditPost, 
-    deletePost
-    } = require("../controllers/communityController");
+const {getCommunity, postCommunity, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts} 
+= require("../controllers/communityController");
 
 router
     .route("/")
     .get(getCommunity);
 
 router
-    .route("/post/:id")
-    .get(postCommunity);
+    .route("/myPosts")
+    .get(getMyPosts);    
+
+router.route("/post/:id")
+.get(postCommunity);
 
 router
     .route("/add")

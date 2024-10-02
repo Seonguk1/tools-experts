@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 
 const getRecord = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
-    
     if (!token) {
         res.redirect("/login");
     } else {
@@ -26,7 +25,6 @@ const getRecord = asyncHandler(async (req,res)=>{
         running.push(await Running.findById(user.runnings[i]));
     }
 
-    // console.log(running);
     const locals = {
         title:"Record",
     }
@@ -74,7 +72,7 @@ const postRunning = asyncHandler(async (req,res)=>{
     }
     const user = await User.findById(req.userID);
 
-    const { latitude, longitude, timestamp, cnt, score } = req.body;
+    const { latitude, longitude, timestamp, cnt, score, distance } = req.body;
     if(!cnt){
         latitudeArray.push(latitude);
         longitudeArray.push(longitude);
@@ -93,9 +91,10 @@ const postRunning = asyncHandler(async (req,res)=>{
                 longitude: longitudeArray[i]
             });
             newRunning.timestamp.push(timestampArray[i]);
-            console.log(score);
-            newRunning.score = score;   
         }
+        console.log(score);
+        newRunning.score = score;
+        newRunning.distance = distance;   
 
         const session = await mongoose.startSession();
         session.startTransaction();

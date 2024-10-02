@@ -29,6 +29,7 @@ app.use("/community", require("./routes/community"))
 app.use("/", require("./routes/login"))
 app.use("/", require("./routes/register"))
 app.use("/friends", require("./routes/Friends"))
+app.use("/course", require("./routes/course"))
 
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
