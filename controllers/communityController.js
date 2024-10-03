@@ -6,6 +6,23 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
+const Comment = require('../models/Comment');
+const util = require('../utils/util');
+
+const verifyToken = asyncHandler(async (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.redirect("/login");
+    }
+
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.userID = decoded.id;
+        next();
+    } catch (error) {
+        res.redirect("/login");
+    }
+});
 
 const getCommunity = asyncHandler(async (req, res) => {
     const page = Number(req.query.page || 1);
@@ -32,20 +49,7 @@ const getCommunity = asyncHandler(async (req, res) => {
 
 const getMyPosts = asyncHandler(async (req, res)=> {
 
-    const token = req.cookies.token;
-    if (!token) {
-        res.redirect("/login");
-    } else {
-        try {
-            const decoded = jwt.verify(token, jwtSecret);
-            req.userID = decoded.id;
-            
-        } catch (error) {
-            res.redirect("/login");
-        }
-    }
     const user = await User.findById(req.userID);
-
     if (!user) {
         return res.redirect("/login"); // 사용자 존재 여부 확인
     }
@@ -58,47 +62,42 @@ const getMyPosts = asyncHandler(async (req, res)=> {
     res.render('myPosts', {posts : posts, locals, layout : mainLayout});
 })
 
-const postCommunity = asyncHandler(async (req, res) => {
-const data = await Post.findOne({ _id : req.params.id});
-res.render("post", {data, layout : mainLayout}); // 게시물 보기
-})
+const getPostAndComments = async (req, res) => {
+    try {
+        const [post, comments] = await Promise.all([
+            Post.findOne({ _id: req.params.id }).populate({ path: 'author', select: 'username' }),
+            Comment.find({ post: req.params.id }).sort('createdAt').populate({ path: 'author', select: 'username' })
+        ]);
+
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+
+        // 댓글을 트리 구조로 변환
+        const commentTrees = util.convertToTrees(comments, '_id', 'parentComment', 'childComments');
+        
+        // 결과를 템플릿에 전달
+        res.render('post', {
+            layout : mainLayout,
+            data: post,
+            commentTrees: commentTrees || []  // commentTrees가 없으면 빈 배열을 전달
+        });
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+};
 
 const getAddPost = asyncHandler(async(req, res) => {
 
-    const token = req.cookies.token;
-    if (!token) {
-        res.redirect("/login");
-    } else {
-        try {
-            const decoded = jwt.verify(token, jwtSecret);
-            req.userID = decoded.id;
-            
-        } catch (error) {
-            res.redirect("/login");
-        }
-    }
-
     const locals = {
         title: "게시물 작성"
-    }
+    };
     res.render("addPost", {locals, layout: mainLayout});
 })
 
 const postAddPost = asyncHandler(async (req, res) => {
     const { title, body } = req.body;
 
-    const token = req.cookies.token;
-    if (!token) {
-        res.redirect("/login");
-    } else {
-        try {
-            const decoded = jwt.verify(token, jwtSecret);
-            req.userID = decoded.id;
-            
-        } catch (error) {
-            res.redirect("/login");
-        }
-    }
     const user = await User.findById(req.userID);
 
     if (!user) {
@@ -108,22 +107,11 @@ const postAddPost = asyncHandler(async (req, res) => {
     const createdPost = await Post.create({
         title : title,
         body : body,
-        creator : user._id
+        userId : user._id
     })
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    try {
-        await createdPost.save({ session: session });
-        user.posts.push(createdPost._id);
-        await user.save({ session: session });
-        await session.commitTransaction();
-    } catch (error) {
-        await session.abortTransaction();
-        throw error;
-    } finally {
-        session.endSession();
-    }
+    user.posts.push(createdPost._id);
+    await user.save();
 
     res.redirect("/community");
 });
@@ -138,7 +126,6 @@ const putEditPost = asyncHandler(async(req, res) => {
     await Post.findByIdAndUpdate(req.params.id, {
         title : req.body.title,
         body : req.body.body,
-        createdAt : Date.now()
     })
     res.redirect("/community/myPosts");
 });
@@ -151,11 +138,12 @@ const deletePost = asyncHandler(async(req, res) => {
 
 module.exports = {
     getCommunity,
-    postCommunity,
     getAddPost,
     postAddPost,
     getEditPost,
     putEditPost,
     deletePost,
-    getMyPosts
+    getMyPosts,
+    verifyToken,
+    getPostAndComments
 };
