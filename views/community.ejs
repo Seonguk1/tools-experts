@@ -8,9 +8,9 @@
     </header>
     <nav>
         <div class="comunity_nav">
-            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='community.ejs';">나의 러닝메이트</div>
-            <div style="cursor: default;" onclick="location.href='community_1.ejs';">러닝 코스</div>
-            <div style="cursor: default;" onclick="location.href='community_2.ejs';">게시판</div>
+            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community';">나의 러닝메이트</div>
+            <div style="cursor: default;" onclick="location.href='/community_1';">러닝 코스</div>
+            <div style="cursor: default;" onclick="location.href='/community_2';">게시판</div>
         </div>
     </nav>
     <section>
@@ -143,51 +143,3 @@
         </div>
     </footer>
 </div>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= locals.title %></title>
-    <style>
-        /* 스타일링 코드 생략 (기존 코드 유지) */
-    </style>
-</head>
-<body>
-    <div class="admin-title">
-        <h2><%= locals.title %></h2>
-        <p>Page <%= locals.currentPage %> of <%= locals.totalPages %></p> <!-- totalPages 표시 -->
-    </div>
-
-    <a href="/community/myPosts" class="button">내 게시물</a>
-
-    <ul class="admin-posts">
-        <% if (data && data.length > 0) { %>
-            <% data.forEach(post => { %>
-                <li>
-                    <a href="/community/post/<%= post._id %>">
-                        <%= post.title %>
-                    </a>
-                </li>
-            <% }) %>
-        <% } else { %>
-            <li>No posts available.</li>
-        <% } %>
-    </ul>
-
-    <a href="/community/add" class="button">+ 새 게시물</a>
-
-    <!-- 페이지네이션 버튼 -->
-    <div>
-        <% if (locals.currentPage > 1) { %>
-            <a href="/community?page=<%= locals.currentPage - 1 %>&perPage=<%= locals.perPage %>" class="button">Previous</a>
-        <% } %>
-    
-        <% if (locals.currentPage < locals.totalPages) { %>
-            <a href="/community?page=<%= locals.currentPage + 1 %>&perPage=<%= locals.perPage %>" class="button">Next</a>
-        <% } %>
-    </div>
-</body>
-</html>
->>>>>>> 63026ad5cdb67e15bf464ffb80064c4a8dd2a52b
