@@ -49,7 +49,7 @@ const modes_2 = document.getElementsByClassName("s_mode_2");
 
 let lastClickedButton_2 = 0;
 let con_2 = document.getElementById("s_distance");
-buttons_3[0].style.backgroundColor="#E7E7E7";
+buttons_3[0].style.backgroundColor="#A4E3D8";
 modes_2[1].style.display = "none";
 modes_2[2].style.display = "none";
 for(j=0; j<buttons_3.length; j++){
@@ -74,13 +74,13 @@ function handleButtonClick_2(event) {
         }
         con_2.style.display = "block";
     }
-    clickedButton_2.style.backgroundColor = "#E7E7E7";
+    clickedButton_2.style.backgroundColor = "#A4E3D8";
     lastClickedButton_2 = clickedButton_2;
 }
 
 function resetButtonColors_2() {
     for (let j = 0; j < buttons_3.length; j++) {
-        buttons_3[j].style.backgroundColor = "";
+        buttons_3[j].style.backgroundColor = "#A4E3D899";
         modes_2[j].style.display = "none";
     }
 }
