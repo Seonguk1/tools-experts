@@ -1,6 +1,6 @@
 @font-face {
   font-family: ethnocentric-font;
-  src: url('font/ethnocentric\ rg.ttf');
+  src: url('/font/ethnocentric\ rg.ttf');
 }
 body {
   width: 390px;
@@ -96,7 +96,6 @@ body {
   justify-content: center;
   color: #66FFE3;
   font-size: 22px;
-  padding: 35px;
   background-color: #424242;
 }
 .infor_article1 {
@@ -226,9 +225,6 @@ body {
 .top_infor {
   width: 30px;
   height: 30px;
-  position: absolute;
-  top: 35px;
-  padding-left: 10px;
 }
 .myCurrentRecord {
   display: flex;

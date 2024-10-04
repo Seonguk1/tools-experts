@@ -9,16 +9,23 @@
   <meta name="description" content="My first application using Node.js, Express and MongoDB">
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body style="width: 375px; height: 812px; margin: auto;">
+<body>
   
-  <div class="container">
+ <!-- <div class="container"> -->
 
     <!-- 헤더 : 로고, 상단 메뉴, 로그인 -->
-      <!-- 로고 -->
-      <div>
-        <!-- <img style="cursor: default;" onclick="location.href='myinfor.html';" class="top_infor" src="images/User_cicrle_light.png" alt=""> -->
-        <a href="/"><div class="current_page">RUNUS</div></a>
+    <header>
+      <div style="display: flex; height: 80px; width: 350px; background-color: #424242; justify-content: space-between; align-items: center; padding-left: 20px; padding-right: 20px;">
+          <img style="cursor: default;" onclick="location.href='/information';" class="top_infor" src="images/User_cicrle_light.png" alt="">
+          <div class="current_page">RUNUS</div>
+          <img style="width: 30px; height: 30px;" src="images/Sortlist_alt_light.png" alt="">
       </div>
+    </header>
+      <!-- 로고 -->
+      <!-- <div> -->
+        <!-- <img style="cursor: default;" onclick="location.href='myinfor.html';" class="top_infor" src="images/User_cicrle_light.png" alt=""> -->
+        <!-- <a href="/"><div class="current_page">RUNUS</div></a>
+      </div> -->
       <!-- 상단 메뉴 -->
       <!-- <nav style="display: flex; padding-right: 10px; justify-content: center;">
             <a href="/">홈</a>
@@ -41,23 +48,20 @@
       <%- body %>
     </main>
     <footer>
-      <div class="under_nav">
-        <div style="cursor: default;" onclick="location.href='/';">
-            <img style=" width: 25px; height: 25px;" src="/public/style.css/undernav_home.png" alt="">
-        </div>
-        <div style="cursor: default;" onclick="location.href='/running';">
-            <img style=" width: 25px; height: 25px;" src="images/undernav_timer.png" alt="">
-        </div>
-        <div style="cursor: default;" onclick="location.href='/record';">
-            <img style=" width: 25px; height: 25px;" src="images/undernav_record.png" alt="">
-        </div>
-        <div style="cursor: default;" onclick="location.href='/community';">
-            <img style=" width: 25px; height: 25px;" src="images/comunity.png" alt="">
-        </div>
-        <div style="cursor: default;" onclick="location.href='mysetting.html';">
-            <img style=" width: 25px; height: 25px;" src="images/setting.png" alt="">
-        </div>
-    </div>
+      <div class="d_under_nav">
+          <div style="cursor: default;" onclick="location.href='/home';">
+              <img style=" width: 35px; height: 35px;" src="images/Home_light.png" alt="">
+          </div>
+          <div style="cursor: default;" onclick="location.href='/community';">
+              <img style=" width: 35px; height: 35px;" src="images/Group_light.png" alt="">
+          </div>
+          <div style="cursor: default;" onclick="location.href='mywrite.html';">
+              <img style=" width: 35px; height: 35px;" src="images/Chart_light.png" alt="">
+          </div>
+          <div style="cursor: default;" onclick="location.href='mysetting.html';">
+              <img style=" width: 35px; height: 35px;" src="images/Setting_line_light.png" alt="">
+          </div>
+      </div>
   </footer>
   </div>
 
