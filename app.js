@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const cors = require('cors');
+const mainLayout = "../views/layouts/main.ejs";
 
 connectDB();
 
@@ -32,6 +33,15 @@ app.use("/", require("./routes/register"))
 app.use("/friends", require("./routes/Friends"))
 app.use("/course", require("./routes/course"))
 
+app.get("/community_1", (req,res)=>{
+    res.render("community_1",{layout:mainLayout});
+})
+app.get("/community_2", (req,res)=>{
+    res.render("community_2",{layout:mainLayout});
+})
+app.get("/information", (req,res)=>{
+    res.render("information",{layout:mainLayout});
+})
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })

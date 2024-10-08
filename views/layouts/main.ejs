@@ -8,6 +8,16 @@
   <title><%= locals.title %></title>
   <meta name="description" content="My first application using Node.js, Express and MongoDB">
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    #s_fullcalendar {
+        width: 340px;
+        height: 340px;
+        font-size: 10px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
 </head>
 <body>
   
@@ -15,7 +25,7 @@
 
     <!-- 헤더 : 로고, 상단 메뉴, 로그인 -->
     <header>
-      <div style="display: flex; height: 80px; width: 350px; background-color: #424242; justify-content: space-between; align-items: center; padding-left: 20px; padding-right: 20px;">
+      <div class="headhead">
           <img style="cursor: default;" onclick="location.href='/information';" class="top_infor" src="images/User_cicrle_light.png" alt="">
           <div class="current_page">RUNUS</div>
           <img style="width: 30px; height: 30px;" src="images/Sortlist_alt_light.png" alt="">
@@ -55,10 +65,10 @@
           <div style="cursor: default;" onclick="location.href='/community';">
               <img style=" width: 35px; height: 35px;" src="images/Group_light.png" alt="">
           </div>
-          <div style="cursor: default;" onclick="location.href='mywrite.html';">
+          <div style="cursor: default;" onclick="location.href='/record';">
               <img style=" width: 35px; height: 35px;" src="images/Chart_light.png" alt="">
           </div>
-          <div style="cursor: default;" onclick="location.href='mysetting.html';">
+          <div style="cursor: default;" onclick="location.href='/setting';">
               <img style=" width: 35px; height: 35px;" src="images/Setting_line_light.png" alt="">
           </div>
       </div>

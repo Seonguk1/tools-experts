@@ -346,17 +346,6 @@ body {
   margin-bottom: 10px;
   padding-left: 15px;
 }
-@font-face {
-  font-family: ethnocentric-font;
-  src: url('font/ethnocentric\ rg.ttf');
-}
-body {
-  width: 390px;
-  height: 844px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
 .startpage_title {
   position: absolute;
   top: 248px;
@@ -484,4 +473,14 @@ body {
   margin-left: 35px;
   margin-top: 50px;
   color: #A4E3D8;
+}
+.headhead {
+  display: flex;
+  height: 80px;
+  width: 350px;
+  background-color: #424242;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }

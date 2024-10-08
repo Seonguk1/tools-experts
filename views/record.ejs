@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="calender.css" />
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" rel="stylesheet">
-    <style>
-        #s_fullcalendar {
-            width: 340px;
-            height: 340px;
-            font-size: 10px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
-</head>
-<body class="s_background">
+<div style="width: 100%; height: 844px; background-color: #2d2d2d;">
     <div class="s_recent">
         <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 10px;">나의 최근 기록</div>
         <div style="font-size: 14px; color: #595959; margin-top: 6.3px; font-weight: 520; margin-right: 20px;" onclick="location.href='index1.html'">더보기 ></div>
@@ -136,19 +117,17 @@
         </div>
     </div>
 </div>
-      <script src="button.js"></script>
-      <script src="map.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js"></script>
-      
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const calendarEl = document.getElementById('s_fullcalendar');
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-            });
-            calendar.render();
-            calendar.updateSize();
+<script src="button.js"></script>
+<script src="map.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('s_fullcalendar');
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
         });
-    </script>
-</body>
-</html>
+        calendar.render();
+        calendar.updateSize();
+    });
+</script>
