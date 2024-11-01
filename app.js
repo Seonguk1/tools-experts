@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const expressLayouts = require("express-ejs-layouts");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
@@ -9,6 +9,7 @@ const methodOverride = require("method-override");
 const cors = require('cors');
 const mainLayout = "../views/layouts/main.ejs";
 const startLayout ="../views/layouts/start.ejs";
+const informationLayout ="../views/layouts/information.ejs";
 
 connectDB();
 
@@ -41,10 +42,22 @@ app.get("/community_2", (req,res)=>{
     res.render("community_2",{layout:mainLayout});
 })
 app.get("/information", (req,res)=>{
-    res.render("information",{layout:mainLayout});
+    res.render("information",{layout:informationLayout});
 })
 app.get("/start", (req,res)=>{
     res.render("start",{layout:startLayout});
+})
+app.get("/start_1", (req,res)=>{
+    res.render("start_1",{layout:startLayout});
+})
+app.get("/start_2", (req,res)=>{
+    res.render("start_2",{layout:startLayout});
+})
+app.get("/start_3", (req,res)=>{
+    res.render("start_3",{layout:startLayout});
+})
+app.get("/start_4", (req,res)=>{
+    res.render("start_4",{layout:startLayout});
 })
 app.listen(port, () => {
     console.log(`server listened for ${port}`);

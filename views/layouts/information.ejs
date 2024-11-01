@@ -8,16 +8,6 @@
   <title><%= locals.title %></title>
   <meta name="description" content="My first application using Node.js, Express and MongoDB">
   <link rel="stylesheet" href="/css/style.css">
-  <style>
-    #s_fullcalendar {
-        width: 340px;
-        height: 340px;
-        font-size: 10px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-    }
-</style>
 </head>
 <body>
   
@@ -25,9 +15,9 @@
 
     <!-- 헤더 : 로고, 상단 메뉴, 로그인 -->
     <header>
-      <div class="headhead">
+      <div class="headhead" style="background-color: #2d2d2d;">
           <img style="cursor: default;" onclick="location.href='/information';" class="top_infor" src="images/User_cicrle_light.png" alt="">
-          <div class="current_page" onclick="location.href='/home';">RUNUS</div>
+          <div class="current_page" style="background-color: #2d2d2d;" onclick="location.href='/home';">RUNUS</div>
           <img style="width: 30px; height: 30px;" src="images/Sortlist_alt_light.png" alt="">
       </div>
     </header>
@@ -54,9 +44,7 @@
       </div> -->
 
     <!-- 메인 : 실제 내용이 들어갈 부분 -->    
-    <main>
       <%- body %>
-    </main>
     <footer>
       <div class="d_under_nav">
           <div style="cursor: default;" onclick="location.href='/home';">
