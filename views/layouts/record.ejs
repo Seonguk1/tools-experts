@@ -7,17 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= locals.title %></title>
   <meta name="description" content="My first application using Node.js, Express and MongoDB">
-  <link rel="stylesheet" href="/css/style.css">
-  <style>
-    #s_fullcalendar {
-        width: 340px;
-        height: 340px;
-        font-size: 10px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-    }
-</style>
+  <link rel="stylesheet" href="/public/css/sangjinstyle.css">
 </head>
 <body>
   
@@ -54,9 +44,7 @@
       </div> -->
 
     <!-- 메인 : 실제 내용이 들어갈 부분 -->    
-    <main>
-      <%- body %>
-    </main>
+    <%- body %>
     <footer>
       <div class="d_under_nav">
           <div style="cursor: default;" onclick="location.href='/home';">
