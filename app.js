@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const cors = require('cors');
 const mainLayout = "../views/layouts/main.ejs";
+const startLayout ="../views/layouts/start.ejs";
 
 connectDB();
 
@@ -41,6 +42,9 @@ app.get("/community_2", (req,res)=>{
 })
 app.get("/information", (req,res)=>{
     res.render("information",{layout:mainLayout});
+})
+app.get("/start", (req,res)=>{
+    res.render("start",{layout:startLayout});
 })
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
