@@ -11,6 +11,9 @@ const mainLayout = "../views/layouts/main.ejs";
 const startLayout ="../views/layouts/start.ejs";
 const informationLayout ="../views/layouts/information.ejs";
 
+const session = require('express-session');
+const bodyParser = require('body-parser');
+
 connectDB();
 
 app.use(cors());
@@ -19,6 +22,15 @@ app.use(express.static("public"));
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // HTTPS 사용 시 true로 설정
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,15 +59,15 @@ app.get("/information", (req,res)=>{
 app.get("/start", (req,res)=>{
     res.render("start",{layout:startLayout});
 })
-app.get("/start_1", (req,res)=>{
-    res.render("start_1",{layout:startLayout});
-})
-app.get("/start_2", (req,res)=>{
-    res.render("start_2",{layout:startLayout});
-})
-app.get("/start_3", (req,res)=>{
-    res.render("start_3",{layout:startLayout});
-})
+// app.get("/start_1", (req,res)=>{
+//     res.render("start_1",{layout:startLayout});
+// })
+// app.get("/start_2", (req,res)=>{
+//     res.render("start_2",{layout:startLayout});
+// })
+// app.get("/start_3", (req,res)=>{
+//     res.render("start_3",{layout:startLayout});
+// })
 app.get("/start_4", (req,res)=>{
     res.render("start_4",{layout:startLayout});
 })
