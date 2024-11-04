@@ -1,0 +1,116 @@
+<div style="width: 100%; height: 1100px; background-color: #2d2d2d;">
+    <nav>
+        <div class="comunity_nav">
+            <div style="cursor: default;" onclick="location.href='/community';">나의 러닝메이트</div>
+            <div style="cursor: default;" onclick="location.href='/community_1';">러닝 코스</div>
+            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community_2';">게시판</div>
+        </div>
+    </nav>
+    <section>
+        <div style="display: flex; justify-content: space-between; padding-left: 20px; padding-right: 20px; padding-top: 30px;">
+            <div style="font-size: 20px; font-weight: 600; color: #66FFE3">자유게시판</div>
+            <div style="color: #E4F2F0; font-size: 14px; background-color: #647A75; width: 76px; height: 27px; text-align: center; border-radius: 50px; line-height: 27px;">글쓰기</div>
+        </div>
+        <article>
+            <div style="font-size: 16px; font-weight: 600; margin-left: 20px; margin-top: 25px; color: #D0E3E1;">오늘의 인기글</div>
+            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 5px;">
+                <div class="board_write1" style="background-color: rgba(164, 227, 216, 0.5);">
+                    <div style="display: flex; flex-direction: column;">
+                        <div>인기 게시물 제목이 노출됩니다</div>
+                        <div>인기 게시물 내용 첫줄이 노출됩니다. 인기 게 ...</div>
+                        <div style="line-height: 38px; background-color: rgba(164, 227, 216, 0.7);">꿈꾸는 고슴도치</div>
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 0.5px solid rgba(109, 109, 109, 1);">
+        </article>
+    </section>
+    <div style="font-size: 13px; font-weight: 600; margin: 25px 0px 15px 18px; width: 63.82px; height: 27px; background-color: rgba(164, 227, 216, 1); line-height: 27px; text-align: center; border-radius: 50px;">최신순</div>
+    <div id="data-container"></div>
+    <div id="pagination"></div>
+    <script>
+        const itemsPerPage = 5;
+        const totalItems = 52; // 예제에서는 총 52개의 항목이 있다고 가정
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        let currentPage = 1;
+        const pagesToShow = 10; // 한 번에 보이는 페이지 번호 수
+
+        // 예제 데이터 배열
+        const items = Array.from({ length: totalItems }, (_, i) => ({
+        title: `인기 게시물 제목 ${i + 1}`,
+        content: `인기 게시물 내용 ${i + 1} 첫줄이 노출됩니다. ...`
+        }));
+
+        function displayItems(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = items.slice(start, end);
+
+        const container = document.getElementById("data-container");
+        container.innerHTML = paginatedItems.map(item => `
+            <div class="board_write1">
+            <div style="display: flex; flex-direction: column;">
+                <div>${item.title}</div>
+                <div>${item.content}</div>
+                <div style="line-height: 60px;"></div>
+            </div>
+            </div>
+        `).join('');
+        }
+
+        function displayPagination() {
+        const paginationContainer = document.getElementById("pagination");
+        paginationContainer.innerHTML = ''; // 기존 버튼 초기화
+
+        // 페이지 그룹 계산
+        const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+        const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+        // 이전 버튼
+        const prevButton = document.createElement("button");
+        prevButton.textContent = '<';
+        prevButton.className = currentPage === 1 ? 'disabled' : '';
+        prevButton.disabled = currentPage === 1;
+        prevButton.addEventListener("click", () => {
+            if (currentPage > 1) {
+            currentPage--;
+            displayItems(currentPage);
+            displayPagination();
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
+        // 페이지 번호 버튼
+        for (let i = startPage; i <= endPage; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+            if (i === currentPage) {
+            button.style.fontWeight = 'bold'; // 현재 페이지는 굵게 표시
+            }
+            button.addEventListener("click", () => {
+            currentPage = i;
+            displayItems(currentPage);
+            displayPagination();
+            });
+            paginationContainer.appendChild(button);
+        }
+
+        // 다음 버튼
+        const nextButton = document.createElement("button");
+        nextButton.textContent = '>';
+        nextButton.className = currentPage === totalPages ? 'disabled' : '';
+        nextButton.disabled = currentPage === totalPages;
+        nextButton.addEventListener("click", () => {
+            if (currentPage < totalPages) {
+            currentPage++;
+            displayItems(currentPage);
+            displayPagination();
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+        }
+
+        displayPagination();
+        displayItems(currentPage); // 첫 페이지 데이터 표시
+    </script>
+</div>
