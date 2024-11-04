@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= locals.title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+        .admin-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-posts {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .admin-posts li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-post-controls {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/community" class="back-button">&larr; 뒤로가기</a>
+
+        <div class="admin-title">
+            <h1><%= locals.title %></h1>
+        </div>
+
+        <!-- 새롭게 추가된 관리 포스트 리스트 -->
+        <ul class="admin-posts">
+            <% if (posts && posts.length > 0) { %>
+                <% posts.forEach(post => { %>
+                    <li>
+                        <a href="/community/post/<%= post._id %>" style="font-weight: bold; color: #007bff;">
+                            <%= post.title %>
+                        </a>
+                        <div class="admin-post-controls">
+                            <a href="/community/edit/<%= post._id %>" class="btn">편집</a>
+                            <form action="/community/delete/<%= post._id %>?_method=DELETE" method="POST">
+                                <input type="submit" value="삭제" class="btn-delete btn">
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <li>No posts available.</li>
+            <% } %>
+        </ul>
+    </div>
+</body>
+</html>

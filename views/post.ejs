@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= data.title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+        .article {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .article h1 {
+            margin-top: 0;
+        }
+
+        .comment-section {
+            margin-top: 40px;
+        }
+
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .reply {
+            margin-left: 30px;
+        }
+
+        .comment-form {
+            margin-top: 20px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .comment-form button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .comment-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .reply-button {
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .reply-button:hover {
+            text-decoration: underline;
+        }
+
+        .reply-form {
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/community" class="back-button">&larr; 뒤로가기</a>
+
+        <article class="article">
+            <h1><%= data.title %></h1>
+            <div>
+                <%= data.body %>
+            </div>
+        </article>
+
+        <div class="comment-section">
+            <h2>댓글</h2>
+            <!-- 댓글 목록을 트리 구조로 렌더링 -->
+            <div class="comments">
+                <% if ( commentTrees && commentTrees.length > 0) { %>
+                    <% commentTrees.forEach(function(comment) { %>
+                        <div class="comment" style="margin-left: <%= (comment.depth || 0) * 20 %>px;">
+                            <p><strong><%= comment.author.username %></strong></p>
+                            <p><%= comment.content %></p>
+                            
+                            <!-- 대댓글 작성 버튼 -->
+                            <span class="reply-button">대댓글 작성</span>
+
+                            <!-- 대댓글 작성 폼 -->
+                            <div class="reply-form" style="display: none;">
+                                <form action="/community/<%= data._id %>/addcomment" method="POST">
+                                    <input type="hidden" name="parentComment" value="<%= comment._id %>">
+                                    <textarea name="content" placeholder="대댓글을 작성하세요..." required></textarea>
+                                    <button type="submit">대댓글 등록</button>
+                                </form>
+                            </div>
+
+                            <!-- 대댓글 출력 -->
+                            <% if (comment.childComments && comment.childComments.length > 0) { %>
+                                <% comment.childComments.forEach(function(childComment) { %>
+                                    <div class="reply" style="margin-left: <%= (comment.depth || 0) * 20 %>px;">
+                                        <p><strong><%= childComment.author.username %></strong></p>
+                                        <p><%= childComment.content %></p>
+                                    </div>
+                                <% }); %>
+                            <% } %>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>댓글이 없습니다.</p>
+                <% } %>
+            </div>
+
+            <!-- 댓글 작성 폼 -->
+            <div class="comment-form">
+                <form action="/community/<%= data._id %>/addcomment" method="POST">
+                    <textarea name="body" placeholder="댓글을 작성하세요..." required></textarea>
+                    <button type="submit">댓글 등록</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 대댓글 폼 표시/숨기기 기능
+        document.querySelectorAll('.reply-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const replyForm = this.nextElementSibling;
+                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
