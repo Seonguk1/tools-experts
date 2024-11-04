@@ -34,7 +34,7 @@ app.use("/", require("./routes/register"))
 app.use("/friends", require("./routes/Friends"))
 app.use("/course", require("./routes/course"))
 
-app.get("/community_1", (req,res)=>{
+app.get("/community_1", (req,res)=>{ 
     res.render("community_1",{layout:mainLayout});
 })
 app.get("/community_2", (req,res)=>{
@@ -45,6 +45,9 @@ app.get("/information", (req,res)=>{
 })
 app.get("/start", (req,res)=>{
     res.render("start",{layout:startLayout});
+})
+app.get("/start_1", (req,res)=>{
+    res.render("start_1",{layout:startLayout});
 })
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
