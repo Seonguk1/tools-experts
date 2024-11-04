@@ -50,8 +50,6 @@ app.get("/start", (req,res)=>{
 app.get("/start_1", (req,res)=>{
     res.render("start_1",{layout:startLayout});
 })
-<<<<<<< HEAD
-=======
 app.get("/start_2", (req,res)=>{
     res.render("start_2",{layout:startLayout});
 })
@@ -61,7 +59,6 @@ app.get("/start_3", (req,res)=>{
 app.get("/start_4", (req,res)=>{
     res.render("start_4",{layout:startLayout});
 })
->>>>>>> 379c31bb53d95a59c1e7d895b1f6fa3d964977cd
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
