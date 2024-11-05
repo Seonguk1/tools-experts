@@ -484,3 +484,32 @@ body {
   padding-left: 20px;
   padding-right: 20px;
 }
+#ohohoh::placeholder {
+  font-size: 20px;
+  color: #7E7E7E;
+  font-weight: 600;
+}
+#ohohoh:focus {
+  border-color: #7E7E7E;
+}
+::placeholder {
+  padding-left: 0px;
+}
+input[type="file"] {
+  display: none; /* 기본 파일 업로드 버튼 숨김 */
+}
+
+/* 커스텀 파일 업로드 버튼 스타일 */
+.custom-file-upload {
+  color: #7E7E7E;
+  background-color: rgba(244, 244, 244, 1);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  width: 113px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 11px;
+  
+}
