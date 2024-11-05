@@ -41,6 +41,9 @@ app.get("/community_1", (req,res)=>{
 app.get("/community_2", (req,res)=>{
     res.render("community_2",{layout:mainLayout});
 })
+app.get("/free_board", (req,res)=>{
+    res.render("free_board",{layout:mainLayout});
+})
 app.get("/information", (req,res)=>{
     res.render("information",{layout:informationLayout});
 })
