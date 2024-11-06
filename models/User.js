@@ -32,7 +32,21 @@ const userSchema = new mongoose.Schema({
         type: Number,
         // require: true
     },
-    
+    runningTemp:{
+        type: Number,
+    },
+    residence:{
+        type: String,
+    },
+    runningArea:{
+        type: String,
+    },
+    goalDistance:{
+        type: Number,
+    },
+    friends: [{
+        type: mongoose.Types.ObjectId,
+    }],
     runnings: [{
         type: mongoose.Types.ObjectId,  
         ref: 'Running'
@@ -43,7 +57,7 @@ const userSchema = new mongoose.Schema({
     }],
     posts: [{
         type: mongoose.Types.ObjectId, 
-        required:true, 
+        // required:true, 
         ref: 'Post'}]
     });
 

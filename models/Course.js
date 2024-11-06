@@ -32,6 +32,12 @@ const CourseSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    lineColor:{
+        type: String,
+    },
+    pin:{
+        type: Boolean,
+    },
     createAt: {
         type: Date,
         default: Date.now() 

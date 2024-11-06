@@ -91,7 +91,7 @@ const getFriends = asyncHandler(async (req,res)=>{
             friendsList.push(await User.findById(user.friends[i]));
         }
     }
-    res.render("friendsList",{locals,friendsList,layout:mainLayout});
+    res.render("friends",{locals,friendsList,layout:mainLayout});
 
 })
 
