@@ -36,8 +36,6 @@ app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
 
-<<<<<<< HEAD
-=======
 app.get("/community_1", (req,res)=>{ 
     res.render("community_1",{layout:mainLayout});
 })
@@ -68,7 +66,6 @@ app.get("/start_4", (req,res)=>{
 app.get("/writeBoard", (req,res)=>{
     res.render("writeBoard",{layout:mainLayout});
 })
->>>>>>> 22486446a4b23274ad552c1de54b64df81f10803
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
