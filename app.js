@@ -59,6 +59,9 @@ app.get("/start_3", (req,res)=>{
 app.get("/start_4", (req,res)=>{
     res.render("start_4",{layout:startLayout});
 })
+app.get("/record", (req,res)=>{
+    res.render("record",{layout:mainLayout});
+})
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
