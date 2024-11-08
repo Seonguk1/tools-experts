@@ -6,16 +6,6 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="calender.css" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" rel="stylesheet">
-    <style>
-        #s_fullcalendar {
-            width: 340px;
-            height: 340px;
-            font-size: 10px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
 </head>
 <body class="s_background">
     <div class="s_recent">
@@ -37,17 +27,6 @@
         </div>
     </div>
     <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin-left: 9px; margin-top: 25px;">나의 베스트 기록</div>
-    <div class="s_container-4" style="margin-top: 20px; border-radius: 999px; margin-left: 8px; width: 180px; height: 32px; background-color: #A4E3D899;">
-        <button class="s_button-3" value="0">
-            거리순
-        </button>
-        <button class="s_button-3" value="1">
-             속도순
-        </button>
-        <button class="s_button-3" value="2">
-            기타
-        </button>
-    </div>
     <div id="s_distance" class="s_mode_2">
         <div style="display: flex; justify-content: center;">
             <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
@@ -65,40 +44,11 @@
             </div>
         </div>
     </div>
-    <div id="s_velocity" class="s_mode_2">
         <div style="display: flex; justify-content: center;">
-            <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
-                <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
-                    2024-07-09
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
-                        서울과학기술대학교>노원구
-                    </div>
-                    <div style="font-size: 12px; color: #E8FFFC; margin-right: 20px; margin-top: 10px;">
-                        총 3.2km
-                    </div>
-                </div>
+            <div  style="background-color: #646464; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
+                <canvas id="barchart"  width="340px" height="210px" style="margin-top: 15px;"></canvas>
             </div>
         </div>
-    </div>
-    <div id="s_etc" class="s_mode_2">
-        <div style="display: flex; justify-content: center;">
-            <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
-                <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
-                    2024-08-09
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
-                        뚝섬한강공원>뚝섬
-                    </div>
-                    <div style="font-size: 12px; color: #E8FFFC; margin-right: 20px; margin-top: 10px;">
-                        총 1.6km
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="s_container-1" style="margin-top: 20px; background-color: #D9D9D9; border-radius: 999px; margin: 7%; height: 35px;border: 1px solid #E3E3E3;">
             <button class="s_button-1" value="0">
                 1일
@@ -114,7 +64,7 @@
         <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">오늘 이만큼 달렸어요.</div>
         <div style="display: flex; justify-content: center;">
             <div  style="background-color: #D9D9D9; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
-            
+                <canvas id="barchart-daily"  width="340px" height="210px" style="margin-top: 15px;"></canvas>
             </div>
         </div>
     </div>
@@ -122,7 +72,7 @@
         <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번주 이만큼 달렸어요.</div>
         <div style="display: flex; justify-content: center;">
             <div  style="background-color: #D9D9D9; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
-            
+                <canvas id="barchart-weekly"  width="340px" height="210px" style="margin-top: 15px;"></canvas>
             </div>
         </div>
     </div>
@@ -130,24 +80,11 @@
         <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번달 이만큼 달렸아요.</div>
         <div style="display: flex; justify-content: center;">
             <div  style="background-color: #D9D9D9; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
-            
+                <canvas id="barchart-monthly"  width="340px" height="210px" style="margin-top: 15px;"></canvas>
             </div>
         </div>
     </div>
-</div>
-      <script src="button.js"></script>
-      <script src="map.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js"></script>
-      
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const calendarEl = document.getElementById('s_fullcalendar');
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-            });
-            calendar.render();
-            calendar.updateSize();
-        });
-    </script>
+    <script src="chart.js"></script>
+    <script src="button.js"></script>
 </body>
 </html>
