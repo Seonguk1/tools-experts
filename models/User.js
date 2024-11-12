@@ -52,6 +52,21 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
 
+    runningTemp:{
+        type: Number,
+    },
+    residence:{
+        type: String,
+    },
+    runningArea:{
+        type: String,
+    },
+    goalDistance:{
+        type: Number,
+    },
+    friends: [{
+        type: mongoose.Types.ObjectId,
+    }],
     runnings: [{
         type: mongoose.Types.ObjectId,
         ref: 'Running'
@@ -61,11 +76,10 @@ const userSchema = new mongoose.Schema({
         ref: 'Course'
     }],
     posts: [{
-        type: mongoose.Types.ObjectId,
-        required: true,
-        ref: 'Post'
-    }]
-});
+        type: mongoose.Types.ObjectId, 
+        // required:true, 
+        ref: 'Post'}]
+    });
 
     // 가상필드(커뮤니티용)
     userSchema.virtual('postList', { 

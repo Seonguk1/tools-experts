@@ -38,39 +38,16 @@ app.use(expressLayouts);
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
-app.use("/", require("./routes/home"))
-app.use("/", require("./routes/record"))
-app.use("/community", require("./routes/community"))
-app.use("/community", require("./routes/comment"))
-app.use("/", require("./routes/login"))
-app.use("/", require("./routes/register"))
-app.use("/friends", require("./routes/Friends"))
-app.use("/course", require("./routes/course"))
+app.use("/", require("./routes/home"));
+app.use("/", require("./routes/record"));
+app.use("/community", require("./routes/community"));
+app.use("/community", require("./routes/comment"));
+app.use("/", require("./routes/login"));
+app.use("/", require("./routes/register"));
+app.use("/friends", require("./routes/Friends"));
+app.use("/course", require("./routes/course"));
+app.use("/start",require("./routes/start"));
 
-app.get("/community_1", (req,res)=>{
-    res.render("community_1",{layout:mainLayout});
-})
-app.get("/community_2", (req,res)=>{
-    res.render("community_2",{layout:mainLayout});
-})
-app.get("/information", (req,res)=>{
-    res.render("information",{layout:informationLayout});
-})
-app.get("/start", (req,res)=>{
-    res.render("start",{layout:startLayout});
-})
-// app.get("/start_1", (req,res)=>{
-//     res.render("start_1",{layout:startLayout});
-// })
-// app.get("/start_2", (req,res)=>{
-//     res.render("start_2",{layout:startLayout});
-// })
-// app.get("/start_3", (req,res)=>{
-//     res.render("start_3",{layout:startLayout});
-// })
-app.get("/start_4", (req,res)=>{
-    res.render("start_4",{layout:startLayout});
-})
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
