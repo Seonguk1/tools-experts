@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    realname: {
+        type: String,
+        // required: true,
+        // unique: true
+    },
     nickname: {
         type: String,
         // required: true,
