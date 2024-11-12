@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 추가 확인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        h1 {
+            text-align: center;
+        }
+        #comment-form {
+            margin-bottom: 20px;
+        }
+        #comments {
+            margin-top: 20px;
+        }
+        .comment {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>게시물 댓글 추가</h1>
+    
+    <div id="comment-form">
+        <textarea id="comment-text" rows="4" placeholder="댓글을 입력하세요..." required></textarea><br>
+        <button id="submit-comment">댓글 추가</button>
+    </div>
+
+    <div id="comments">
+        <h2>댓글 목록</h2>
+        <div id="comment-list"></div>
+    </div>
+
+    <script>
+        const postId = 'YOUR_POST_ID'; // 여기에 게시물 ID를 입력하세요.
+        const apiBaseUrl = 'http://localhost:3000/api/posts'; // API의 기본 URL
+        
+        // 댓글 목록 가져오기
+        async function fetchComments() {
+            try {
+                const response = await fetch(`${apiBaseUrl}/${postId}/comments`, {
+                    method: 'GET',
+                    credentials: 'include', // 쿠키 포함
+                });
+                const comments = await response.json();
+                displayComments(comments);
+            } catch (error) {
+                console.error('댓글 가져오기 오류:', error);
+            }
+        }
+
+        // 댓글 표시하기
+        function displayComments(comments) {
+            const commentList = document.getElementById('comment-list');
+            commentList.innerHTML = ''; // 기존 댓글 목록 초기화
+
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.textContent = comment.text; // 댓글 텍스트 표시
+                commentList.appendChild(commentDiv);
+            });
+        }
+
+        // 댓글 추가하기
+        document.getElementById('submit-comment').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-text').value;
+
+            if (!commentText) {
+                alert('댓글을 입력하세요.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${apiBaseUrl}/${postId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // 쿠키 포함
+                    body: JSON.stringify({ text: commentText }),
+                });
+
+                if (response.ok) {
+                    // 댓글 추가 후 목록 갱신
+                    document.getElementById('comment-text').value = ''; // 텍스트 영역 초기화
+                    fetchComments(); // 댓글 목록 다시 가져오기
+                } else {
+                    const errorData = await response.json();
+                    alert('댓글 추가 오류: ' + errorData.error);
+                }
+            } catch (error) {
+                console.error('댓글 추가 오류:', error);
+            }
+        });
+
+        // 페이지 로드 시 댓글 목록 가져오기
+        fetchComments();
+    </script>
+
+</body>
+</html>

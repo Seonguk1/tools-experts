@@ -11,6 +11,9 @@ const mainLayout = "../views/layouts/main.ejs";
 const startLayout ="../views/layouts/start.ejs";
 const informationLayout ="../views/layouts/information.ejs";
 
+const session = require('express-session');
+const bodyParser = require('body-parser');
+
 connectDB();
 
 app.use(cors());
@@ -19,6 +22,15 @@ app.use(express.static("public"));
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // HTTPS 사용 시 true로 설정
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,39 +48,6 @@ app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
 
-<<<<<<< HEAD
-=======
-app.get("/community_1", (req,res)=>{ 
-    res.render("community_1",{layout:mainLayout});
-})
-app.get("/community_2", (req,res)=>{
-    res.render("community_2",{layout:mainLayout});
-})
-app.get("/free_board", (req,res)=>{
-    res.render("free_board",{layout:mainLayout});
-})
-app.get("/information", (req,res)=>{
-    res.render("information",{layout:informationLayout});
-})
-app.get("/start", (req,res)=>{
-    res.render("start",{layout:startLayout});
-})
-app.get("/start_1", (req,res)=>{
-    res.render("start_1",{layout:startLayout});
-})
-app.get("/start_2", (req,res)=>{
-    res.render("start_2",{layout:startLayout});
-})
-app.get("/start_3", (req,res)=>{
-    res.render("start_3",{layout:startLayout});
-})
-app.get("/start_4", (req,res)=>{
-    res.render("start_4",{layout:startLayout});
-})
-app.get("/writeBoard", (req,res)=>{
-    res.render("writeBoard",{layout:mainLayout});
-})
->>>>>>> 22486446a4b23274ad552c1de54b64df81f10803
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })

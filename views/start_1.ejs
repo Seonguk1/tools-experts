@@ -18,22 +18,32 @@
         </article>
         <article>
             <div class="startpage_set">
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">이름</div>
-                    <input class="startpage_myinfor" type="text" placeholder="이름 입력하기">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">생년월일</div>
-                    <input class="startpage_myinfor" type="text" placeholder="xxxx.xx.xx">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">전화번호</div>
-                    <input class="startpage_myinfor" type="text" placeholder="xxx-xxxx-xxxx">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">거주지</div>
-                    <input class="startpage_myinfor" type="text" placeholder="주소 검색하기">
-                </div>
+                <form action="/start_1" method="POST">
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">이름</div>
+                        <input class="startpage_myinfor" name="name" type="text" placeholder="이름 입력하기" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">생년월일</div>
+                        <input class="startpage_myinfor" name="birthdate" type="date" placeholder="xxxx.xx.xx" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">전화번호</div>
+                        <input
+    type="text"
+    name="phone"
+    placeholder="010-1234-5678"
+    pattern="^01[0-9]{1}-[0-9]{3,4}-[0-9]{4}$"
+    required
+    title="전화번호 형식: 010-1234-5678"
+/>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">거주지</div>
+                        <input class="startpage_myinfor" name="address" type="text" placeholder="주소 검색하기" required>
+                    </div>
+                    <button type="submit" class="startpage_next">다음으로 ></button>
+                </form>
             </div>
         </article>
     </section>
