@@ -8,8 +8,8 @@ const getStart1 = (req, res) => {
 };
 
 const postStart1 = asyncHandler(async (req, res) => {
-    const { nickname, birthdate, phone, address } = req.body;
-    req.session.nickname = nickname;
+    const { realname, birthdate, phone, address } = req.body;
+    req.session.realname = realname;
     req.session.birthdate = birthdate;
     req.session.phone = phone;
     req.session.address = address;
@@ -38,7 +38,7 @@ const postStart3 = asyncHandler(async (req, res) => {
     const { email, password, password2, nickname } = req.body;
     
     // 세션에서 이전 단계에서 저장한 정보 가져오기
-    const { birthdate, phone, address, height, weight, gender } = req.session;
+    const { realname, birthdate, phone, address, height, weight, gender } = req.session;
 
         // email을 비교하여 user가 이미 존재하는지 확인
         let user = await User.findOne({ email });
@@ -57,6 +57,7 @@ const postStart3 = asyncHandler(async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
+        realname,
         email,
         password: hashedPassword, // 암호화된 비밀번호
         nickname,
