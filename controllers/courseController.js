@@ -96,7 +96,7 @@ const getCourseList = asyncHandler(async (req, res) => {
     const local = {
         title: "courseList",
     }
-    res.render("courseList", { local, line, center, layout: mainLayout });
+    res.render("course", { local, line, center, layout: mainLayout });
 })
 
 module.exports = { getCourse, postCourse, getCourseList };
