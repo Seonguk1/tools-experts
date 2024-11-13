@@ -78,6 +78,7 @@ app.get("/friends_list", (req,res)=>{
     res.render("friends_list",{layout:mainLayout});
 })
 
+
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
