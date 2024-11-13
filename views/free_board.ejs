@@ -9,7 +9,7 @@
     <section>
         <div style="display: flex; justify-content: space-between; padding-left: 20px; padding-right: 20px; padding-top: 30px;">
             <div style="font-size: 20px; font-weight: 600; color: #66FFE3">자유게시판</div>
-            <div style="color: #E4F2F0; font-size: 14px; background-color: #647A75; width: 76px; height: 27px; text-align: center; border-radius: 50px; line-height: 27px;">글쓰기</div>
+            <div onclick="location.href='/writeBoard'" style="color: #E4F2F0; font-size: 14px; background-color: #647A75; width: 76px; height: 27px; text-align: center; border-radius: 50px; line-height: 27px;">글쓰기</div>
         </div>
         <article>
             <div style="font-size: 16px; font-weight: 600; margin-left: 20px; margin-top: 25px; color: #D0E3E1;">오늘의 인기글</div>
@@ -35,7 +35,6 @@
         let currentPage = 1;
         const pagesToShow = 10; // 한 번에 보이는 페이지 번호 수
 
-        // 예제 데이터 배열
         const items = Array.from({ length: totalItems }, (_, i) => ({
         title: `인기 게시물 제목 ${i + 1}`,
         content: `인기 게시물 내용 ${i + 1} 첫줄이 노출됩니다. ...`
@@ -60,13 +59,11 @@
 
         function displayPagination() {
         const paginationContainer = document.getElementById("pagination");
-        paginationContainer.innerHTML = ''; // 기존 버튼 초기화
+        paginationContainer.innerHTML = '';
 
-        // 페이지 그룹 계산
         const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
         const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
 
-        // 이전 버튼
         const prevButton = document.createElement("button");
         prevButton.textContent = '<';
         prevButton.className = currentPage === 1 ? 'disabled' : '';
@@ -80,12 +77,11 @@
         });
         paginationContainer.appendChild(prevButton);
 
-        // 페이지 번호 버튼
         for (let i = startPage; i <= endPage; i++) {
             const button = document.createElement("button");
             button.textContent = i;
             if (i === currentPage) {
-            button.style.fontWeight = 'bold'; // 현재 페이지는 굵게 표시
+            button.style.fontWeight = 'bold';
             }
             button.addEventListener("click", () => {
             currentPage = i;
@@ -95,7 +91,6 @@
             paginationContainer.appendChild(button);
         }
 
-        // 다음 버튼
         const nextButton = document.createElement("button");
         nextButton.textContent = '>';
         nextButton.className = currentPage === totalPages ? 'disabled' : '';
@@ -111,6 +106,6 @@
         }
 
         displayPagination();
-        displayItems(currentPage); // 첫 페이지 데이터 표시
+        displayItems(currentPage);
     </script>
 </div>
