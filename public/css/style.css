@@ -554,3 +554,16 @@ input[type="file"] {
   line-height: 35px;
   font-size: 11px;
 }
+
+.friendslist {
+  color: #E8FFFC;
+  width: 280px;
+  height: 40px;
+  background-color: #849492;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  margin: 5px 0 5px 0;
+  line-height: 30px;
+}
