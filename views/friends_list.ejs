@@ -1,0 +1,75 @@
+<div style="width: 100%; height: 100vh; background-color: #2d2d2d;">
+    <nav>
+        <div class="comunity_nav">
+            <div style="cursor: default;" onclick="location.href='/friends';">나의 러닝메이트</div>
+            <div style="cursor: default;" onclick="location.href='/course';">러닝 코스</div>
+            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community';">게시판</div>
+        </div>
+    </nav>
+    <div style="font-size: 20px; font-weight: 600; color: #66FFE3; padding-left: 20px; margin-top: 20px;">자유게시판</div>
+    <div style="display: flex; background-color: #698882; width: 110px; height: 27px; border-radius: 50px; margin: 15px 0px 20px 30px;">
+        <div id="sortByTemperature" onclick="sortByTemperature()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; background-color: #A4E3D8; line-height: 27px; text-align: center; border-radius: 50px;">온도순</div>
+        <div id="sortByName" onclick="sortByName()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; line-height: 27px; text-align: center; border-radius: 50px;">이름순</div>
+    </div>
+    <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px;">
+        <div id="data-container" style="height: 400px; overflow-y: auto; padding: 10px;"></div>
+    </div>
+    <script>
+        const itemsPerPage = 7;
+        const totalItems = 52;
+        let currentPage = 1;
+        let items = Array.from({ length: totalItems }, (_, i) => ({
+            title: `이름 ${i + 1}`,
+            content: `지역 ${i + 11}°`
+        }));
+
+        function displayItems() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = items.slice(start, end);
+
+            const container = document.getElementById("data-container");
+            container.innerHTML = paginatedItems.map(item => `
+                <div class="friendslist">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>${item.title}</div>
+                        <div>${item.content}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function setActiveButton(activeButtonId) {
+            document.getElementById("sortByName").style.backgroundColor = activeButtonId === "sortByName" ? "#A4E3D8" : "#698882";
+            document.getElementById("sortByTemperature").style.backgroundColor = activeButtonId === "sortByTemperature" ? "#A4E3D8" : "#698882";
+        }
+        function sortByName() {
+            items.sort((a, b) => a.title.localeCompare(b.title));
+            currentPage = 1; // 페이지 초기화
+            displayItems(); // 정렬 후 다시 렌더링
+            setActiveButton("sortByName");
+        }
+
+        function sortByTemperature() {
+            items.sort((a, b) => parseInt(a.content.split(' ')[1]) - parseInt(b.content.split(' ')[1]));
+            currentPage = 1; // 페이지 초기화
+            displayItems(); // 정렬 후 다시 렌더링
+            setActiveButton("sortByTemperature");
+        }
+
+        function handleScroll() {
+            const container = document.getElementById("data-container");
+            if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
+                if (currentPage <= Math.ceil(totalItems / itemsPerPage)) {
+                    currentPage++;
+                    displayItems();
+                }
+            }
+        }
+
+        const container = document.getElementById("data-container");
+        container.addEventListener("scroll", handleScroll);
+
+        displayItems(); // 초기 로드
+    </script>
+</div>
