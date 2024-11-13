@@ -459,6 +459,41 @@ body {
   margin-top: 50px;
   color: #A4E3D8;
 }
+<<<<<<< HEAD
+
+.s_container-1{
+  font-size: 13px;
+  display: flex;
+  font-weight: 700;
+  justify-content: center;
+  font-family: ethnocentric-font;
+}
+.s_button-1{
+background: #D9D9D9;
+border-radius: 999px;
+color: black;
+font-size: 13px;
+font-weight: 700;
+width: 33.333%;
+height: 100%;
+border: 0;
+}
+.s_container-4{
+font-size: 13px;
+display: flex;
+font-weight: 700;
+font-family: ethnocentric-font;
+}
+.s_button-3{
+border-radius: 999px;
+color: black;
+font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+font-size: 12px;
+font-weight: 700;
+line-height: 20px;
+width: 33.333%;
+border: none;
+=======
 .headhead {
   display: flex;
   height: 80px;
@@ -520,4 +555,5 @@ input[type="file"] {
   height: 35px;
   line-height: 35px;
   font-size: 11px;
+>>>>>>> ff079f45408666f1c663ad286cdf337c879d3af6
 }
