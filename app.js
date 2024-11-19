@@ -66,6 +66,7 @@ app.get("/course_list", (req,res)=>{
     res.render("course_list",{layout:mainLayout});
 })
 
+
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
