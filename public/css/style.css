@@ -279,14 +279,13 @@ body {
   color: #E8FFFC;
   display: flex;
   gap: 12px;
-  width: 346px;
-  height: 98px;
+  width: 366px;
+  height: 80px;
   background-color: #777777;
   border-radius: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
   padding-top: 10px;
   margin: 5px 0 5px 0;
+  font-size: 15px;
 }
 .comunity1_section1 {
   display: flex;
@@ -459,6 +458,7 @@ body {
   margin-top: 50px;
   color: #A4E3D8;
 }
+
 .s_container-1{
   font-size: 13px;
   display: flex;
@@ -553,4 +553,17 @@ input[type="file"] {
   height: 35px;
   line-height: 35px;
   font-size: 11px;
+}
+
+.friendslist {
+  color: #E8FFFC;
+  width: 280px;
+  height: 40px;
+  background-color: #849492;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  margin: 5px 0 5px 0;
+  line-height: 30px;
 }

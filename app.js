@@ -47,6 +47,24 @@ app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
+app.get("/information", (req,res)=>{
+    res.render("information",{layout:informationLayout});
+})
+app.get("/free_board", (req,res)=>{
+    res.render("free_board",{layout:mainLayout});
+})
+app.get("/writeBoard", (req,res)=>{
+    res.render("writeBoard",{layout:mainLayout});
+})
+app.get("/friendsList", (req,res)=>{
+    res.render("friendsList",{layout:mainLayout});
+})
+app.get("/friends_list", (req,res)=>{
+    res.render("friends_list",{layout:mainLayout});
+})
+app.get("/course_list", (req,res)=>{
+    res.render("course_list",{layout:mainLayout});
+})
 
 
 app.listen(port, () => {
