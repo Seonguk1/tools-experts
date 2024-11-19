@@ -11,6 +11,9 @@ const mainLayout = "../views/layouts/main.ejs";
 const startLayout ="../views/layouts/start.ejs";
 const informationLayout ="../views/layouts/information.ejs";
 
+const session = require('express-session');
+const bodyParser = require('body-parser');
+
 connectDB();
 
 app.use(cors());
@@ -20,44 +23,47 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // HTTPS 사용 시 true로 설정
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
-app.use("/", require("./routes/home"))
-app.use("/", require("./routes/record"))
-app.use("/community", require("./routes/community"))
-app.use("/community", require("./routes/comment"))
-app.use("/", require("./routes/login"))
-app.use("/", require("./routes/register"))
-app.use("/friends", require("./routes/Friends"))
-app.use("/course", require("./routes/course"))
-
-app.get("/community_1", (req,res)=>{
-    res.render("community_1",{layout:mainLayout});
-})
-app.get("/community_2", (req,res)=>{
-    res.render("community_2",{layout:mainLayout});
-})
+app.use("/", require("./routes/home"));
+app.use("/", require("./routes/record"));
+app.use("/community", require("./routes/community"));
+app.use("/community", require("./routes/comment"));
+app.use("/", require("./routes/login"));
+app.use("/", require("./routes/register"));
+app.use("/friends", require("./routes/Friends"));
+app.use("/course", require("./routes/course"));
+app.use("/start",require("./routes/start"));
 app.get("/information", (req,res)=>{
     res.render("information",{layout:informationLayout});
 })
-app.get("/start", (req,res)=>{
-    res.render("start",{layout:startLayout});
+app.get("/free_board", (req,res)=>{
+    res.render("free_board",{layout:mainLayout});
 })
-app.get("/start_1", (req,res)=>{
-    res.render("start_1",{layout:startLayout});
+app.get("/writeBoard", (req,res)=>{
+    res.render("writeBoard",{layout:mainLayout});
 })
-app.get("/start_2", (req,res)=>{
-    res.render("start_2",{layout:startLayout});
+app.get("/friendsList", (req,res)=>{
+    res.render("friendsList",{layout:mainLayout});
 })
-app.get("/start_3", (req,res)=>{
-    res.render("start_3",{layout:startLayout});
+app.get("/friends_list", (req,res)=>{
+    res.render("friends_list",{layout:mainLayout});
 })
-app.get("/start_4", (req,res)=>{
-    res.render("start_4",{layout:startLayout});
+app.get("/course_list", (req,res)=>{
+    res.render("course_list",{layout:mainLayout});
 })
 app.get("/record", (req,res)=>{
     res.render("record",{layout:mainLayout});

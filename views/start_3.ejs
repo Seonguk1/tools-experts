@@ -12,28 +12,35 @@
     <section>
         <article>
             <div class="startpage_content">
-                <div>아이디/비밀번호를 설정해 주세요.</div>
+                <div style="font-weight: 800; font-size: 24px; color: #5B5B5B;">계정 정보를 입력해 주세요.</div>
             </div>
         </article>
         <article>
             <div class="startpage_set">
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">아이디</div>
-                    <input class="startpage_myinfor" type="text" name="email" placeholder="아이디 또는 이메일">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">비밀번호</div>
-                    <input class="startpage_myinfor" type="password" name="password" placeholder="비밀번호">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">닉네임</div>
-                    <input class="startpage_myinfor" type="text" placeholder="닉네임 입력하기">
-                </div>
+                <form action="/start_3" method="POST">
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">이메일</div>
+                        <input class="startpage_myinfor" name="email" type="email" placeholder="아이디 입력하기" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">비밀번호</div>
+                        <input class="startpage_myinfor" name="password" type="password" placeholder="비밀번호 입력하기" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">비밀번호 확인</div>
+                        <input class="startpage_myinfor" name="password2" type="password" placeholder="비밀번호 확인" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">닉네임</div>
+                        <input class="startpage_myinfor" name="nickname" type="text" placeholder="닉네임 입력하기" required>
+                    </div>
+                
+                </form>
             </div>
         </article>
     </section>
     <footer>
-        <div style="cursor: default;" onclick="location.href='/start_2';" class="startpage_before"><</div>
-        <div style="cursor: default;" onclick="location.href='/start_4';" class="startpage_next">></div>
+        <div style="cursor: default;" onclick="location.href='/start/2';" class="startpage_before"></div>
+        <div style="cursor: default;" onclick="location.href='/start/4';" class="startpage_next">></div>
     </footer>
 </div>
