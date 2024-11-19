@@ -50,21 +50,6 @@ app.use("/start",require("./routes/start"));
 app.get("/information", (req,res)=>{
     res.render("information",{layout:informationLayout});
 })
-app.get("/start", (req,res)=>{
-    res.render("start",{layout:startLayout});
-})
-app.get("/start_1", (req,res)=>{
-    res.render("start_1",{layout:startLayout});
-})
-app.get("/start_2", (req,res)=>{
-    res.render("start_2",{layout:startLayout});
-})
-app.get("/start_3", (req,res)=>{
-    res.render("start_3",{layout:startLayout});
-})
-app.get("/start_4", (req,res)=>{
-    res.render("start_4",{layout:startLayout});
-})
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
 })
@@ -76,6 +61,9 @@ app.get("/friendsList", (req,res)=>{
 })
 app.get("/friends_list", (req,res)=>{
     res.render("friends_list",{layout:mainLayout});
+})
+app.get("/course_list", (req,res)=>{
+    res.render("course_list",{layout:mainLayout});
 })
 
 
