@@ -3,22 +3,35 @@
     <div class="s_recent">
         <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin-left: 10px;">나의 최근 기록</div>
     </div>
+    <% for(run of running){ %>
     <div style="display: flex; justify-content: center;">
-        <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
-            <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
-                2024-08-09
+        <div  style="background-color: #D9D9D9; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+            <div style="font-size: 14px; color: #595959; padding-top: 6px; margin-left: 10px;">
+                <%= run.date.getFullYear()%>. <%= run.date.getMonth()+1%>. <%= run.date.getDate()%>.
             </div>
             <div style="display: flex; justify-content: space-between;">
-                <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
-                    반포한강공원>여의도
+                <div style="font-size: 12px; color: #595959; margin-left: 10px; margin-top: 10px;">
+                    이름
                 </div>
-                <div style="font-size: 12px; color: #E8FFFc; margin-right: 20px; margin-top: 10px;">
-                    총 1.6km
+                <div style="font-size: 12px; color: #595959; margin-right: 20px; margin-top: 10px;">
+                    총 <%= run.distance%>km
                 </div>
             </div>
         </div>
     </div>
-    <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin-left: 9px; margin-top: 25px;">나의 베스트 기록</div>
+    <% } %>
+    <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">나의 베스트 기록</div>
+    <div class="s_container-4" style="margin-top: 20px; border: 1px solid #E3E3E3; border-radius: 999px; margin-left: 8px; width: 180px; height: 32px;">
+        <button class="s_button-3" value="0">
+            거리순
+        </button>
+        <button class="s_button-3" value="1">
+             속도순
+        </button>
+        <button class="s_button-3" value="2">
+            기타
+        </button>
+    </div>
     <div id="s_distance" class="s_mode_2">
         <div style="display: flex; justify-content: center;">
             <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
