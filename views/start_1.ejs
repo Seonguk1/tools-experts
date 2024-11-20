@@ -1,3 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUNUS - 시작 화면</title>
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <!-- 카카오맵 API 추가 -->
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4f8b765027d36d5b212c070eeeb79a62&libraries=services"></script>
+
+  <!-- 위치 정보 스크립트 추가 -->
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+          alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      
+      const geocoder = new kakao.maps.services.Geocoder();
+      const coord = new kakao.maps.LatLng(latitude, longitude);
+
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+            let address = result[0].address.address_name;
+            address = address.replace(/[0-9-]/g, '').trim();
+            document.getElementById("addressInput").value = address;
+        } else {
+            alert("주소를 찾을 수 없습니다.");
+        }
+      });
+    }
+
+    function error() {
+      alert("사용자의 위치를 가져올 수 없습니다.");
+    }
+
+    // 전화번호 입력 시 자동으로 하이픈 추가하는 함수
+    function formatPhone(input) {
+      let numbers = input.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+      let formatted = '';
+
+      if (numbers.length <= 3) {
+        formatted = numbers;
+      } else if (numbers.length <= 7) {
+        formatted = numbers.slice(0, 3) + '-' + numbers.slice(3);
+      } else {
+        formatted = numbers.slice(0, 3) + '-' + numbers.slice(3, 7) + '-' + numbers.slice(7, 11);
+      }
+
+      input.value = formatted;
+    }
+  </script>
+</head>
+<body>
 <div style="width: 100%; height: 100%; background-color: #F1FCFA;">
     <header>
         <div class="startpage_mainlogo">RUNUS</div>
@@ -18,22 +80,42 @@
         </article>
         <article>
             <div class="startpage_set">
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">이름</div>
-                    <input class="startpage_myinfor" type="text" placeholder="이름 입력하기">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">생년월일</div>
-                    <input class="startpage_myinfor" type="text" placeholder="xxxx.xx.xx">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">전화번호</div>
-                    <input class="startpage_myinfor" type="text" placeholder="xxx-xxxx-xxxx">
-                </div>
-                <div class="startpage_inforset">
-                    <div class="startpage_infor">거주지</div>
-                    <input class="startpage_myinfor" type="text" placeholder="주소 검색하기">
-                </div>
+                <form action="/start_1" method="POST">
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">이름</div>
+                        <input class="startpage_myinfor" name="realname" type="text" placeholder="이름 입력하기" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">생년월일</div>
+                        <input class="startpage_myinfor" name="birthdate" type="date" placeholder="xxxx.xx.xx" required>
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">전화번호</div>
+                        <input
+                            class="startpage_myinfor"
+                            type="text"
+                            name="phone"
+                            placeholder="010-1234-5678"
+                            maxlength="13" 
+                            required
+                            title="전화번호 형식: 010-1234-5678"
+                            oninput="formatPhone(this)" 
+                        />
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">거주지(현 위치)</div>
+                        <input
+                            id="addressInput"
+                            class="startpage_myinfor"
+                            name="address"
+                            type="text"
+                            placeholder="주소 검색하기"
+                            onclick="getLocation()"
+                            readonly
+                        />
+                    </div>
+                    
+                </form>
             </div>
         </article>
     </section>
@@ -41,3 +123,5 @@
         <div style="cursor: default;" onclick="location.href='/start/2';" class="startpage_next">></div>
     </footer>
 </div>
+</body>
+</html>

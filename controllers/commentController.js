@@ -1,33 +1,97 @@
 const Comment = require('../models/Comment');
 const Post = require('../models/Post');
 
-const createComment = async (req, res) => {
-    const post = res.locals.post;
-
-    if (!post) {
-        return res.status(404).send('Post not found');
+const writeComment = async (req, res) => {
+    //토큰 검증
+    const token = req.cookies.token;
+    
+    if (!token) {
+        res.redirect("/login");
+    } else {
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userID = decoded.id;
+            
+        } catch (error) {
+            res.redirect("/login");
+        }
     }
-
-    req.body.author = req.user._id; 
-    req.body.post = post._id;
-
-    req.body.body = req.body.body.replace(/[\r\n]+/g, ' ').trim();
-
-    // req.body.body를 사용하여 댓글 내용을 가져옴
-    if (!req.body.body) {
-        return res.status(400).send('Comment body is required');
-    }
+    const user = await User.findById(req.userID);
 
     try {
-        const comment = await Comment.create(req.body);
-        return res.redirect(`/community/post/${post._id}`);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server Error');
-    }
-};
+        const { text } = req.body;
+        const { postId } = req.params;
+        const author = req.user._id;  // 사용자 인증이 되어 있는 경우
 
+        const newComment = new Comment({
+            post: postId,
+            author: author,
+            text: text,
+            depth: 1,  // 일반 댓글이므로 depth는 1
+          });
+      
+          await newComment.save();
+          res.status(201).json(newComment);
+        } catch (err) {
+          res.status(500).json({ error: err.message });
+        }
+      }
+
+const replyComment = async (req, res) => {
+    const token = req.cookies.token;
+    
+    if (!token) {
+        res.redirect("/login");
+    } else {
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userID = decoded.id;
+            
+        } catch (error) {
+            res.redirect("/login");
+        }
+    }
+    const user = await User.findById(req.userID);
+
+
+
+    try {
+        const { text } = req.body;
+        const { postId, commentId } = req.params;
+        const author = req.user._id;  // 사용자 인증이 되어 있는 경우
+    
+        const newReply = new Comment({
+          post: postId,
+          author: author,
+          text: text,
+          parentComment: commentId, // 부모 댓글 ID 설정
+          depth: 2,  // 대댓글이므로 depth는 2
+        });
+    
+        await newReply.save();
+        res.status(201).json(newReply);
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    }
+
+    const checkComment = async (req, res) => {
+        try {
+            const { postId } = req.params;
+
+            const comments = await Comment.find({ post: postId })
+              .populate('author', 'username')
+              .populate('parentComment', 'text') // 대댓글인 경우 부모 댓글 정보도 가져옴
+              .sort('createdAt');
+        
+            res.json(comments);
+          } catch (err) {
+            res.status(500).json({ error: err.message });
+          }
+        }
 
 module.exports = {
-    createComment
+    writeComment,
+    replyComment,
+    checkComment
 };

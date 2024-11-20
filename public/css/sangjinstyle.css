@@ -1,0 +1,50 @@
+@font-face {
+  font-family: ethnocentric-font;
+  src: url("font/ethnocentric\ rg.ttf");
+}
+body{
+    width: 375px;
+    height: 812px;
+    border: 1px solid black;
+}
+
+.head{
+    font-size: 120%;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    
+}
+
+.s_container-1{
+    font-size: 13px;
+    display: flex;
+    font-weight: 700;
+    justify-content: center;
+    font-family: ethnocentric-font;
+}
+.s_button-1{
+  background: #D9D9D9;
+  border-radius: 999px;
+  color: black;
+  font-size: 13px;
+  font-weight: 700;
+  width: 33.333%;
+  height: 100%;
+  border: 0;
+}
+.s_container-4{
+  font-size: 13px;
+  display: flex;
+  font-weight: 700;
+  font-family: ethnocentric-font;
+}
+.s_button-3{
+  border-radius: 999px;
+  color: black;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  width: 33.333%;
+  border: none;
+}

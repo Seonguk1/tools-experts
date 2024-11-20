@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= data.title %></title>
+    <title><%= post.title %></title> <!-- 게시물 제목 수정 -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,17 +106,16 @@
         <a href="/community" class="back-button">&larr; 뒤로가기</a>
 
         <article class="article">
-            <h1><%= data.title %></h1>
+            <h1><%= post.title %></h1>
             <div>
-                <%= data.body %>
+                <%= post.body %>
             </div>
         </article>
 
         <div class="comment-section">
             <h2>댓글</h2>
-            <!-- 댓글 목록을 트리 구조로 렌더링 -->
             <div class="comments">
-                <% if ( commentTrees && commentTrees.length > 0) { %>
+                <% if (commentTrees && commentTrees.length > 0) { %>
                     <% commentTrees.forEach(function(comment) { %>
                         <div class="comment" style="margin-left: <%= (comment.depth || 0) * 20 %>px;">
                             <p><strong><%= comment.author.username %></strong></p>
@@ -127,7 +126,7 @@
 
                             <!-- 대댓글 작성 폼 -->
                             <div class="reply-form" style="display: none;">
-                                <form action="/community/<%= data._id %>/addcomment" method="POST">
+                                <form action="/community/<%= post._id %>/addcomment" method="POST"> <!-- post._id로 수정 -->
                                     <input type="hidden" name="parentComment" value="<%= comment._id %>">
                                     <textarea name="content" placeholder="대댓글을 작성하세요..." required></textarea>
                                     <button type="submit">대댓글 등록</button>
@@ -152,7 +151,7 @@
 
             <!-- 댓글 작성 폼 -->
             <div class="comment-form">
-                <form action="/community/<%= data._id %>/addcomment" method="POST">
+                <form action="/community/<%= post._id %>/addcomment" method="POST"> <!-- post._id로 수정 -->
                     <textarea name="body" placeholder="댓글을 작성하세요..." required></textarea>
                     <button type="submit">댓글 등록</button>
                 </form>
