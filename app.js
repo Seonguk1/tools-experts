@@ -68,6 +68,9 @@ app.get("/course_list", (req,res)=>{
 app.get("/record", (req,res)=>{
     res.render("record",{layout:mainLayout});
 })
+app.get("/recording", (req,res)=>{
+    res.render("recording",{layout:mainLayout});
+})
 app.get("/setting", (req,res)=>{
     res.render("setting",{layout:informationLayout});
 })
