@@ -1,6 +1,9 @@
-<!-- https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running -->
-<!-- http://localhost:3000/running -->
-<!-- http://172.20.10.4:3000/running -->
+<!-- 
+https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running
+http://localhost:8080/running
+http://172.20.10.4:8080/running
+-->
+
 <div id="display"></div>
 
 <script>
@@ -99,7 +102,7 @@
                     score
                 }),
             });
-            console.log(`Post success at ${timestamp}`);
+            console.log(`Post success at ${currentTimestamp}`);
             // }
         } catch (error) {
             console.error('Error getting GPS data:', error);
@@ -108,14 +111,19 @@
 
     function startRunning() {
         if (!isRunning) {
-            isRunning = true;
-            startTime = Date.now();
-            intervalId = setInterval(sendGPSData, 100);
+        isRunning = true;
+        cnt = false;  // 새로 시작할 때 cnt 초기화
+        totalDistance = 0;  // 새로 시작할 때 거리 초기화
+        latitudeArray = [];
+        longitudeArray = [];
+        timestampArray = [];
+        startTime = Date.now();
+        intervalId = setInterval(sendGPSData, 1000);
 
-            document.getElementById('startButton').disabled = true;
-            document.getElementById('endButton').disabled = false;
-        }
+        document.getElementById('startButton').disabled = true;
+        document.getElementById('endButton').disabled = false;
     }
+}
 
     // End 버튼 클릭 이벤트 처리
     async function handleEndButtonClick() {

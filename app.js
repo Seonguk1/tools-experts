@@ -15,7 +15,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 
 connectDB();
-
+    
 app.use(cors());
 
 app.use(express.static("public"));

@@ -6,30 +6,53 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 const mongoose = require("mongoose");
 
-const getRecord = asyncHandler(async (req,res)=>{
+const getRecord = asyncHandler(async (req, res) => {
     const token = req.cookies.token;
+
+    // 토큰 검증 및 리디렉션 처리
     if (!token) {
-        res.redirect("/login");
-    } else {
-        try {
-            const decoded = jwt.verify(token, jwtSecret);
-            req.userID = decoded.id;
-            
-        } catch (error) {
-            res.redirect("/login");
-        }
-    }
-    const user = await User.findById(req.userID);
-    const running = [];
-    for(let i=0;i<user.runnings.length;i++){
-        running.push(await Running.findById(user.runnings[i]));
+        return res.redirect("/login");
     }
 
-    const locals = {
-        title:"Record",
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.userID = decoded.id;
+
+        console.log("Decoded userID:", req.userID); // JWT 토큰에서 추출한 유저 ID
+
+    } catch (error) {
+        return res.redirect("/login");
     }
-    res.render("record",{locals, running, layout: mainLayout});
-})
+
+    // 사용자 조회
+    const user = await User.findById(req.userID) || {}; // user가 null일 경우 빈 객체로 초기화
+
+    // console.log("User data:", user); // MongoDB에서 조회한 유저 데이터
+
+    const userRunnings = user.runnings || []; // runnings가 null일 경우 빈 배열로 초기화
+
+    // console.log("User runnings:", userRunnings); // 유저의 러닝 기록 배열
+
+    // 러닝 데이터 조회
+    const running = [];
+    for (let i = 0; i < userRunnings.length; i++) {
+        const runningData = await Running.findById(userRunnings[i]);
+        if (runningData) {
+            running.push(runningData);
+        }
+    }
+
+    console.log(running);
+
+    // locals 객체 정의
+    const locals = {
+        title: "Record",
+    };
+
+    // 템플릿 렌더링
+    res.render("record", { locals, running, layout: mainLayout });
+});
+
 
 const getRunning = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;

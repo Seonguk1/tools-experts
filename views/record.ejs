@@ -4,36 +4,54 @@
         <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin-left: 10px;">나의 최근 기록</div>
     </div>
     <div style="display: flex; justify-content: center;">
-        <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
-            <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
-                2024-08-09
-            </div>
-            <div style="display: flex; justify-content: space-between;">
-                <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
-                    반포한강공원>여의도
+        <% if (running && running.length > 0) { %>
+            <% const latestRun = running[running.length - 1]; %>
+            <div style="display: flex; justify-content: center;">
+                <div style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+                    <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
+                        <%= new Date(latestRun.date).toISOString().slice(0, 10) %>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
+                            <%= latestRun.route || "경로 정보 없음" %>
+                        </div>
+                        <div style="font-size: 12px; color: #E8FFFc; margin-right: 20px; margin-top: 10px;">
+                            총 <%= latestRun.distance %> km
+                        </div>
+                    </div>
                 </div>
-                <div style="font-size: 12px; color: #E8FFFc; margin-right: 20px; margin-top: 10px;">
-                    총 1.6km
-                </div>
             </div>
-        </div>
+        <% } else { %>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+                <div style="color: #E8FFFC; font-size: 16px;">최근 기록이 없습니다.</div>
+            </div>
+        <% } %>
     </div>
     <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin-left: 9px; margin-top: 25px;">나의 베스트 기록</div>
     <div id="s_distance" class="s_mode_2">
         <div style="display: flex; justify-content: center;">
-            <div  style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
-                <div style="font-size: 14px; color: #E8FFFc; padding-top: 6px; margin-left: 10px;">
-                    2024-08-09
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
-                        반포한강공원>여의도
+            <% if (running && running.length > 0) { %>
+                <% const longestRun = running.reduce((prev, current) => (prev.distance > current.distance) ? prev : current); %>
+                <div style="display: flex; justify-content: center;">
+                    <div style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+                        <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
+                            <%= new Date(longestRun.date).toISOString().slice(0, 10) %>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
+                                <%= longestRun.route || "경로 정보 없음" %>
+                            </div>
+                            <div style="font-size: 12px; color: #E8FFFc; margin-right: 20px; margin-top: 10px;">
+                                총 <%= longestRun.distance %> km
+                            </div>
+                        </div>
                     </div>
-                    <div style="font-size: 12px; color: #E8FFFC; margin-right: 20px; margin-top: 10px;">
-                        총 1.6km
-                    </div>
                 </div>
-            </div>
+            <% } else { %>
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                    <div style="color: #E8FFFC; font-size: 16px;">최근 기록이 없습니다.</div>
+                </div>
+            <% } %>
         </div>
     </div>
         <div style="display: flex; justify-content: center;">
