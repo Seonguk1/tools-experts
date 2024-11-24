@@ -1,15 +1,23 @@
-<form action="/login" method="POST">
-    <div class="d_main">
-        <div><input style="width: 350px; height: 50px; border-radius: 0%; border: solid lightgray 2px;" type="text" name="email" placeholder="아이디 또는 이메일"></div>
-        <div><input style="width: 350px; height: 50px; border-radius: 0%; border: solid lightgray 2px;" type="password" name="password" placeholder="비밀번호"></div>
-        <div class="d_losang"><input type="checkbox"><label style="padding-left: 3px; padding-top: 3px; font-size: 12px;" for="상태유지">로그인 상태 유지</label></div>
-        <div><button class="d_submitbutton" onclick="" type="submit">로그인</button></div>
-</form>
-<div class="d_footer">
-    <div class="d_leftfooter">
-        <div style="cursor: default;" onclick="location.href='/index.com';">회원가입</div>
-    </div>
-    <div class="d_rightfooter">
-        <div style="cursor: default;" onclick="location.href='/index.com';">비밀번호 찾기</div>
-    </div>
+<div style="width: 100%; height: 844px; background-color: #F1FCFA;">
+    <header>
+        <div class="startpage_mainlogo" style="padding-top: 40%; font-size: 30px;">RUNUS</div>
+    </header>
+    <section>
+        <article>
+            <div class="startpage_set">
+                <form action="/login" method="POST">
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">이메일</div>
+                        <input class="startpage_myinfor" style="width: 200px;" name="email" type="email" placeholder="아이디 입력하기">
+                    </div>
+                    <div class="startpage_inforset">
+                        <div class="startpage_infor">비밀번호</div>
+                        <input class="startpage_myinfor" style="width: 200px;" name="password" type="password" placeholder="비밀번호 입력하기" required>
+                    </div>
+                    <div class="d_losang"><input type="checkbox"><label style="padding-left: 3px; padding-top: 3px; font-size: 13px; color: #646464; font-weight: 600;" for="상태유지">로그인 상태 유지</label></div>
+                    <div><button style="display: block; margin: auto; font-size: 16px; color: #646464; background-color: #D5E8E5; font-weight: 600; border-radius: 10px; width: 339px; height: 40px; margin-top: 30px;" onclick="" type="submit">로그인</button></div>
+                </form>
+            </div>
+        </article>
+    </section>
 </div>
