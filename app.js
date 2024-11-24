@@ -42,13 +42,16 @@ app.use("/", require("./routes/home"));
 app.use("/", require("./routes/record"));
 app.use("/community", require("./routes/community"));
 app.use("/community", require("./routes/comment"));
-app.use("/", require("./routes/login"));
+// app.use("/", require("./routes/login")); 로그인 페이지 주석
 app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
 app.get("/information", (req,res)=>{
     res.render("information",{layout:informationLayout});
+})
+app.get("/login", (req,res)=>{
+    res.render("login",{layout:startLayout});
 })
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
