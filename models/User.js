@@ -39,11 +39,11 @@ const userSchema = new mongoose.Schema({
     },
     birthdate: {
         type: Date,
-        required: true, // 생년월일은 필수로 설정
+        // required: true, // 생년월일은 필수로 설정
     },
     phone: {
         type: String,
-        required: true,
+        // required: true,
         validate: {
             validator: function(v) {
                 // 전화번호의 형식 검증 (예시: xxx-xxxx-xxxx)
@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: true,
+        // required: true,
     },
 
     runningTemp:{
@@ -120,6 +120,6 @@ const userSchema = new mongoose.Schema({
 //         this.friends.push(this._id);
 //     }
 //     next();
-// });
+// });  
 
 module.exports = mongoose.model("User",userSchema);
