@@ -1,63 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body class="s_background">
-    <div style="display: flex; justify-content: center;">
-        <div style="background-color: #F5F5F5; width: 390px; height: 340px; border-radius: 10px; margin-top: 15px;">
-        </div>
+<div style="width: 100%; height: 844px; background-color: #2d2d2d;">
+<div style="display: flex; justify-content: center;">
+    <div style="background-color: #F5F5F5; width: 390px; height: 340px; border-radius: 10px; margin-top: 15px;">
     </div>
-    <div style="display: flex; justify-content: center;">
-        <div style="background-color: #646464; width: 346px; height: 133px; border-radius: 10px; margin-top: 15px;">
-            <div style="font-size: 16px; color: #E8FFFC; margin-left: 10px; margin-top: 10px; font-weight: 500; font-family: Pretendard Variable;">
-                <div id="timer" style="display: flex; justify-content: center; font-size: 30px; color: #A4E3D8; font-weight: 700;">00:00:00</div>
-                <img src="Line 4.png" alt="" style="background-color: #646464;">
-                <div style="display: flex; justify-content: center;">
-                    <div id="resetButton" style="cursor: pointer; margin: 0 20px;">
-                        <img src="Rectangle 4216.png" alt="" style="background-color: #646464;">
-                    </div>
-                    <div onclick="startTimer()" style="cursor: pointer; margin: 0 20px;">
-                        <img src="Polygon 1.png" alt="" style="background-color: #646464;">
-                    </div>
-                    <div onclick="pauseTimer()" style="cursor: pointer; margin: 0 20px;">
-                        <img src="Group 8635.png" alt="" style="background-color: #646464;">
-                    </div>
+</div>
+<div style="display: flex; justify-content: center;">
+    <div style="background-color: #646464; width: 346px; height: 133px; border-radius: 10px; margin-top: 15px;">
+        <div style="font-size: 16px; color: #E8FFFC; margin-left: 10px; margin-top: 10px; font-weight: 500; font-family: Pretendard Variable;">
+            <div id="timer" style="display: flex; justify-content: center; font-size: 30px; color: #A4E3D8; font-weight: 700;">00:00:00</div>
+            <img src="images/Line 4.png" alt="" style="background-color: #646464;">
+            <div style="display: flex; justify-content: center;">
+                <div id="resetButton" style="cursor: pointer; margin: 0 20px;">
+                    <img src="images/Rectangle 4216.png" alt="" style="background-color: #646464;">
+                </div>
+                <div onclick="startTimer()" style="cursor: pointer; margin: 0 20px;">
+                    <img src="images/Polygon 1.png" alt="" style="background-color: #646464;">
+                </div>
+                <div onclick="pauseTimer()" style="cursor: pointer; margin: 0 20px;">
+                    <img src="images/Group 8635.png" alt="" style="background-color: #646464;">
                 </div>
             </div>
         </div>
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 40px;" >
-        <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
-            0.00km
-        </div>
-        <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
-            0.00km/h
-        </div>
-        <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
-            0.00kcal
-        </div>
+</div>
+<div style="display: flex; justify-content: center; margin-top: 40px;" >
+    <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
+        0.00km
     </div>
-    <script src="timer.js"></script>
-    <script>
-        const resetButton = document.getElementById('resetButton');
-        let timer;
+    <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
+        0.00km/h
+    </div>
+    <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
+        0.00kcal
+    </div>
+</div>
+</div>
+<script src="js/timer.js"></script>
+<script>
+    const resetButton = document.getElementById('resetButton');
+    let timer;
 
-        resetButton.addEventListener('mousedown', () => {
-            timer = setTimeout(() => {
-                resetTimer();
-            }, 1000);
-        });
+    resetButton.addEventListener('mousedown', () => {
+        timer = setTimeout(() => {
+            resetTimer();
+        }, 1000);
+    });
 
-        resetButton.addEventListener('mouseup', () => {
-            clearTimeout(timer);
-        });
+    resetButton.addEventListener('mouseup', () => {
+        clearTimeout(timer);
+    });
 
-        resetButton.addEventListener('mouseleave', () => {
-            clearTimeout(timer);
-        });
-    </script>
-</body>
-</html>
+    resetButton.addEventListener('mouseleave', () => {
+        clearTimeout(timer);
+    });
+</script>

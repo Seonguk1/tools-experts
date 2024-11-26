@@ -42,13 +42,16 @@ app.use("/", require("./routes/home"));
 app.use("/", require("./routes/record"));
 app.use("/community", require("./routes/community"));
 app.use("/community", require("./routes/comment"));
-app.use("/", require("./routes/login"));
+// app.use("/", require("./routes/login")); 로그인 페이지 주석
 app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
 app.get("/information", (req,res)=>{
     res.render("information",{layout:informationLayout});
+})
+app.get("/login", (req,res)=>{
+    res.render("login",{layout:startLayout});
 })
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
@@ -68,11 +71,18 @@ app.get("/course_list", (req,res)=>{
 app.get("/record", (req,res)=>{
     res.render("record",{layout:mainLayout});
 })
+app.get("/recording", (req,res)=>{
+    res.render("recording",{layout:mainLayout});
+})
 app.get("/setting", (req,res)=>{
     res.render("setting",{layout:informationLayout});
 })
 app.get("/details", (req,res)=>{
+<<<<<<< HEAD
     res.render("details",{layout:mainLayout});
+=======
+    res.render("details",{layout:informationLayout});
+>>>>>>> 458faa62a485692f31c88070f8d7e68d20ddf8db
 })
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
