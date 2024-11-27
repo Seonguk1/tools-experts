@@ -1,0 +1,123 @@
+<div style="width: 100%; height: 1100px; background-color: #2d2d2d;">
+    <nav>
+        <div class="comunity_nav">
+            <div style="cursor: default;" onclick="location.href='/friends';">나의 러닝메이트</div>
+            <div style="cursor: default;" onclick="location.href='/course';">러닝 코스</div>
+            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community';">게시판</div>
+        </div>
+    </nav>
+    <section>
+        <div style="color: #D5D5D5; position: absolute; top: 152px; left: 30px;" onclick="location.href='/free_board'"><</div>
+        <div style="display: flex; justify-content: center; padding-left: 20px; padding-right: 20px; padding-top: 20px;">
+            <div style="font-size: 13px; font-weight: 600; color: #D5D5D5; padding-bottom: 20px;">자유게시판</div>
+        </div>
+    </section>
+    <div style="background-color: #595959; border-radius: 10px; width: 318px; height: 39px; padding: 10px; margin: auto; margin-bottom: 30px;">
+        <div style="color: #E8FFFCE5; font-size: 14px;">땟물땟물</div>
+        <div style="color: #A7A7A7; font-size: 11px;">@gilD1032</div>
+    </div>
+    <article>
+        <div style="padding-left: 30px; padding-right: 30px;">
+            <div style="font-size: 17px; color: #DFEEEC; font-weight: 700; margin-bottom: 20px;">어제 있었던 충격적인 일</div>
+            <div style="font-size: 13px; font-weight: 400; color: #BDC6C5; margin-bottom: 15px;">2024/05/01   21:07</div>
+            <div style="font-size: 14px; color: #CCD9D8; margin-bottom: 20px; line-height: 22px;">
+                어제 진짜 짜증나는 일이 있었어요.
+                학생중에 하나가 저한테 선물로 준 직접 구운 쿠키를 먹었는데
+                뭔가 맛이 이상한 거에요...
+                맛도 그렇고 식감도 아무래도 이상해서 뱉어 봤더니...
+                안에 휴지가 들어 있더군요.
+                일단 부모님께 연락드리고 아이에게도 다시는 이러지 말라고 타일렀는데 여전히 충격이 가시질 않네요....ㅠㅠ
+                앞으로는 아이들이 준거 함부로 먹으면 안되겠다는 생각이...</div>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <div><img width="17px" height="17px" src="images/vector.png"> <span style="font-size: 12px; color: #DFEEEC;">1</span></div>
+                <div><img width="17px" height="17px" src="images/Chat_alt_light.png"> <span style="font-size: 12px; color: #DFEEEC;">3</span></div>
+                <div><img width="17px" height="17px" src="images/Favorite_light.png"> <span style="font-size: 12px; color: #DFEEEC;">5</span></div>
+            </div>
+        </div>
+    </article>
+    <div id="data-container"></div>
+    <div id="pagination"></div>
+    <script>
+        const itemsPerPage = 5;
+        const totalItems = 52; // 예제에서는 총 52개의 항목이 있다고 가정
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        let currentPage = 1;
+        const pagesToShow = 10; // 한 번에 보이는 페이지 번호 수
+
+        const items = Array.from({ length: totalItems }, (_, i) => ({
+        title: `익명${i}`,
+        date: `2024/04/28 21:15`,
+        content: `어우 너무너무 충격인데요?`
+        }));
+
+        function displayItems(page) {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = items.slice(start, end);
+
+            const container = document.getElementById("data-container");
+            container.innerHTML = paginatedItems.map(item => `
+                <div class="board_write2">
+                    <div style="display: flex; flex-direction: column; gap: 5px">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="padding-left: 10px; font-size: 13px;">${item.title}</div>
+                            <div style="padding-left: 10px; font-size: 11px;">${item.date}</div>
+                        </div>
+                        <div style="padding-left: 10px; font-size: 13px; padding-top: 5px; width: 308px;">${item.content}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayPagination() {
+        const paginationContainer = document.getElementById("pagination");
+        paginationContainer.innerHTML = '';
+
+        const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+        const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+        const prevButton = document.createElement("button");
+        prevButton.textContent = '<';
+        prevButton.className = currentPage === 1 ? 'disabled' : '';
+        prevButton.disabled = currentPage === 1;
+        prevButton.addEventListener("click", () => {
+            if (currentPage > 1) {
+            currentPage--;
+            displayItems(currentPage);
+            displayPagination();
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
+        for (let i = startPage; i <= endPage; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+            if (i === currentPage) {
+            button.style.fontWeight = 'bold';
+            }
+            button.addEventListener("click", () => {
+            currentPage = i;
+            displayItems(currentPage);
+            displayPagination();
+            });
+            paginationContainer.appendChild(button);
+        }
+
+        const nextButton = document.createElement("button");
+            nextButton.textContent = '>';
+            nextButton.className = currentPage === totalPages ? 'disabled' : '';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener("click", () => {
+                if (currentPage < totalPages) {
+                currentPage++;
+                displayItems(currentPage);
+                displayPagination();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
+        }
+
+        displayPagination();
+        displayItems(currentPage);
+    </script>
+</div>

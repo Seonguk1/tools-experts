@@ -567,3 +567,15 @@ input[type="file"] {
   margin: 5px 0 5px 0;
   line-height: 30px;
 }
+.board_write2 {
+  color: #E8FFFC;
+  display: flex;
+  gap: 12px;
+  width: 338px;
+  height: 70px;
+  background-color: #595959;
+  border-radius: 10px;
+  padding-top: 10px;
+  margin: 5px 0 5px 0;
+  font-size: 15px;
+}
