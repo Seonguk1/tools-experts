@@ -35,13 +35,16 @@
                             <option value="Other">기타</option>
                         </select>
                     </div>
-                    
+
+                    <!-- 이전과 다음 버튼을 footer에서 form 내부로 이동 -->
+                    <footer>
+                        <!-- "이전" 버튼은 폼 밖 이동을 위한 링크로 유지 -->
+                        <button type="button" class="startpage_before" style="cursor: pointer;" onclick="location.href='/start_1';">< 이전</button>
+                        <!-- "다음" 버튼은 폼 제출용으로 변경 -->
+                        <button type="submit" class="startpage_next" style="cursor: pointer;">다음 ></button>
+                    </footer>
                 </form>
             </div>
         </article>
     </section>
-    <footer>
-        <div style="cursor: default;" onclick="location.href='/start/1';" class="startpage_before"></div>
-        <div style="cursor: default;" onclick="location.href='/start/3';" class="startpage_next">></div>
-    </footer>
 </div>

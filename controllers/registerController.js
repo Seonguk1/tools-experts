@@ -38,15 +38,13 @@ const postStart3 = asyncHandler(async (req, res) => {
     const { email, password, password2, nickname } = req.body;
     
     // 세션에서 이전 단계에서 저장한 정보 가져오기
-    const { realname, birthdate, phone, address, height, weight, gender } = req.session;
+    const { realname, birthdate, phone, address, height, weight, gender} = req.session;
 
         // email을 비교하여 user가 이미 존재하는지 확인
-        let user = await User.findOne({ email });
-              if (user) {
-          return res
-            .status(400)
-            .json({ errors: [{ msg: "User already exists" }] });
-        }
+        const user = await User.findOne({ email });
+    if (user) {
+        return res.status(400).json({ errors: [{ msg: "User already exists" }] });
+    }
 
     // 비밀번호 확인 처리
     if (password !== password2) {
@@ -56,10 +54,10 @@ const postStart3 = asyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = await User.create({
+    await User.create({
         realname,
         email,
-        password: hashedPassword, // 암호화된 비밀번호
+        password: hashedPassword,
         nickname,
         birthdate,
         phone,
@@ -72,6 +70,9 @@ const postStart3 = asyncHandler(async (req, res) => {
     // 성공적으로 회원가입이 완료된 후 start_4 페이지로 리디렉션
     res.redirect('/start_4');
 });
+const getStart4 = (req, res) => {
+    res.render("start_4", { layout: startLayout }); // start_4.ejs 파일을 렌더링
+};
 
 module.exports = {
     getStart1,
@@ -80,4 +81,5 @@ module.exports = {
     postStart2,
     getStart3,
     postStart3,
+    getStart4 // 새로 추가된 컨트롤러 함수
 };
