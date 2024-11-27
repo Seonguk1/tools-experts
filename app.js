@@ -78,11 +78,7 @@ app.get("/setting", (req,res)=>{
     res.render("setting",{layout:informationLayout});
 })
 app.get("/details", (req,res)=>{
-<<<<<<< HEAD
-    res.render("details",{layout:mainLayout});
-=======
     res.render("details",{layout:informationLayout});
->>>>>>> 458faa62a485692f31c88070f8d7e68d20ddf8db
 })
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
