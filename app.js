@@ -62,6 +62,9 @@ app.get("/friendsList", (req,res)=>{
 app.get("/friends_list", (req,res)=>{
     res.render("friends_list",{layout:mainLayout});
 })
+app.get("/find_friends", (req,res)=>{
+    res.render("find_friends",{layout:mainLayout});
+})
 app.get("/course_list", (req,res)=>{
     res.render("course_list",{layout:mainLayout});
 })
