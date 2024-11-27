@@ -1,9 +1,9 @@
 <div style="width: 100%; height: 1100px; background-color: #2d2d2d;">
     <nav>
         <div class="comunity_nav">
-            <div style="cursor: default;" onclick="location.href='/community';">나의 러닝메이트</div>
-            <div style="cursor: default;" onclick="location.href='/community_1';">러닝 코스</div>
-            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community_2';">게시판</div>
+            <div style="cursor: default;" onclick="location.href='/friends';">나의 러닝메이트</div>
+            <div style="cursor: default;" onclick="location.href='/course';">러닝 코스</div>
+            <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community';">게시판</div>
         </div>
     </nav>
     <section>
@@ -16,9 +16,14 @@
             <div style="display: flex; flex-direction: column; align-items: center; margin-top: 5px;">
                 <div class="board_write1" style="background-color: rgba(164, 227, 216, 0.5);">
                     <div style="display: flex; flex-direction: column;">
-                        <div>인기 게시물 제목이 노출됩니다</div>
-                        <div>인기 게시물 내용 첫줄이 노출됩니다. 인기 게 ...</div>
-                        <div style="line-height: 38px; background-color: rgba(164, 227, 216, 0.7);">꿈꾸는 고슴도치</div>
+                        <div style="display: flex; padding-left: 10px;">
+                            <div><img src="images/Fire_light.png" alt=""></div>
+                            <div>
+                                <div style="padding-left: 10px; font-size: 18px;">정말 오랜만에 러닝</div>
+                                <div style="padding-left: 10px; font-size: 14px; padding-top: 5px;">진짜 너무너무 힘들었는데 다 뛰고 나니 너무 뿌듯하더...</div>
+                            </div>
+                        </div>
+                        <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 8px; line-height: 30px; width: 356px; background-color: rgba(164, 227, 216, 0.7); font-size: 11px;">꿈꾸는 고슴도치</div>
                     </div>
                 </div>
             </div>
@@ -36,25 +41,25 @@
         const pagesToShow = 10; // 한 번에 보이는 페이지 번호 수
 
         const items = Array.from({ length: totalItems }, (_, i) => ({
-        title: `인기 게시물 제목 ${i + 1}`,
-        content: `인기 게시물 내용 ${i + 1} 첫줄이 노출됩니다. ...`
+        title: `정말 오랜만에 러닝`,
+        content: `진짜 너무너무 힘들었는데 다 뛰고 나니 너무 뿌듯하더라고...`
         }));
 
         function displayItems(page) {
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const paginatedItems = items.slice(start, end);
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = items.slice(start, end);
 
-        const container = document.getElementById("data-container");
-        container.innerHTML = paginatedItems.map(item => `
-            <div class="board_write1">
-            <div style="display: flex; flex-direction: column;">
-                <div>${item.title}</div>
-                <div>${item.content}</div>
-                <div style="line-height: 60px;"></div>
-            </div>
-            </div>
-        `).join('');
+            const container = document.getElementById("data-container");
+            container.innerHTML = paginatedItems.map(item => `
+                <div class="board_write1">
+                <div style="display: flex; flex-direction: column; gap: 5px">
+                    <div style="padding-left: 10px; font-size: 16px;">${item.title}</div>
+                    <div style="padding-left: 10px; font-size: 11px; padding-top: 5px">${item.content}</div>
+                    <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 3px; line-height: 30px; width: 356px; background-color: #454545; font-size: 11px">꿈꾸는 고슴도치</div>
+                </div>
+                </div>
+            `).join('');
         }
 
         function displayPagination() {
@@ -92,17 +97,17 @@
         }
 
         const nextButton = document.createElement("button");
-        nextButton.textContent = '>';
-        nextButton.className = currentPage === totalPages ? 'disabled' : '';
-        nextButton.disabled = currentPage === totalPages;
-        nextButton.addEventListener("click", () => {
-            if (currentPage < totalPages) {
-            currentPage++;
-            displayItems(currentPage);
-            displayPagination();
-            }
-        });
-        paginationContainer.appendChild(nextButton);
+            nextButton.textContent = '>';
+            nextButton.className = currentPage === totalPages ? 'disabled' : '';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener("click", () => {
+                if (currentPage < totalPages) {
+                currentPage++;
+                displayItems(currentPage);
+                displayPagination();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
         }
 
         displayPagination();

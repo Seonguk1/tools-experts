@@ -3,25 +3,25 @@ const mongoose = require("mongoose");
 const runningSchema = new mongoose.Schema({
     timestamp: [{
         type: String,
-        required: true
+        // required: true
     }],
     location: [{
         latitude: {
             type: Number,
-            required: true
+            // required: true
         },
         longitude: {
             type: Number,
-            required: true
+            // required: true
         }
     }],
     distance:{
         type: Number,
-        required: true
+        // required: true
     },
     score: {
         type: Number,
-        required: true
+        // required: true
     },
     date: {
         type: Date,

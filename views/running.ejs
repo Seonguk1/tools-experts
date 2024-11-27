@@ -1,30 +1,24 @@
-<!-- 
-https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running
-http://localhost:8080/running
-http://172.20.10.4:8080/running
--->
-
-<div id="display"></div>
+<form action="/running" method="post">
+    <div></div>
+    <input name="score" type="hidden">
+    <input name="allLatitudes" type="hidden">
+    <input name="allLongitudes" type="hidden">
+    <input name="allTimestamps" type="hidden">
+    <input name="allPaces" type="hidden">
+    <input name="totalDistance" type="hidden">
+    <button type="button" onclick="start()">Start</button>
+    <button type="submit" onclick="end()">End</button>
+</form>
 
 <script>
-    const address = "https://port-0-tools-experts-lyygmlrh5904d5c2.sel4.cloudtype.app/running";
-    let cnt = false;
-    let previousPosition = null;
-    let previousTimestamp = null;
-    let totalDistance = 0;
-    let startTime = null;
-    let intervalId = null;
-    let isRunning = false;
+    // const dis_score = document.querySelectorAll("div")[0];
     let score = 0;
-    let k = 0;
-    let bonus = 10;
-    // navigator.geolocation API를 사용하여 GPS 데이터 수집
-    function getGPSData() {
-        return new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
-    }
-
+    let latitude, longitude, currentTimestamp, startTime, previousPosition, totalDistance=0, totalTime;
+    let setTimeout_id;
+    let allLatitudes = [];
+    let allLongitudes = [];
+    let allTimestamps = [];
+    let allPaces = [];
     function haversine(lat1, lon1, lat2, lon2) {
         const R = 6371.0; // 지구 반지름 (킬로미터)
         const toRadians = (degree) => degree * (Math.PI / 180);
@@ -41,146 +35,61 @@ http://172.20.10.4:8080/running
         return R * c; // 킬로미터 단위 거리 반환
     }
 
-    function timeDifference(timestamp1, timestamp2) {
-        return (new Date(timestamp2) - new Date(timestamp1)) / 1000; // 초 단위 시간 차이
-    }
-
     function calculatePace(distance, timeSeconds) {
         if (distance === 0) return 0;
         return timeSeconds / distance / 60; // 초/킬로미터
     }
 
-    async function sendGPSData() {
-        if (!isRunning) return;
-        if (cnt) {
-            console.log("cnt가 참입니다.");
-            return;
+    async function start(){
+        const position = await(new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        }));
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        currentTimestamp = Date.now();
+
+        if (!startTime) {
+            startTime = currentTimestamp;
         }
-        try {
-            score++;
-            if ((score - bonus * k) % 20 == 0) {
-                k++;
-                score += bonus;
-            }
-            const position = await getGPSData();
-            const { latitude, longitude } = position.coords;
-            const currentTimestamp = Date.now();
 
-            if (!startTime) {
-                startTime = currentTimestamp;
-            }
+        if (previousPosition) {
+            const distance = haversine(
+                previousPosition.latitude,
+                previousPosition.longitude,
+                latitude,
+                longitude
+            );
 
-            if (previousPosition) {
-                const distance = haversine(
-                    previousPosition.latitude,
-                    previousPosition.longitude,
-                    latitude,
-                    longitude
-                );
+            totalDistance += distance;
+            totalTime = (currentTimestamp - startTime) / 1000; // 초 단위
+            const pace = calculatePace(totalDistance, totalTime);
 
-                totalDistance += distance;
-                const totalTime = (currentTimestamp - startTime) / 1000; // 초 단위
-                const pace = calculatePace(totalDistance, totalTime);
-
-                console.log(`Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} min/km`);
-                document.getElementById('display').innerText = `Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(1)} s, Pace: ${pace.toFixed(2)} min/km, Score: ${score}`;
-            }
-
-            previousPosition = { latitude, longitude };
-            previousTimestamp = currentTimestamp;
-            // if (totalTime%10 == 0) {
-            await fetch(address, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    latitude,
-                    longitude,
-                    timestamp: currentTimestamp,
-                    cnt,
-                    score
-                }),
-            });
-            console.log(`Post success at ${currentTimestamp}`);
-            // }
-        } catch (error) {
-            console.error('Error getting GPS data:', error);
+            console.log(`Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} min/km`);
+            document.querySelectorAll('div')[0].innerText = `Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(1)} s, Pace: ${pace.toFixed(2)} min/km, Score: ${score}`;
+            
+            allLatitudes.push(latitude);
+            allLongitudes.push(longitude);
+            allTimestamps.push(currentTimestamp);
+            allPaces.push(pace);
         }
+
+        previousPosition = { latitude, longitude };
+        previousTimestamp = currentTimestamp;
+
+        score++;
+        setTimeout_id = setTimeout(start,100)
     }
 
-    function startRunning() {
-        if (!isRunning) {
-        isRunning = true;
-        cnt = false;  // 새로 시작할 때 cnt 초기화
-        totalDistance = 0;  // 새로 시작할 때 거리 초기화
-        latitudeArray = [];
-        longitudeArray = [];
-        timestampArray = [];
-        startTime = Date.now();
-        intervalId = setInterval(sendGPSData, 1000);
+    function end(){
+        const post = document.querySelectorAll("input");
+        post[0].value = score;
+        post[1].value = allLatitudes;
+        post[2].value = allLongitudes;
+        post[3].value = allTimestamps;
+        post[4].value = allPaces;
+        post[5].value = totalDistance;
 
-        document.getElementById('startButton').disabled = true;
-        document.getElementById('endButton').disabled = false;
+        clearTimeout(setTimeout_id);
     }
-}
-
-    // End 버튼 클릭 이벤트 처리
-    async function handleEndButtonClick() {
-        if (!isRunning) return;
-
-        isRunning = false;
-        cnt = true;
-        console.log("Running ended. cnt:", cnt);
-        clearInterval(intervalId);
-        document.getElementById('startButton').disabled = false;
-        document.getElementById('endButton').disabled = true;
-
-        try {
-            // 서버로 종료 요청 전송
-            const response = await fetch(address, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    endTime: Date.now(),
-                    cnt: cnt,
-                    score: score,
-                    distance: totalDistance,
-                    message: "Running session ended"
-                }),
-            });
-            console.log("포스트 엔드 버튼");
-            if (response.ok) {
-                console.log("End running request sent successfully");
-                // document.getElementById('display').innerText = "Running session ended successfully";
-            } else {
-                console.error("Failed to send end running request");
-                // document.getElementById('display').innerText = "Failed to end running session";
-            }
-        } catch (error) {
-            console.error('Error sending end running request:', error);
-            document.getElementById('display').innerText = "Error ending running session";
-        }
-    }
-
-    // 페이지 로드 완료 후 실행
-    window.onload = function () {
-        const startButton = document.createElement('button');
-        startButton.id = 'startButton';
-        startButton.innerText = 'Start';
-        startButton.onclick = startRunning;
-        document.body.appendChild(startButton);
-
-        // End 버튼 생성 및 이벤트 리스너 추가
-        const endButton = document.createElement('button');
-        endButton.id = 'endButton';
-        endButton.innerText = 'End';
-        endButton.onclick = handleEndButtonClick;
-        document.body.appendChild(endButton);
-    };
 
 </script>
-
-<!-- AIzaSyB-L0HphgWGfUgsf6_YeM08QJvhFmx3wmc -->

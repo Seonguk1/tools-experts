@@ -13,16 +13,14 @@ const getRecord = asyncHandler(async (req, res) => {
     if (!token) {
         return res.redirect("/login");
     }
-
+    
     try {
         const decoded = jwt.verify(token, jwtSecret);
         req.userID = decoded.id;
-
-        console.log("Decoded userID:", req.userID); // JWT 토큰에서 추출한 유저 ID
-
     } catch (error) {
-        return res.redirect("/login");
+        return;  // 여기에서 응답을 보내지 않도록 종료합니다.
     }
+    
 
     // 사용자 조회
     const user = await User.findById(req.userID) || {}; // user가 null일 경우 빈 객체로 초기화
@@ -58,16 +56,16 @@ const getRunning = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
     
     if (!token) {
-        res.redirect("/login");
-    } else {
-        try {
-            const decoded = jwt.verify(token, jwtSecret);
-            req.userID = decoded.id;
-            
-        } catch (error) {
-            res.redirect("/login");
-        }
+        return res.redirect("/login");
     }
+    
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.userID = decoded.id;
+    } catch (error) {
+        return;  // 여기에서 응답을 보내지 않도록 종료합니다.
+    }
+
     const user = await User.findById(req.userID);
 
     const locals = {
@@ -76,71 +74,102 @@ const getRunning = asyncHandler(async (req,res)=>{
     res.render("running",{locals, layout: mainLayout});
 })
 
-let latitudeArray = [];
-let longitudeArray = [];
-let timestampArray = [];
 const postRunning = asyncHandler(async (req,res)=>{
     const token = req.cookies.token;
     
     if (!token) {
-        res.redirect("/login");
-    } else {
-        try {
-            const decoded = jwt.verify(token, jwtSecret);
-            req.userID = decoded.id;
-            
-        } catch (error) {
-            res.redirect("/login");
-        }
+        return res.redirect("/login");
+    }
+    
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.userID = decoded.id;
+    } catch (error) {
+        return;  // 여기에서 응답을 보내지 않도록 종료합니다.
     }
     const user = await User.findById(req.userID);
 
-    const { latitude, longitude, timestamp, cnt, score, distance } = req.body;
-    if(!cnt){
-        latitudeArray.push(latitude);
-        longitudeArray.push(longitude);
-        timestampArray.push(timestamp);
-        
-        // console.log(`${latitudeArray}  ${longitudeArray}  ${timestampArray}`);
-    }
-    else if(cnt){
-        const newRunning = new Running({
-            creator: req.userID
-        });
-        console.log(req.userID);
-        for(let i=0;i<latitudeArray.length;i++){
-            newRunning.location.push({
-                latitude: latitudeArray[i],
-                longitude: longitudeArray[i]
-            });
-            newRunning.timestamp.push(timestampArray[i]);
-        }
-        console.log(score);
-        newRunning.score = score;
-        newRunning.distance = distance;   
+    let { allLatitudes, allLongitudes, allTimestamps, allPaces, score, totalDistance } = req.body;
+allLatitudes = allLatitudes.split(",");
+allLongitudes = allLongitudes.split(",");
+allTimestamps = allTimestamps.split(",");
+allPaces = allPaces.split(",");
+    
+    const newRunning = new Running({
+        creator: req.userID
+    });
 
-        const session = await mongoose.startSession();
-        session.startTransaction();
-        try {
-            await newRunning.save({ session: session });
-            user.runnings.push(newRunning._id);
-            await user.save({ session: session });
-            await session.commitTransaction();
-            latitudeArray = [];
-            longitudeArray = [];
-            timestampArray = [];
-            console.log("세션");
-        } catch (error) {
-            await session.abortTransaction();
-            throw error;    
-        } finally {
-            session.endSession();
-            console.log("Redirecting to /record after session end");
-            return res.redirect("/");
-        }
-        
-        
+    for(let i=0;i<allLatitudes.length;i++){
+        newRunning.location.push({
+            latitude: allLatitudes[i],
+            longitude: allLongitudes[i]
+        });
+        newRunning.timestamp.push(allTimestamps[i]);
     }
+    newRunning.score = score;
+    newRunning.distance = totalDistance;  
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+        await newRunning.save({ session: session });
+        user.runnings.push(newRunning._id);
+        await user.save({ session: session });
+        await session.commitTransaction();
+        console.log("세션");
+    } catch (error) {
+        await session.abortTransaction();
+        throw error;    
+    } finally {
+        session.endSession();
+        console.log("Redirecting to /record after session end");
+        return res.redirect("/");
+    }
+
+    //
+    // if(!cnt){
+    //     latitudeArray.push(latitude);
+    //     longitudeArray.push(longitude);
+    //     timestampArray.push(timestamp);
+        
+    //     // console.log(`${latitudeArray}  ${longitudeArray}  ${timestampArray}`);
+    // }
+    // else if(cnt){
+    //     const newRunning = new Running({
+    //         creator: req.userID
+    //     });
+    //     console.log(req.userID);
+    //     for(let i=0;i<latitudeArray.length;i++){
+    //         newRunning.location.push({
+    //             latitude: latitudeArray[i],
+    //             longitude: longitudeArray[i]
+    //         });
+    //         newRunning.timestamp.push(timestampArray[i]);
+    //     }
+    //     console.log(score);
+    //     newRunning.score = score;
+    //     newRunning.distance = distance;   
+
+    //     const session = await mongoose.startSession();
+    //     session.startTransaction();
+    //     try {
+    //         await newRunning.save({ session: session });
+    //         user.runnings.push(newRunning._id);
+    //         await user.save({ session: session });
+    //         await session.commitTransaction();
+    //         latitudeArray = [];
+    //         longitudeArray = [];
+    //         timestampArray = [];
+    //         console.log("세션");
+    //     } catch (error) {
+    //         await session.abortTransaction();
+    //         throw error;    
+    //     } finally {
+    //         session.endSession();
+    //         console.log("Redirecting to /record after session end");
+    //         return res.redirect("/");
+    //     }
+    // }
 })
 
 module.exports = {

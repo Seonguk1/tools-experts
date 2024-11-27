@@ -70,6 +70,9 @@ const postStart3 = asyncHandler(async (req, res) => {
     // 성공적으로 회원가입이 완료된 후 start_4 페이지로 리디렉션
     res.redirect('/start_4');
 });
+const getStart4 = (req, res) => {
+    res.render("start_4", { layout: startLayout }); // start_4.ejs 파일을 렌더링
+};
 
 module.exports = {
     getStart1,
@@ -78,4 +81,5 @@ module.exports = {
     postStart2,
     getStart3,
     postStart3,
+    getStart4 // 새로 추가된 컨트롤러 함수
 };
