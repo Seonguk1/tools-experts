@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const mainLayout = "../views/layouts/main.ejs";
-const jwtSecret = "your_jwt_secret"; // 실제 JWT 비밀 키로 교체 필요
+const jwtSecret = process.env.JWT_SECRET;
 
 // 홈 페이지 라우트
 const getHome = asyncHandler(async (req, res) => {
