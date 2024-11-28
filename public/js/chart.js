@@ -10,7 +10,7 @@ function drawBarChart(canvasId, data, labels) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const maxDataValue = Math.max(...data);
-    const yAxisMaxValue = maxDataValue; // Y축 최댓값을 데이터 최댓값 + 3으로 설정
+    const yAxisMaxValue = maxDataValue; // Y축 최댓값을 데이터 최댓값으로 설정
 
     // 막대 그리기
     data.forEach((value, index) => {
@@ -68,7 +68,7 @@ function drawBarChart(canvasId, data, labels) {
     ctx.stroke();
 }
 
-const data1 = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30];
+const data1 = [30, 30, 30, 20, 30, 30, 30, 30, 30, 30, 30, 30, 30];
 const labels1 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
 
 const data2 = [70, 130, 180, 60, 110, 150];
