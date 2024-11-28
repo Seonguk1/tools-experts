@@ -68,9 +68,11 @@ app.get("/find_friends", (req,res)=>{
 app.get("/course_list", (req,res)=>{
     res.render("course_list",{layout:mainLayout});
 })
-app.get("/record", (req,res)=>{
-    res.render("record",{layout:mainLayout});
-})
+app.get('/record', (req, res) => {
+    const running = req.userData.running || []; // 데이터가 없으면 빈 배열로 초기화
+    const sanitizedRunning = running.filter(run => run && run.distance != null); // 유효한 데이터만 유지
+    res.render('record', { running: sanitizedRunning });
+});
 app.get("/recording", (req,res)=>{
     res.render("recording",{layout:mainLayout});
 })
