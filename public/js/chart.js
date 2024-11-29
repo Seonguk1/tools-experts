@@ -4,8 +4,6 @@ function drawBarChart(canvasId, data, labels) {
 
     const barWidth = 30; // 막대 너비
     const gap = 20; // 막대 간 간격
-    const canvasWidth = data.length * (barWidth + gap) + 50; // 캔버스 너비 동적 설정
-    canvas.width = canvasWidth; // 데이터에 따라 캔버스 크기 설정
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
