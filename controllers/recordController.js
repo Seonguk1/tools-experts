@@ -103,7 +103,12 @@ const postRunning = asyncHandler(async (req,res)=>{
     } finally {
         session.endSession();
         console.log("Redirecting to /record after session end");
-        return res.redirect("/details");
+        const locals = {
+            year: newRunning.date.getFullYear(),
+            month: newRunning.date.getMonth()+1,
+            day: newRunning.date.getDay(),
+        }
+        return res.render("details",{newRunning,layout:mainLayout});
     }
 
     //

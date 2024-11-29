@@ -2,7 +2,7 @@
 <img src="images/Vector 9.png" alt="" style="width: 14px; height: 28px; margin-top: 15px; margin-left: 10px;">
 <img src="images/Line 1.png" alt="">
 <div style="font-family: Pretendard Variable; font-size: 13px; font-weight: 500; line-height: 14px; letter-spacing: -0.5px; color:#E8FFFC; margin-left: 29px; padding-top: 8px;">
-    2024. 11. 2. - 오전 1:45
+    <%= newRunning.date.getFullYear()%>. <%= newRunning.date.getMonth()+1%>. <%= newRunning.date.getDate()%>.
 </div>
 <div style="display: flex;">
     <div style="font-family: Pretendard Variable; font-size: 23px; font-weight: 900; line-height: 14px; letter-spacing: -0.5px; color:#E8FFFC; margin-left: 26px; padding-top: 12px;">
@@ -20,7 +20,6 @@
 </div>
 <div style="display: flex; margin-top: 50px;" class="score-container">
     <div id="score" style="margin: 0 20px; font-family: Pretendard Variable; font-size: 65px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
-        100
     </div>
     <div style="font-size: 16px; text-align: left; margin-top: 17px; margin-left: 10px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
         점
@@ -28,13 +27,13 @@
 </div>
 <div style=" display: flex; justify-content: left; margin-top: 40px;" >
     <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 23px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
-        3.00
+        <%= newRunning.distance %>
         <div style="font-size: 13px; text-align: left; padding-top: 8px;">
             킬로미터
         </div>
     </div>
     <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 23px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
-        5'24"
+        <%= newRunning.pace %>
         <div style="font-size: 13px; text-align: left; padding-top: 8px;">
             평균 페이스
         </div>
@@ -58,4 +57,5 @@
     </div>
 </div>
 </div>
+<script>const user_score = <%- JSON.stringify(newRunning.score)%> </script>
 <script src="js/score.js"></script>
