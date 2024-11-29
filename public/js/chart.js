@@ -73,44 +73,50 @@ function dateDifference(date1, date2) {
 const recent_records_distance = [0,0,0,0,0,0];
 const recent_records_date = ["","","","","",""];
 const this_week_records_distance = [0,0,0,0,0,0,0];
-const this_week_records_day = [];
-const dayList = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const this_week_records_label = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const this_month_records_distance = [0,0,0,0,0,0];
+const this_month_records_label = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
+const this_year_records_distance =[0,0,0,0,0,0,0,0,0,0,0,0];
+const this_year_records_label = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const todayDate = new Date();
-// let record = null;
-
-// 이번주 요일 
-let day = todayDate.getDay();
-for(let i=0;i<7;i++){
-    if(day==-1){
-        day=6
-    }
-    this_week_records_day[6-i] = dayList[day];
-    day--;
-}
+const firstDayOfMonth = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1).getDay();
+let is_this_week = true;
 
 running.forEach((record, index)=>{
+    let recordDate = new Date(record.date)
+    let difference_date = dateDifference(recordDate, todayDate)
     // 최근 기록
     if(index<6){
-        recent_records_distance[5-index] = running[index].distance;
-        const date = new Date(running[index].date)
-        recent_records_date[5-index] = date.getMonth()+1+"."+date.getDate();
+        recent_records_distance[5-index] = record.distance;
+        
+        recent_records_date[5-index] = recordDate.getMonth()+1+"."+recordDate.getDate();
     }
 
-    // 이번주 기록
-    let difference_date = dateDifference(new Date(record.date), todayDate)
-    if(difference_date<7){
-        this_week_records_distance[6-difference_date]+= record.distance;
+    // 이번 주 기록
+    if(difference_date<7 && is_this_week){
+        this_week_records_distance[recordDate.getDay()]+= record.distance;
+        if(recordDate.getDay() == 0){
+            is_this_week = false;
+        }
     }
+
+    // 이번 달 기록
+    if(difference_date<31 && recordDate.getMonth == todayDate.getMonth){
+        let a = Math.floor(recordDate.getDate()/7);
+        let b = recordDate.getDate() % 7;
+        if(b>7-firstDayOfMonth){
+            this_month_records_distance[a+1] += record.distance;
+        }
+        else{
+            this_month_records_distance[a] += record.distance;
+        }
+    }
+
+    //이번 연도 기록
 })
-
-const data3 = [50, 90, 130, 40, 90, 120];
-const labels3 = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
-
-const data4 = [30, 60, 90, 30, 70, 100];
-const labels4 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
 
 // Draw the charts
 drawBarChart("barchart", recent_records_distance, recent_records_date);
-drawBarChart("barchart-daily", this_week_records_distance, this_week_records_day);
-drawBarChart("barchart-weekly", data3, labels3);
-drawBarChart("barchart-monthly", data4, labels4);
+drawBarChart("barchart-daily", this_week_records_distance, this_week_records_label);
+drawBarChart("barchart-weekly", this_month_records_distance, this_month_records_label);
+drawBarChart("barchart-monthly", this_year_records_distance, this_year_records_label);

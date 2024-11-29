@@ -6,7 +6,7 @@
 </div>
 <div style="display: flex;">
     <div style="font-family: Pretendard Variable; font-size: 23px; font-weight: 900; line-height: 14px; letter-spacing: -0.5px; color:#E8FFFC; margin-left: 26px; padding-top: 12px;">
-        토요일 야간 러닝
+        <%= locals.day %>요일 야간 러닝
     </div>
     <div style="margin-left: 123px;">
         <img src="images/free-icon-pencil-tool-7632600.png" alt="" style="width: 26px; height: 26px; padding-top: 7px; ">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 23px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
-        <%= newRunning.pace %>
+        <%= newRunning.avg_pace %>
         <div style="font-size: 13px; text-align: left; padding-top: 8px;">
             평균 페이스
         </div>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 23px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
-        227
+        <%= newRunning.calorie %>
         <div style="font-size: 13px; text-align: left; padding-top: 8px;">
             칼로리
         </div>
