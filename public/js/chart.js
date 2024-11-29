@@ -70,8 +70,8 @@ function drawBarChart(canvasId, data, labels) {
 function dateDifference(date1, date2) {
     return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24))
 }
-const recent_records_distance = [0,0,0,0,0,0];
-const recent_records_date = ["","","","","",""];
+const recent_records_distance = [0,0,0,0,0,0,0,0,0,0,0];
+const recent_records_date = ["","","","","","","","","","",""];
 const this_week_records_distance = [0,0,0,0,0,0,0];
 const this_week_records_label = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const this_month_records_distance = [0,0,0,0,0,0];
@@ -82,8 +82,15 @@ const todayDate = new Date();
 const firstDayOfMonth = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1).getDay();
 let is_this_week = true;
 
-const data1 = [30, 30, 30, 200, 30, 30, 30, 30, 30, 30, 30, 30, 30];
-const labels1 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
+running.forEach((record, index)=>{
+    let recordDate = new Date(record.date)
+    let difference_date = dateDifference(recordDate, todayDate)
+    // 최근 기록
+    if(index<6){
+        recent_records_distance[5-index] = record.distance;
+        
+        recent_records_date[5-index] = recordDate.getMonth()+1+"."+recordDate.getDate();
+    }
 
     // 이번 주 기록
     if(difference_date<7 && is_this_week){
