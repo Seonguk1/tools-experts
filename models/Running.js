@@ -23,6 +23,15 @@ const runningSchema = new mongoose.Schema({
         type: Number,
         // required: true
     },
+    avg_pace: {
+        type: Number,
+    },
+    calorie: {
+        type: Number,
+    },
+    taken_time: {
+        type: Number,
+    },
     date: {
         type: Date,
         default: Date.now()
