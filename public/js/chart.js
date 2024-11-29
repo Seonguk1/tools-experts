@@ -82,15 +82,8 @@ const todayDate = new Date();
 const firstDayOfMonth = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1).getDay();
 let is_this_week = true;
 
-running.forEach((record, index)=>{
-    let recordDate = new Date(record.date)
-    let difference_date = dateDifference(recordDate, todayDate)
-    // 최근 기록
-    if(index<6){
-        recent_records_distance[5-index] = record.distance;
-        
-        recent_records_date[5-index] = recordDate.getMonth()+1+"."+recordDate.getDate();
-    }
+const data1 = [30, 30, 30, 200, 30, 30, 30, 30, 30, 30, 30, 30, 30];
+const labels1 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
 
     // 이번 주 기록
     if(difference_date<7 && is_this_week){
