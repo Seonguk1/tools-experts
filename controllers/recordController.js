@@ -123,7 +123,7 @@ allPaces = allPaces.split(",");
     } finally {
         session.endSession();
         console.log("Redirecting to /record after session end");
-        return res.redirect("/");
+        return res.redirect("/details");
     }
 
     //

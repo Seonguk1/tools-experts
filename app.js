@@ -62,6 +62,9 @@ app.get("/friendsList", (req,res)=>{
 app.get("/friends_list", (req,res)=>{
     res.render("friends_list",{layout:mainLayout});
 })
+app.get("/find_friends", (req,res)=>{
+    res.render("find_friends",{layout:mainLayout});
+})
 app.get("/course_list", (req,res)=>{
     res.render("course_list",{layout:mainLayout});
 })
@@ -76,6 +79,9 @@ app.get("/setting", (req,res)=>{
 })
 app.get("/details", (req,res)=>{
     res.render("details",{layout:informationLayout});
+})
+app.get("/writer", (req,res)=>{
+    res.render("writer",{layout:mainLayout});
 })
 app.listen(port, () => {
     console.log(`server listened for ${port}`);

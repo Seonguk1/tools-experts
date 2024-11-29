@@ -66,9 +66,14 @@ function drawBarChart(canvasId, data, labels) {
     ctx.lineCap = "round"; // Rounded ends for a smooth appearance
     ctx.stroke();
 }
-
+const data1 = [];
+for(let i=0;i<6;i++){
+    data1[i]=0;    
+}
+for(let i=0;i<running.length;i++){
+    data1[5-i]= running[i].distance
+}
 // Sample data
-const data1 = [100, 150, 180, 80, 120, 170];
 const labels1 = ["1", "2", "3", "4", "5", "6"];
 
 const data2 = [70, 130, 180, 60, 110, 150];

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const asyncHandler = require("express-async-handler");
 const mainLayout = "../views/layouts/main.ejs";
+const startLayout = "../views/layouts/start.ejs";
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -12,7 +13,7 @@ const getLogin = asyncHandler(async (req,res)=>{
     const locals = {
         title:"Login",
     }
-    res.render("login",{locals, layout:mainLayout})
+    res.render("login",{locals, layout:startLayout})
 })
 
 const postLogin = asyncHandler(async(req, res) => {

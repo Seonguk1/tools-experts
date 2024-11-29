@@ -3,21 +3,16 @@
         <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin-left: 10px;">나의 최근 기록</div>
     </div>
     <div style="display: flex; justify-content: center;">
-        <% if (running && running.length > 0) { %>
-            <% const latestRun = running[running.length - 1]; %>
-            <div style="display: flex; justify-content: center;">
-                <div style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
-                    <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
-                        <%= new Date(latestRun.date).toISOString().slice(0, 10) %>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
-                            <%= latestRun.route || "경로 정보 없음" %>
-                        </div>
-                        <div style="font-size: 12px; color: #E8FFFc; margin-right: 20px; margin-top: 10px;">
-                            총 <%= latestRun.distance %> km
-                        </div>
-                    </div>
+        <div  style="background-color: #D9D9D9; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
+            <div style="font-size: 14px; color: #595959; padding-top: 6px; margin-left: 10px;">
+                <%= run.date.getFullYear()%>. <%= run.date.getMonth()+1%>. <%= run.date.getDate()%>.
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="font-size: 12px; color: #595959; margin-left: 10px; margin-top: 10px;">
+                    이름
+                </div>
+                <div style="font-size: 12px; color: #E8FFFC; margin-left: 10px; margin-top: 10px;">
+                    총 <%= run.distance%>km
                 </div>
             </div>
         <% } else { %>
@@ -104,6 +99,9 @@
             </div>
         </div>
     </div>
+    <script>
+        const running = <%- JSON.stringify(running) %>;
+    </script>
     <script src="js/chart.js"></script>
     <script src="js/button.js"></script>
 </div>
