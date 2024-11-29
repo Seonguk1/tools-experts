@@ -67,21 +67,56 @@ function drawBarChart(canvasId, data, labels) {
     ctx.lineCap = "round";
     ctx.stroke();
 }
+function dateDifference(date1, date2) {
+    return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24))
+}
+const recent_records_distance = [0,0,0,0,0,0];
+const recent_records_date = ["","","","","",""];
+const this_week_records_distance = [0,0,0,0,0,0,0];
+const this_week_records_label = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const this_month_records_distance = [0,0,0,0,0,0];
+const this_month_records_label = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
+const this_year_records_distance =[0,0,0,0,0,0,0,0,0,0,0,0];
+const this_year_records_label = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const todayDate = new Date();
+const firstDayOfMonth = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1).getDay();
+let is_this_week = true;
 
-const data1 = [30, 30, 30, 200, 30, 30, 30, 30, 30, 30, 30, 30, 30];
-const labels1 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
+running.forEach((record, index)=>{
+    let recordDate = new Date(record.date)
+    let difference_date = dateDifference(recordDate, todayDate)
+    // 최근 기록
+    if(index<6){
+        recent_records_distance[5-index] = record.distance;
+        
+        recent_records_date[5-index] = recordDate.getMonth()+1+"."+recordDate.getDate();
+    }
 
-const data2 = [70, 130, 180, 60, 110, 150];
-const labels2 = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    // 이번 주 기록
+    if(difference_date<7 && is_this_week){
+        this_week_records_distance[recordDate.getDay()]+= record.distance;
+        if(recordDate.getDay() == 0){
+            is_this_week = false;
+        }
+    }
 
-const data3 = [50, 90, 130, 40, 90, 120];
-const labels3 = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"];
+    // 이번 달 기록
+    if(difference_date<31 && recordDate.getMonth == todayDate.getMonth){
+        let a = Math.floor(recordDate.getDate()/7);
+        let b = recordDate.getDate() % 7;
+        if(b>7-firstDayOfMonth){
+            this_month_records_distance[a+1] += record.distance;
+        }
+        else{
+            this_month_records_distance[a] += record.distance;
+        }
+    }
 
-const data4 = [30, 60, 90, 30, 70, 100];
-const labels4 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    //이번 연도 기록
+})
 
 // Draw the charts
-drawBarChart("barchart", data1, labels1);
-drawBarChart("barchart-daily", data2, labels2);
-drawBarChart("barchart-weekly", data3, labels3);
-drawBarChart("barchart-monthly", data4, labels4);
+drawBarChart("barchart", recent_records_distance, recent_records_date);
+drawBarChart("barchart-daily", this_week_records_distance, this_week_records_label);
+drawBarChart("barchart-weekly", this_month_records_distance, this_month_records_label);
+drawBarChart("barchart-monthly", this_year_records_distance, this_year_records_label);

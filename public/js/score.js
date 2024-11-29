@@ -1,5 +1,5 @@
 let score = 0;
-const maxScore = 100;
+let maxScore = user_score;
 const duration = 5000;
 
 function updateScore() {
