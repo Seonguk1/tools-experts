@@ -33,14 +33,12 @@ const getRecord = asyncHandler(async (req, res) => {
 
     // 러닝 데이터 조회
     const running = [];
-    for (let i = 0; i < userRunnings.length; i++) {
+    for (let i = userRunnings.length-1; i >= 0; i--) {
         const runningData = await Running.findById(userRunnings[i]);
         if (runningData) {
             running.push(runningData);
         }
     }
-
-    console.log(running);
 
     // locals 객체 정의
     const locals = {
