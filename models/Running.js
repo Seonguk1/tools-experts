@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const runningSchema = new mongoose.Schema({
     timestamp: [{
-        type: String,
-        // required: true
+        start: { type: Date, required: true },
+    end: { type: Date, required: true }
     }],
     location: [{
         latitude: {
@@ -40,6 +40,19 @@ const runningSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         // required:true, 
         ref: 'User'
+    }
+    ,
+    week_of_year: {
+        type: Number,
+        required: true
+    },
+    month: {
+        type: Number,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
     }
 });
 

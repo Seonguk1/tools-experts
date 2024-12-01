@@ -55,7 +55,7 @@
         <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">최신 게시글</div>
         <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
             <% data.forEach(function(post) { %>
-                <div class="board_write1">
+                <div class="board_write1" onclick="location.href='/community/post/<%= post._id %>'" style="cursor: pointer;">
                     <div style="display: flex; flex-direction: column;">
                         <div style="display: flex; padding-left: 10px;">
                             <div><img src="images/Fire_light.png" alt=""></div>
