@@ -1,9 +1,28 @@
 function drawBarChart(canvasId, data, labels) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext("2d");
+    let barWidth;
+    let gap;
 
-    const barWidth = 30; // 막대 너비
-    const gap = 20; // 막대 간 간격
+    if (canvasId === "barchart-daily") {
+        barWidth = 25.45; // 막대 너비
+        gap = 16.9; // 막대 간 간격
+    }
+    else if (canvasId === "barchart-weekly") {
+        barWidth = 30; // 막대 너비
+        gap = 20; // 막대 간 간격
+    }
+    else if (canvasId === "barchart-monthly") {
+        barWidth = 14.48; // 막대 너비
+        gap = 9.65; // 막대 간 간격
+    }  
+    else {
+        barWidth = 30; // 막대 너비
+        gap = 20; // 막대 간 간격
+    }
+
+    const canvasWidth = data.length * (barWidth + gap) + 50; // 캔버스 너비 동적 설정
+    canvas.width = canvasWidth; // 데이터에 따라 캔버스 크기 설정
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -20,7 +39,7 @@ function drawBarChart(canvasId, data, labels) {
         const curveRadius = 10; // 상단 둥근 반지름
 
         // 막대 스타일 설정
-        ctx.fillStyle = index === data.length - 1 ? "#95C7BF" : "#B6B6B6";
+        ctx.fillStyle = "#95C7BF";
 
         // 둥근 상단을 가진 직사각형 그리기
         ctx.beginPath();
@@ -53,7 +72,7 @@ function drawBarChart(canvasId, data, labels) {
         const yPos = canvas.height - 30 - (i * ((canvas.height - 60) / yAxisSteps));
         ctx.fillStyle = "#000000";
         ctx.textAlign = "right";
-        ctx.fillText(yValue.toFixed(0), 40, yPos + 5); // Y축 값
+        ctx.fillText(yValue.toFixed(0), 25, yPos + 5); // Y축 값
     }
 
     // X축 그리기
@@ -68,8 +87,8 @@ function drawBarChart(canvasId, data, labels) {
 function dateDifference(date1, date2) {
     return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24))
 }
-const recent_records_distance = [0,0,0,0,0,0,0,0,0,0,0];
-const recent_records_date = ["","","","","","","","","","",""];
+const recent_records_distance = [0,0,0,0,0,0,0];
+const recent_records_date = ["","","","","","", ""];
 const this_week_records_distance = [0,0,0,0,0,0,0];
 const this_week_records_label = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const this_month_records_distance = [0,0,0,0,0,0];
