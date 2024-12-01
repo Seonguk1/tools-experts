@@ -11,65 +11,50 @@
         <div id="sortByTemperature" onclick="sortByTemperature()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; background-color: #A4E3D8; line-height: 27px; text-align: center; border-radius: 50px;">온도순</div>
         <div id="sortByName" onclick="sortByName()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; line-height: 27px; text-align: center; border-radius: 50px;">이름순</div>
     </div>
-    <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px;">
-        <div id="data-container" style="height: 400px; overflow-y: auto; padding: 10px;"></div>
+    <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px; overflow-y: auto;" id="data-container">
+        <!-- 모든 데이터를 한 번에 출력 -->
     </div>
     <script>
-        const itemsPerPage = 7;
         const totalItems = 52;
-        let currentPage = 1;
+
+        // 초기 데이터 배열 생성
         let items = Array.from({ length: totalItems }, (_, i) => ({
-            title: `이름 ${i + 1}`,
+            title: `이름 ${i + 1}`, // 여기서 i + 1로 시작 번호 보장
             content: `지역 ${i + 11}°`
         }));
 
-        function displayItems() {
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedItems = items.slice(start, end);
-
+        // 전체 데이터를 한 번에 렌더링
+        function displayAllItems() {
             const container = document.getElementById("data-container");
-            container.innerHTML = paginatedItems.map(item => `
-                <div class="friendslist">
-                    <div style="display: flex; justify-content: space-between;">
+            container.innerHTML = items.map(item => `
+                <div class="friendslist" style="margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; color: #FFFFFF;">
                         <div>${item.title}</div>
                         <div>${item.content}</div>
                     </div>
                 </div>
             `).join('');
         }
-        
+
+        // 정렬 기능
         function setActiveButton(activeButtonId) {
             document.getElementById("sortByName").style.backgroundColor = activeButtonId === "sortByName" ? "#A4E3D8" : "#698882";
             document.getElementById("sortByTemperature").style.backgroundColor = activeButtonId === "sortByTemperature" ? "#A4E3D8" : "#698882";
         }
+
         function sortByName() {
             items.sort((a, b) => a.title.localeCompare(b.title));
-            currentPage = 1; // 페이지 초기화
-            displayItems(); // 정렬 후 다시 렌더링
+            displayAllItems(); // 정렬 후 전체 다시 렌더링
             setActiveButton("sortByName");
         }
 
         function sortByTemperature() {
             items.sort((a, b) => parseInt(a.content.split(' ')[1]) - parseInt(b.content.split(' ')[1]));
-            currentPage = 1; // 페이지 초기화
-            displayItems(); // 정렬 후 다시 렌더링
+            displayAllItems(); // 정렬 후 전체 다시 렌더링
             setActiveButton("sortByTemperature");
         }
 
-        function handleScroll() {
-            const container = document.getElementById("data-container");
-            if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
-                if (currentPage <= Math.ceil(totalItems / itemsPerPage)) {
-                    currentPage++;
-                    displayItems();
-                }
-            }
-        }
-
-        const container = document.getElementById("data-container");
-        container.addEventListener("scroll", handleScroll);
-
-        displayItems(); // 초기 로드
+        // 초기 렌더링
+        displayAllItems();
     </script>
 </div>

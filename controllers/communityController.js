@@ -48,13 +48,15 @@ const getPage = asyncHandler(async (req, res) => {
 // });
 
 const getPosts = asyncHandler(async (req, res) => {
-    try {
-        const posts = await Post.find().populate('userId', 'nickname'); // userId를 참조하고 nickname만 가져옴
-        res.status(200).json(posts);
-    } catch (error) {
-        res.status(500).json({ error: "게시글 조회 중 오류가 발생했습니다." });
-    }
-});
+    const locals = { title: "게시물 편집" };
+ 
+    // await를 사용해 데이터를 가져옴
+    const data = await Post.findOne({ _id: req.params.postId }).populate('userId', 'nickname');
+    
+ 
+    // 렌더링 시 data를 전달
+    res.render("writer", { locals, data, layout: mainLayout });
+ });
 
 const getMyPosts = asyncHandler(async (req, res)=> {
 
