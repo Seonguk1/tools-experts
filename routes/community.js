@@ -3,12 +3,12 @@ const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
 // const Comment = require('../models/Comment');  
-const {getPage, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts, getPosts } 
+const {getPage, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts, getPosts, toggleLike, getTopPost } 
 = require("../controllers/communityController");
 
 router
     .route("/")
-    .get(getPage);
+    .get(getPage, getTopPost);
 
 router
     .route("/myPosts")
@@ -31,5 +31,10 @@ router
 router
     .route("/delete/:postId")
     .delete(deletePost); // 로그인 필요
+
+router
+    .route("/post/:id/like")
+    .post(toggleLike)
+
 
 module.exports = router;

@@ -6,7 +6,10 @@ const PostSchema = new mongoose.Schema ({
   body: { type: String, required: true },
   userId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' }, // 작성자 ID 참조
   created_at: { type: Date, default: Date.now },
-  updated_at: { type: Date }
+  updated_at: { type: Date },
+  likes: { type: Number, default: 0 },
+  likedBy: [{ type: mongoose.Types.ObjectId, ref: 'User' }]
+
 });
 
 PostSchema.virtual('nickname').get(function() {

@@ -38,20 +38,23 @@
             </div>
         </div>
         <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">오늘의 전체 인기글</div>
-        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
-            <div class="board_write1" style="background-color: #454545; border-radius: 10px;">
-                <div style="display: flex; flex-direction: column;">
-                    <div style="display: flex; padding-left: 10px;">
-                        <div><img src="images/Fire_light.png" alt=""></div>
-                        <div>
-                            <div style="padding-left: 10px; font-size: 18px; font-weight: 600; color: #E4F2F0;">정말 오랜만에 러닝</div>
-                            <div style="padding-left: 10px; font-size: 14px; padding-top: 5px; color: #B0B0B0;">진짜 너무너무 힘들었는데 다 뛰고 나니 너무 뿌듯하더...</div>
-                        </div>
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+    <a href="/community/post/<%= post._id %>" style="text-decoration: none; color: inherit;">
+        <div class="board_write1" style="background-color: #454545; border-radius: 10px;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; padding-left: 10px;">
+                    <div><img src="images/Fire_light.png" alt=""></div>
+                    <div>
+                        <div style="padding-left: 10px; font-size: 18px; font-weight: 600; color: #E4F2F0;"><%= post.title %></div>
+                        <div style="padding-left: 10px; font-size: 14px; padding-top: 5px; color: #B0B0B0;"><%= post.body.substring(0, 30) %>...</div>
                     </div>
-                    <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7;">꿈꾸는 고슴도치</div>
                 </div>
+                <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7;"><%= post.nickname || '익명' %></div>
             </div>
         </div>
+    </a>
+</div>
+
         <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">최신 게시글</div>
         <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
             <% data.forEach(function(post) { %>
