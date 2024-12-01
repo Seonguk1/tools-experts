@@ -88,6 +88,9 @@ app.get("/details", (req,res)=>{
 app.get("/writer", (req,res)=>{
     res.render("writer",{layout:mainLayout});
 })
+app.get("/courseshare", (req,res)=>{
+    res.render("courseshare",{layout:mainLayout});
+})
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })

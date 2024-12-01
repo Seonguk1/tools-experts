@@ -579,3 +579,18 @@ input[type="file"] {
   margin: 5px 0 5px 0;
   font-size: 15px;
 }
+.s_container-2{
+  font-size: 13px;
+  display: flex;
+  font-weight: 700;
+  font-family: ethnocentric-font;
+}
+.s_button-2{
+background: #698882;
+border-radius: 999px;
+font-size: 13px;
+font-weight: 700;
+width: 50%;
+height: 100%;
+border: 0;
+}
