@@ -11,58 +11,51 @@
         <input id="searchInput" type="text" placeholder="이름 검색" style="width: 200px; height: 27px; padding-left: 10px; border-radius: 5px; border: 1px solid #646464; font-size: 13px; background-color: #646464;">
         <button onclick="searchByName()" style="margin-left: 10px; font-size: 13px; padding: 5px 10px; border-radius: 5px; background-color: #A4E3D8; border: none; cursor: pointer;">검색</button>
     </div>
-    <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px;">
-        <div id="data-container" style="height: 400px; overflow-y: auto; padding: 10px;"></div>
+    <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px; overflow-y: auto;" id="data-container">
+        <!-- 데이터가 이곳에 렌더링됩니다 -->
     </div>
     <script>
-        const itemsPerPage = 7;
+        // 데이터 배열 생성
         const totalItems = 52;
-        let currentPage = 1;
-        let searchQuery = "";
-        let items = Array.from({ length: totalItems }, (_, i) => ({
-            title: `이름 ${i + 1}`,
+        const items = Array.from({ length: totalItems }, (_, i) => ({
+            title: `이름 ${i + 1}`, // "이름 1"부터 "이름 52"
             content: `지역 ${i + 11}°`
         }));
-        let filteredItems = [...items]; // 검색 및 필터링된 데이터
 
-        function displayItems() {
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedItems = filteredItems.slice(start, end);
+        let filteredItems = [...items]; // 필터링된 데이터 저장 (초기값은 전체 데이터)
 
+        // 데이터 렌더링 함수
+        function renderItems(data) {
             const container = document.getElementById("data-container");
-            container.innerHTML = paginatedItems.map(item => `
-                <div class="friendslist">
+            container.innerHTML = ""; // 기존 내용을 지움
+
+            if (data.length === 0) {
+                container.innerHTML = `<div style="color: #ffffff; text-align: center;">검색 결과가 없습니다.</div>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const listItem = document.createElement("div");
+                listItem.className = "friendslist";
+                listItem.style = "margin-bottom: 10px; color: #FFFFFF;";
+                listItem.innerHTML = `
                     <div style="display: flex; justify-content: space-between;">
                         <div>${item.title}</div>
                         <div>${item.content}</div>
                     </div>
-                </div>
-            `).join('');
+                `;
+                container.appendChild(listItem);
+            });
         }
 
+        // 검색 기능
         function searchByName() {
-            const searchInput = document.getElementById("searchInput").value.trim();
-            searchQuery = searchInput.toLowerCase();
-            filteredItems = items.filter(item => item.title.toLowerCase().includes(searchQuery));
-            currentPage = 1;
-            displayItems();
+            const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+            filteredItems = items.filter(item => item.title.toLowerCase().includes(searchInput));
+            renderItems(filteredItems); // 검색 결과 렌더링
         }
 
-        function handleScroll() {
-            const container = document.getElementById("data-container");
-            if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
-                if (currentPage <= Math.ceil(filteredItems.length / itemsPerPage)) {
-                    currentPage++;
-                    displayItems();
-                }
-            }
-        }
-
-        const container = document.getElementById("data-container");
-        container.addEventListener("scroll", handleScroll);
-
-        displayItems();
+        // 초기 데이터 렌더링
+        renderItems(filteredItems);
     </script>
-
 </div>
