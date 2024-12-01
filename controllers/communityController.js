@@ -9,28 +9,61 @@ const Comment = require('../models/Comment');
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
-const getPage = asyncHandler(async (req, res) => {
+const getPage = asyncHandler(async (req, res, next) => {
     const page = Number(req.query.page || 1);
     const perPage = Number(req.query.perPage || 10);
 
-    const totalPosts = await Post.countDocuments();  // 전체 게시물 수
-    const totalPages = Math.ceil(totalPosts / perPage); // 페이지가 부족하면 안되기에 올림
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / perPage);
     const posts = await Post.find()
-        .populate('userId', 'nickname') // userId를 참조하고 nickname만 가져옴
-        .sort({ created_at: -1 }) // 최신순으로 정렬
-        .skip((page - 1) * perPage) // 현재 페이지에 맞춰 skip
-        .limit(perPage) // 페이지당 제한 수
-        .exec(); // 최종적으로 쿼리 실행
+        .populate('userId', 'nickname')
+        .sort({ created_at: -1 })
+        .skip((page - 1) * perPage)
+        .limit(perPage)
+        .exec();
 
-    const locals = {
-        title: "Community",
-        currentPage: page,
-        totalPages: totalPages,
-        perPage: perPage
+    // 데이터를 요청 객체(req)에 추가
+    req.pageData = {
+        data: posts,
+        locals: {
+            title: "Community",
+            currentPage: page,
+            totalPages: totalPages,
+            perPage: perPage,
+        },
     };
 
-    res.render("community", { data: posts, locals, layout: mainLayout });
+    // 다음 핸들러로 이동
+    next();
 });
+
+const getTopPost = async (req, res) => {
+    try {
+        // 좋아요 순으로 정렬된 인기 게시물 가져오기
+        const topPost = await Post.findOne()
+            .sort({ likes: -1, created_at: -1 })
+            .exec();
+
+        if (!topPost) {
+            return res.status(404).render('error', { message: 'No posts found' });
+        }
+
+        // `getPage`에서 설정된 데이터 가져오기
+        const { data, locals } = req.pageData;
+
+        res.render('community', {
+            post: topPost, // 인기 게시물
+            data, // 페이지네이션 데이터
+            locals, // 페이지 메타데이터
+            layout: mainLayout,
+        });
+    } catch (error) {
+        console.error('Error fetching top post:', error);
+        res.status(500).render('error', { message: 'An error occurred while fetching the top post.' });
+    }
+};
+
+
 
 
 // const getPostsAndComments = asyncHandler(async (req, res) => {
@@ -144,21 +177,54 @@ const deletePost = asyncHandler(async(req, res) => {
 });
 
 
-//
-const verifyToken = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.redirect("/login");
-    }
-
+const toggleLike = async (req, res) => {
     try {
-        const decoded = jwt.verify(token, jwtSecret);
-        req.userID = decoded.id;
-        next();
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized. Please log in.' });
+        }
+
+        // JWT 인증
+        let userId;
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            userId = decoded.id;
+        } catch (jwtError) {
+            return res.status(401).json({ message: 'Invalid token. Please log in again.' });
+        }
+
+        const postId = req.params.id;
+
+        // 게시물 조회
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // 좋아요 상태 확인 및 업데이트
+        const likedIndex = post.likedBy.indexOf(userId);
+        if (likedIndex === -1) {
+            post.likes += 1;
+            post.likedBy.push(userId);
+        } else {
+            post.likes = Math.max(0, post.likes - 1);
+            post.likedBy.splice(likedIndex, 1);
+        }
+
+        await post.save();
+
+        res.status(200).json({
+            likes: post.likes,
+            message: 'Toggle like successful',
+        });
     } catch (error) {
-        res.redirect("/login");
+        res.status(500).json({ message: 'An error occurred while toggling like.' });
     }
-});
+};
+
+
+
 
 
 module.exports = {
@@ -169,6 +235,7 @@ module.exports = {
     putEditPost,
     deletePost,
     getMyPosts,
-    verifyToken,
-    getPosts
+    getPosts,
+    toggleLike,
+    getTopPost
 };

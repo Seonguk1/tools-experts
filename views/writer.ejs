@@ -24,11 +24,19 @@
                 <%= data.body %>
             </div>
             <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <div><img width="17px" height="17px" src="../../images/vector.png"> <span style="font-size: 12px; color: #DFEEEC;">1</span></div>
-                <div><img width="17px" height="17px" src="../../images/Chat_alt_light.png"> <span style="font-size: 12px; color: #DFEEEC;">3</span></div>
-                <div><img width="17px" height="17px" src="../../images/Favorite_light.png"> <span style="font-size: 12px; color: #DFEEEC;">5</span></div>
-            </div>
-        </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <!-- 좋아요 버튼 -->
+                    <div style="cursor: pointer;" data-post-id="<%= data._id %>" onclick="toggleLike(this)" class="like-button">
+                        <img width="17px" height="17px" src="../../images/vector.png" alt="like">
+                        <span style="font-size: 12px; color: #DFEEEC;"><%= data.likes %></span>
+                    </div>
+                    <!-- 댓글 버튼 -->
+                    <div>
+                        <img width="17px" height="17px" src="../../images/Chat_alt_light.png" alt="comment">
+                        <span style="font-size: 12px; color: #DFEEEC;">3</span>
+                    </div>
+                </div>
+                
     </article>
     <div id="data-container"></div>
     <div id="pagination"></div>
@@ -114,5 +122,47 @@
 
         displayPagination();
         displayItems(currentPage);
+
+
+//추천
+function toggleLike(button) {
+    const likeCountElement = button.querySelector('span'); // 좋아요 숫자 엘리먼트
+    const postId = button.getAttribute('data-post-id'); // 게시물 ID
+    const isLiked = button.classList.contains('liked'); // 현재 좋아요 상태
+
+    // 서버로 좋아요 요청 보내기
+    fetch(`/community/post/${postId}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isLiked }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to toggle like');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data.message === 'Toggle like successful') {
+                // 좋아요 상태 업데이트
+                if (button.classList.contains('liked')) {
+                    button.classList.remove('liked');
+                } else {
+                    button.classList.add('liked');
+                }
+                // 좋아요 수 업데이트
+                likeCountElement.textContent = data.likes;
+            } else {
+                alert('Failed to toggle like');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error); // 에러 로깅
+            alert('An error occurred while toggling like');
+        });
+}
+
     </script>
 </div>
