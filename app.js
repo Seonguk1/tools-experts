@@ -82,6 +82,9 @@ app.get("/setting", (req,res)=>{
 app.get("/details", (req,res)=>{
     res.render("details",{layout:informationLayout});
 })
+app.get("/hamburger", (req,res)=>{
+    res.render("hamburger",{layout:informationLayout});
+})
 app.get("/writer", (req,res)=>{
     res.render("writer",{layout:mainLayout});
 })
