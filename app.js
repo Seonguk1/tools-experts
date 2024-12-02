@@ -53,9 +53,6 @@ app.get("/information", (req,res)=>{
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
 })
-app.get("/myPost", (req,res)=>{
-    res.render("myPost",{layout:mainLayout});
-})
 app.get("/writeBoard", (req,res)=>{
     res.render("writeBoard",{layout:mainLayout});
 })
