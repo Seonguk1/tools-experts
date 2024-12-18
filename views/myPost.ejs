@@ -12,127 +12,108 @@
             <div onclick="toggleDeleteMode()" id="delete-btn" style="color: #E4F2F0; font-size: 14px; background-color: #647A75; width: 76px; height: 27px; text-align: center; border-radius: 50px; line-height: 27px; cursor: pointer;">삭제하기</div>
         </div>
     </section>
-    <div id="data-container"></div>
-    <div id="pagination"></div>
-
-    <script>
-        const itemsPerPage = 5;
-        const totalItems = 52;
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        let currentPage = 1;
-        const pagesToShow = 10;
-        let isDeleteMode = false;  // 삭제 모드 상태
-        const items = Array.from({ length: totalItems }, (_, i) => ({
-            id: i,
-            title: `정말 오랜만에 러닝`,
-            content: `진짜 너무너무 힘들었는데 다 뛰고 나니 너무 뿌듯하더라고...`
-        }));
-
-        function displayItems(page) {
-            const start = (page - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedItems = items.slice(start, end);
-
-            const container = document.getElementById("data-container");
-            container.innerHTML = paginatedItems.map(item => `
-                <div style="display: flex;">
-                    ${isDeleteMode ? `<input style="margin-right: 10px;" type="checkbox" class="item-checkbox" data-id="${item.id}" />` : ''}
+    <div id="data-container">
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(post => { %>
+                <div 
+                    class="post-item" 
+                    style="display: flex; margin-bottom: 10px; align-items: center; cursor: pointer;" 
+                    onclick="location.href='/community/edit/<%= post._id %>'"
+                >
+                <input 
+                type="checkbox" 
+                class="post-checkbox" 
+                data-id="<%= post._id %>" 
+                style="margin-right: 10px; display: none;" 
+                onclick="event.stopPropagation();"
+            >
                     <div class="board_write1" style="width: 330px;">
                         <div style="display: flex; flex-direction: column; gap: 5px;">
                             <div style="display: flex;">
-                                <div style="padding-left: 10px; font-size: 16px;">${item.title}</div>
+                                <div style="padding-left: 10px; font-size: 16px;"><%= post.title %></div>
                             </div>
-                            <div style="padding-left: 10px; font-size: 11px; padding-top: 5px">${item.content}</div>
-                            <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 3px; line-height: 30px; width: 320px; background-color: #454545; font-size: 11px">꿈꾸는 고슴도치</div>
+                            <div style="padding-left: 10px; font-size: 11px; padding-top: 5px;">
+                                <%= post.body.substring(0, 45) %>
+                            </div>
+                            <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 3px; line-height: 30px; width: 320px; background-color: #454545; font-size: 11px;">
+                                <span style="float: left;"><%= post.userId.nickname || '익명' %></span>
+                                <span style="float: right; font-size: 12px; color: #B0B0B0; margin-right: 10px;">
+                                    <%= new Date(post.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            `).join('');
-        }
+            <% }) %>
+        <% } else { %>
+            <div>게시물이 없습니다.</div>
+        <% } %>
+    </div>
+
+    <div id="pagination">
+        <% if (pagination.totalPages > 1) { %>
+            <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                <a href="/community/mypost?page=<%= i %>" 
+                   style="margin-right: 5px; <%= i === pagination.currentPage ? 'font-weight: bold; text-decoration: underline;' : '' %>">
+                   <%= i %>
+                </a>
+            <% } %>
+        <% } %>
+    </div>
+
+    <script>
+        let isDeleteMode = false;
 
         function toggleDeleteMode() {
-            isDeleteMode = !isDeleteMode;  // 삭제 모드 상태 전환
+            isDeleteMode = !isDeleteMode;
+
             const deleteBtn = document.getElementById("delete-btn");
+            const checkboxes = document.querySelectorAll('.post-checkbox');
 
             if (isDeleteMode) {
                 deleteBtn.textContent = '삭제 완료';
-                deleteBtn.style.backgroundColor = '#647A75';  // 삭제 완료 모드 스타일
+                deleteBtn.style.backgroundColor = '#FF6F61';
+                checkboxes.forEach(checkbox => checkbox.style.display = 'inline-block');
+                deleteBtn.onclick = deleteSelectedPosts;
             } else {
                 deleteBtn.textContent = '삭제하기';
-                deleteBtn.style.backgroundColor = '#647A75';  // 원래 스타일로 되돌리기
+                deleteBtn.style.backgroundColor = '#647A75';
+                checkboxes.forEach(checkbox => checkbox.style.display = 'none');
+                deleteBtn.onclick = toggleDeleteMode;
             }
-
-            displayItems(currentPage);  // 삭제 모드 상태에 맞춰 글 목록 갱신
         }
 
-        function deleteSelected() {
-            const selectedItems = document.querySelectorAll('.item-checkbox:checked');
-            const selectedIds = Array.from(selectedItems).map(item => item.getAttribute('data-id'));
+        async function deleteSelectedPosts() {
+            const checkboxes = document.querySelectorAll('.post-checkbox:checked');
+            const postIds = Array.from(checkboxes).map(checkbox => checkbox.getAttribute('data-id'));
 
-            if (selectedIds.length === 0) {
-                alert('삭제할 글을 선택해 주세요.');
+            if (postIds.length === 0) {
+                alert('삭제할 게시물을 선택해주세요.');
                 return;
             }
 
-            // 선택된 항목들을 삭제
-            const newItems = items.filter(item => !selectedIds.includes(String(item.id)));
-            items.length = 0;
-            items.push(...newItems); 
+            const confirmDelete = confirm('선택한 게시물을 삭제하시겠습니까?');
+            if (!confirmDelete) return;
 
-            // 삭제 후 다시 글 목록 갱신
-            displayItems(currentPage);
-            displayPagination();
-        }
-
-        function displayPagination() {
-            const paginationContainer = document.getElementById("pagination");
-            paginationContainer.innerHTML = '';
-
-            const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
-            const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
-
-            const prevButton = document.createElement("button");
-            prevButton.textContent = '<';
-            prevButton.className = currentPage === 1 ? 'disabled' : '';
-            prevButton.disabled = currentPage === 1;
-            prevButton.addEventListener("click", () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    displayItems(currentPage);
-                    displayPagination();
-                }
-            });
-            paginationContainer.appendChild(prevButton);
-
-            for (let i = startPage; i <= endPage; i++) {
-                const button = document.createElement("button");
-                button.textContent = i;
-                if (i === currentPage) {
-                    button.style.fontWeight = 'bold';
-                }
-                button.addEventListener("click", () => {
-                    currentPage = i;
-                    displayItems(currentPage);
-                    displayPagination();
+            try {
+                const response = await fetch('/community/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ postIds })
                 });
-                paginationContainer.appendChild(button);
-            }
 
-            const nextButton = document.createElement("button");
-            nextButton.textContent = '>';
-            nextButton.className = currentPage === totalPages ? 'disabled' : '';
-            nextButton.disabled = currentPage === totalPages;
-            nextButton.addEventListener("click", () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    displayItems(currentPage);
-                    displayPagination();
+                if (response.ok) {
+                    alert('게시물이 삭제되었습니다.');
+                    location.reload();
+                } else {
+                    alert('게시물 삭제에 실패했습니다.');
                 }
-            });
-            paginationContainer.appendChild(nextButton);
+            } catch (error) {
+                console.error('Error deleting posts:', error);
+                alert('오류가 발생했습니다. 다시 시도해주세요.');
+            }
         }
-
-        displayPagination();
-        displayItems(currentPage);
     </script>
 </div>
