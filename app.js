@@ -53,6 +53,9 @@ app.get("/information", (req,res)=>{
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
 })
+app.get("/home2", (req,res)=>{
+    res.render("home2",{layout:startLayout});
+})
 app.get("/myPost", (req,res)=>{
     res.render("myPost",{layout:mainLayout});
 })
@@ -86,7 +89,7 @@ app.get("/details", (req,res)=>{
     res.render("details",{layout:informationLayout});
 })
 app.get("/hamburger", (req,res)=>{
-    res.render("hamburger",{layout:informationLayout});
+    res.render("hamburger",{layout:startLayout});
 })
 app.get("/writer", (req,res)=>{
     res.render("writer",{layout:mainLayout});
