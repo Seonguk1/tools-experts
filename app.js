@@ -41,7 +41,7 @@ app.use(methodOverride("_method"));
 app.use("/", require("./routes/home"));
 app.use("/", require("./routes/record"));
 app.use("/community", require("./routes/community"));
-app.use("/community", require("./routes/comment"));
+app.use("/comments", require("./routes/comment"));
 app.use("/", require("./routes/login"));
 app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));

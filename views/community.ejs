@@ -8,32 +8,65 @@
     </nav>
     <section>
         <div style="display: flex; justify-content: space-between; padding-left: 20px; padding-right: 20px; padding-top: 30px;">
-            <div style="font-size: 20px; font-weight: 600; color: #CAFFF7;">오늘의 전체 인기글</div>
-            <div onclick="location.href='/writeBoard'" style="color: #E4F2F0; font-size: 14px; background-color: #647A75; width: 76px; height: 27px; text-align: center; border-radius: 50px; line-height: 27px;">글쓰기</div>
+            <div style="font-size: 20px; font-weight: 600; color: #CAFFF7;">게시판</div>
+            <div style="color: #E4F2F0; font-size: 14px;">더보기 ></div>
         </div>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
-    <a href="/community/post/<%= post._id %>" style="text-decoration: none; color: inherit;">
-        <div class="board_write1" border-radius: 10px;">
-            <div style="display: flex; flex-direction: column;">
-                <div style="display: flex; padding-left: 10px;">
-                    <div><img src="images/Fire_light.png" alt=""></div>
-                    <div>
-                        <div style="padding-left: 10px; font-size: 18px; font-weight: 600; color: #E4F2F0;"><%= post.title %></div>
-                        <div style="padding-left: 10px; font-size: 14px; padding-top: 5px; color: #B0B0B0;"><%= post.body.substring(0, 30) %>...</div>
-                    </div>
+        <div style="display: flex; justify-content: space-between; margin-left: 20px; margin-right: 20px;">
+            <div class="board_menu1">
+                <div class="board_menu2" onclick="location.href='/free_board';">
+                    <div style="width: 50px; height: 50px;"><img src="images/Chat_alt_light.png" alt=""></div>
                 </div>
-                <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7;"><%= post.nickname || '익명' %></div>
+                <div style="color: #CAFFF7; font-size: 14px;">자유게시판</div>
+            </div>
+            <div class="board_menu1">
+                <div class="board_menu2">
+                    <div style="width: 50px; height: 50px;"><img src="images/notebook_light.png" alt=""></div>
+                </div>
+                <div style="color: #CAFFF7; font-size: 14px;">대회 일정</div>
+            </div>
+            <div class="board_menu1">
+                <div class="board_menu2">
+                    <div style="width: 50px; height: 50px;"><img src="images/Send_light.png" alt=""></div>
+                </div>
+                <div style="color: #CAFFF7; font-size: 14px;">코스 공유</div>
+            </div>
+            <div class="board_menu1">
+                <div class="board_menu2">
+                    <div style="width: 50px; height: 43px;"><img src="images/Vector.png" alt=""></div>
+                </div>
+                <div style="color: #CAFFF7; font-size: 14px;">러닝 팁</div>
             </div>
         </div>
-    </a>
-</div>
-
-    <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">최신 게시글</div>
-    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
-        <% data.forEach(function(post) { %>
-            <div class="board_write1" onclick="location.href='/community/post/<%= post._id %>'" style="cursor: pointer; background-color: #454545;">
+        <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">오늘의 인기글</div>
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+    <% if (post) { %>
+        <a href="/community/post/<%= post._id %>" style="text-decoration: none; color: inherit;">
+            <div class="board_write1" style="background-color: #454545; border-radius: 10px;">
                 <div style="display: flex; flex-direction: column;">
                     <div style="display: flex; padding-left: 10px;">
+                        <div><img src="images/Fire_light.png" alt=""></div>
+                        <div>
+                            <div style="padding-left: 10px; font-size: 18px; font-weight: 600; color: #E4F2F0;"><%= post.title %></div>
+                            <div style="padding-left: 10px; font-size: 14px; padding-top: 5px; color: #B0B0B0;"><%= post.body.substring(0, 30) %>...</div>
+                        </div>
+                    </div>
+                    <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7;"><%= post.nickname || '익명' %></div>
+                </div>
+            </div>
+        </a>
+    <% } else { %>
+        <div style="color: #B0B0B0; font-size: 14px; margin-top: 10px;">오늘의 인기글이 없습니다.</div>
+    <% } %>
+</div>
+
+<div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">최신 게시글</div>
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+    <% if (data && data.length > 0) { %>
+        <% data.forEach(function(post) { %>
+            <div class="board_write1" onclick="location.href='/community/post/<%= post._id %>'" style="cursor: pointer;">
+                <div style="display: flex; flex-direction: column;">
+                    <div style="display: flex; padding-left: 10px;">
+                        <div><img src="images/Fire_light.png" alt=""></div>
                         <div>
                             <div style="padding-left: 10px; font-size: 18px;"><%= post.title %></div>
                             <div style="padding-left: 10px; font-size: 14px; padding-top: 5px;"><%= post.body.substring(0, 30) %>...</div>
@@ -46,8 +79,13 @@
                 </div>
             </div>
         <% }) %>
-    </div>
-    <!-- 페이지네이션 -->
+    <% } else { %>
+        <div style="color: #B0B0B0; font-size: 14px; margin-top: 10px;">최신 게시글이 없습니다.</div>
+    <% } %>
+</div>
+
+
+<!-- 페이지네이션 -->
 <div id="pagination" style="margin-top: 20px; text-align: center;">
     <% if (pagination.totalPages > 1) { %>
         <% for (let i = 1; i <= pagination.totalPages; i++) { %>
@@ -57,37 +95,4 @@
             </a>
         <% } %>
     <% } %>
-        <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">최신 게시글</div>
-        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
-            <% data.forEach(function(post) { %>
-                <div class="board_write1" style="background-color: #454545;" onclick="location.href='/community/post/<%= post._id %>'" style="cursor: pointer;">
-                    <div style="display: flex; flex-direction: column;">
-                        <div style="display: flex; padding-left: 10px;">
-                            <div>
-                                <div style="padding-left: 10px; font-size: 18px;"><%= post.title %></div>
-                                <div style="padding-left: 10px; font-size: 14px; padding-top: 5px;"><%= post.body.substring(0, 30) %>...</div>
-                            </div>
-                        </div>
-                        <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7; display: flex; justify-content: space-between; align-items: center;">
-                            <span><%= post.userId.nickname || '익명' %></span>
-                            <span style="font-size: 12px; color: #B0B0B0; margin-right: 10px;"><%= new Date(post.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %></span>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
-        </div>
-    </section>
-    <script>
-        function loadIframe() {
-            // iframe 요소 생성
-            const iframe = document.createElement('iframe');
-            iframe.src = '/hamburger';  // 불러올 페이지 주소
-            iframe.width = '100%';
-            iframe.height = '500px';
-            iframe.style.border = 'none';
-            
-            // iframe을 페이지에 삽입
-            document.getElementById('iframe-container').appendChild(iframe);
-        }
-    </script>
 </div>
