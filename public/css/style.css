@@ -285,11 +285,10 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  background-color: #617C77;
-  width: 74px;
-  height: 74px;
+  background-color: #66FFE3;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-  margin-top: 15px;
 }
 .board_write1 {
   color: #E8FFFC;
@@ -491,6 +490,7 @@ font-weight: 700;
 width: 33.333%;
 height: 100%;
 border: 0;
+margin: 0;
 }
 .s_container-4{
 font-size: 13px;
@@ -507,6 +507,7 @@ font-weight: 700;
 line-height: 20px;
 width: 33.333%;
 border: none;
+margin: 0;
 }
 .headhead {
   display: flex;
@@ -609,10 +610,29 @@ font-weight: 700;
 width: 50%;
 height: 100%;
 border: 0;
+margin: 0;
 }
 .modal{
   position: fixed;
   top: 80px;
   left: 94px;
   display: none;
+}
+  
+.container-options{
+  font-size: 13px;
+  display: flex;
+  font-weight: 700;
+  font-family: ethnocentric-font;
+}
+
+.option-button{
+background: #698882;
+border-radius: 999px;
+font-size: 13px;
+font-weight: 700;
+width: 50%;
+height: 100%;
+border: 0;
+margin: 0;
 }
