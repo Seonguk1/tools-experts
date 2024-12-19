@@ -155,7 +155,7 @@ const postRunning = asyncHandler(async (req, res) => {
         const locals = {
             day: daysList[new Date(newRunning.date).getDay()],
             title: "Details",
-            formattedElapsedTime: formatElapsedTime(newRunning.taken_time), // taken_time을 포맷
+            formattedElapsedTime: formatElapsedTime (newRunning.taken_time), // taken_time을 포맷
         }
         // 경과 시간을 `HH:MM:SS`로 변환하는 함수
         function formatElapsedTime(seconds) {
