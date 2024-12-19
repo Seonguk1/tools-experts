@@ -10,7 +10,8 @@ const cors = require('cors');
 const mainLayout = "../views/layouts/main.ejs";
 const startLayout ="../views/layouts/start.ejs";
 const informationLayout ="../views/layouts/information.ejs";
-
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET;
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
@@ -44,7 +45,25 @@ app.use(expressLayouts);
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
-app.use("/", require("./routes/home"));
+// app.use("/", require("./routes/home"));
+app.get("/", (req,res)=>{
+    
+    const token = req.cookies.token;
+    
+    // 토큰 검증 및 리디렉션 처리
+    if (!token) {
+        return res.redirect("/login");
+    }
+    
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.userID = decoded.id;
+    } catch (error) {
+        return;  // 여기에서 응답을 보내지 않도록 종료합니다.
+    }
+
+    res.redirect("/running")
+})
 app.use("/", require("./routes/record"));
 app.use("/community", require("./routes/community"));
 app.use("/comments", require("./routes/comment"));

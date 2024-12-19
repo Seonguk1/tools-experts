@@ -1,15 +1,25 @@
-
-<form action="/running" method="post">
-        
+<!-- AIzaSyCF5_7FPprcmV7r-DfjS3OQQ-UmvSFfizI -->
+<!DOCTYPE html>
+<form id="resultForm" method="POST" action="/running">
+    <input type="hidden" name="totalDistance" id="formTotalDistance">
+    <input type="hidden" name="averagePace" id="formAveragePace">
+    <input type="hidden" name="totalTime" id="formTotalTime">
+    <input type="hidden" name="caloriesBurned" id="formCaloriesBurned">
+    <input type="hidden" name="startTime" id="formStartTime">
+    <input type="hidden" name="route" id="formRoute">
+    <input type="hidden" name="score" id="formScore">
+</form>
 <div style="width: 100%; height: 844px; background-color: #2d2d2d;">
-    <div style="display: flex; justify-content: center;">
-        <div style="background-color: #F5F5F5; width: 390px; height: 340px; border-radius: 10px; margin-top: 15px;">
-        </div>
-    </div>
+    <div id="map"
+        style="background-color: #F5F5F5; width: 390px; height: 340px; border-radius: 10px; margin-top: 15px;"></div>
+
     <div style="display: flex; justify-content: center;">
         <div style="background-color: #646464; width: 346px; height: 133px; border-radius: 10px; margin-top: 15px;">
-            <div style="font-size: 16px; color: #E8FFFC; margin-left: 10px; margin-top: 10px; font-weight: 500; font-family: Pretendard Variable;">
-                <div id="timer" style="display: flex; justify-content: center; font-size: 30px; color: #A4E3D8; font-weight: 700;">00:00:00</div>
+            <div
+                style="font-size: 16px; color: #E8FFFC; margin-left: 10px; margin-top: 10px; font-weight: 500; font-family: Pretendard Variable;">
+                <div id="timer"
+                    style="display: flex; justify-content: center; font-size: 30px; color: #A4E3D8; font-weight: 700;">
+                    00:00:00</div>
                 <img src="images/Line 4.png" alt="" style="background-color: #646464;">
                 <div style="display: flex; justify-content: center;">
                     <div id="resetButton" style="cursor: pointer; margin: 0 20px;">
@@ -18,135 +28,245 @@
                     <div onclick="start()" style="cursor: pointer; margin: 0 20px;">
                         <img src="images/Polygon 1.png" alt="" style="background-color: #646464;">
                     </div>
-                    <button type="submit" onclick="end()">
-                    <div style="cursor: pointer; margin: 0 20px;">
-                        <img src="images/Group 8635.png" alt="" style="background-color: #646464;">
+                    <div onclick="end()">
+                        <div style="cursor: pointer; margin: 0 20px;">
+                            <img src="images/Group 8635.png" alt="" style="background-color: #646464;">
+                        </div>
                     </div>
-                    </button>   
                 </div>
             </div>
         </div>
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 40px;" >
-        <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
+    <div style="display: flex; justify-content: center; margin-top: 40px;">
+        <div id="realTimeDistance"
+            style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
             0.00km
         </div>
-        <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
+        <div id="realTimePace"
+            style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
             0.00km/h
         </div>
-        <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
+        <div id="realTimeCalories"
+            style="margin: 0 20px; font-family: Pretendard Variable; font-size: 25px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: center; color: #7FB3AA;">
             0.00kcal
         </div>
     </div>
-    </div>
-        <input name="score" type="hidden">
-        <input name="allLatitudes" type="hidden">
-        <input name="allLongitudes" type="hidden">
-        <input name="allTimestamps" type="hidden">
-        <input name="allPaces" type="hidden">
-        <input name="totalDistance" type="hidden">
-        <button type="button" onclick="start()">Start</button>
-        <button type="submit" >End</button>
-    </form>
-    <script src="js/timer.js"></script>
-    <script>
-        const resetButton = document.getElementById('resetButton');
-        let timer;
-    
-        resetButton.addEventListener('mousedown', () => {
-            timer = setTimeout(() => {
-                resetTimer();
-            }, 1000);
+</div>
+
+
+<script>
+    let map, polyline, route = [];
+    let totalDistance = 0, totalTime = 0, score = 0;
+    let startTime, timerInterval = null, scoreInterval = null, watchId = null;
+    const MIN_DISTANCE = 0.01; // 최소 거리 조건 (10m)
+    const MAX_ACCURACY = 20;   // 위치 정확도 조건 (20m 이하만 허용)
+    const WEIGHT = 70;         // 체중 (kg)
+    const MET = 8.3;           // MET 값 (달리기 기준)
+
+    // Haversine 공식으로 두 좌표 간 거리 계산
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    // 소모한 칼로리 계산 (거리 기반)
+    function calculateCalories(weight, distance, MET) {
+        return weight * distance * MET * 1.036; // 칼로리 계산
+    }
+
+
+    function formatTime(seconds) {
+        const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const secs = (seconds % 60).toString().padStart(2, '0');
+        return `${hrs}:${mins}:${secs}`;
+    }
+
+
+    function initMap() {
+        // 기본 지도 설정 (임시 위치: 서울시청)
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 37.5665, lng: 126.9780 }, // 임시 중심 좌표
+            zoom: 18,
         });
-    
-        resetButton.addEventListener('mouseup', () => {
-            clearTimeout(timer);
-        });
-    
-        resetButton.addEventListener('mouseleave', () => {
-            clearTimeout(timer);
-        });
-    </script>
-    <script>
-        // const dis_score = document.querySelectorAll("div")[0];
-        let score = 0;
-        let latitude, longitude, currentTimestamp, startTime, previousPosition, totalDistance=0, totalTime;
-        let setTimeout_id;
-        let allLatitudes = [];
-        let allLongitudes = [];
-        let allTimestamps = [];
-        let allPaces = [];
-        function haversine(lat1, lon1, lat2, lon2) {
-            const R = 6371.0; // 지구 반지름 (킬로미터)
-            const toRadians = (degree) => degree * (Math.PI / 180);
-    
-            const dLat = toRadians(lat2 - lat1);
-            const dLon = toRadians(lon2 - lon1);
-    
-            const a = Math.sin(dLat / 2) ** 2 +
-                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-                Math.sin(dLon / 2) ** 2;
-    
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    
-            return R * c; // 킬로미터 단위 거리 반환
+        polyline = new google.maps.Polyline({ path: route, map: map, strokeColor: "#FF0000", strokeWeight: 3 });
+
+        // Geolocation API로 현재 위치 가져오기
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+
+                    // 지도 중심을 현재 위치로 이동
+                    const userLocation = { lat: latitude, lng: longitude };
+                    map.setCenter(userLocation);
+
+
+                    console.log("Map initialized at current location:", userLocation);
+                },
+                (error) => {
+                    console.error("Error getting current location:", error);
+                    alert("현재 위치를 가져올 수 없습니다. 위치 권한을 확인해주세요.");
+                },
+                {
+                    enableHighAccuracy: true, // 높은 정확도로 현재 위치 요청
+                    timeout: 5000,           // 5초 내에 위치 정보를 가져오지 못하면 실패 처리
+                }
+            );
+        } else {
+            alert("Geolocation을 지원하지 않는 브라우저입니다.");
         }
-    
-        function calculatePace(distance, timeSeconds) {
-            if (distance === 0) return 0;
-            return timeSeconds / distance / 60; // 초/킬로미터
+    }
+
+
+    async function start() {
+        // 이미 실행 중이라면 중복 실행 방지
+        if (watchId !== null || scoreInterval !== null || timerInterval !== null) {
+            console.log("Tracking is already running.");
+            return;
         }
-    
-        async function start(){
-            const position = await(new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(resolve, reject);
-            }));
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            currentTimestamp = Date.now();
-    
-            if (!startTime) {
-                startTime = currentTimestamp;
+
+        // 초기화
+        route = [];
+        totalDistance = 0;
+        totalTime = 0;
+        score = 0;
+        document.getElementById("realTimeDistance").innerText = "0.00" + "km";
+        document.getElementById("realTimePace").innerText = "0.00" + "km/h";
+        document.getElementById("realTimeCalories").innerText = "0.00" + "kcal";
+
+        startTime = new Date(); // 시작 시간 기록
+
+        // 위치 추적 시작
+        watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                const { latitude, longitude, accuracy } = position.coords;
+
+                // 위치 정확도 검증
+                if (accuracy > MAX_ACCURACY) {
+                    console.log(`Ignoring point due to low accuracy: ${accuracy}m`);
+                    return;
+                }
+
+                const newPoint = { lat: latitude, lng: longitude };
+
+                // 노이즈 필터링 및 최소 이동 거리 확인
+                if (
+                    route.length === 0 ||
+                    calculateDistance(
+                        route[route.length - 1].lat,
+                        route[route.length - 1].lng,
+                        newPoint.lat,
+                        newPoint.lng
+                    ) > MIN_DISTANCE
+                ) {
+                    if (route.length > 0) {
+                        // 이동 거리 계산 및 업데이트
+                        const prevPoint = route[route.length - 1];
+                        totalDistance += calculateDistance(
+                            prevPoint.lat,
+                            prevPoint.lng,
+                            newPoint.lat,
+                            newPoint.lng
+                        );
+
+                        // 평균 페이스 계산 (km/h)
+                        const elapsedHours = (new Date() - startTime) / 3600000; // 시간 단위로 경과 시간 계산
+                        const averagePace = totalDistance / elapsedHours || 0;
+
+                        // 소모 칼로리 계산 (거리 기반)
+                        const caloriesBurned = calculateCalories(WEIGHT, totalDistance, MET);
+
+                        // 실시간 값 업데이트
+                        document.getElementById("realTimeDistance").innerText = totalDistance.toFixed(2);
+                        document.getElementById("realTimePace").innerText = averagePace.toFixed(2);
+                        document.getElementById("realTimeCalories").innerText = caloriesBurned.toFixed(2);
+                    }
+
+                    // 경로에 새 점 추가
+                    route.push(newPoint);
+                    polyline.setPath(route); // 지도 경로 업데이트
+                    map.setCenter(newPoint); // 지도 중심 이동
+                }
+            },
+            (error) => {
+                // 오류 처리
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("위치 정보 사용 권한이 거부되었습니다. 브라우저 설정에서 권한을 허용해주세요.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("위치 정보를 사용할 수 없습니다. GPS 또는 네트워크 상태를 확인해주세요.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("위치 정보를 가져오는데 시간이 초과되었습니다. 다시 시도해주세요.");
+                        break;
+                    default:
+                        alert("알 수 없는 오류가 발생했습니다.");
+                }
+                console.error("Geolocation Error:", error);
+            },
+            {
+                enableHighAccuracy: true, // 고정밀 위치 정보 요청
+                maximumAge: 0,            // 캐시된 위치 정보 사용 안함
+                timeout: 5000,            // 5초 내에 위치 정보를 가져오지 못하면 실패 처리
             }
-    
-            if (previousPosition) {
-                const distance = haversine(
-                    previousPosition.latitude,
-                    previousPosition.longitude,
-                    latitude,
-                    longitude
-                );
-    
-                totalDistance += distance;
-                totalTime = (currentTimestamp - startTime) / 1000; // 초 단위
-                const pace = calculatePace(totalDistance, totalTime);
-    
-                console.log(`Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(0)} s, Pace: ${pace.toFixed(2)} min/km`);
-                // document.querySelectorAll('div')[0].innerText = `Distance: ${totalDistance.toFixed(2)} km, Time: ${totalTime.toFixed(1)} s, Pace: ${pace.toFixed(2)} min/km, Score: ${score}`;
-                
-                allLatitudes.push(latitude);
-                allLongitudes.push(longitude);
-                allTimestamps.push(currentTimestamp);
-                allPaces.push(pace);
-            }
-    
-            previousPosition = { latitude, longitude };
-            previousTimestamp = currentTimestamp;
-    
-            score++;
-            setTimeout_id = setTimeout(start,100)
+        );
+
+        // 점수 증가 (0.1초마다 1점)
+        scoreInterval = setInterval(() => {
+            score += 1;
+        }, 100);
+
+        // 경과 시간 측정 및 타이머 업데이트 (1초 간격)
+        timerInterval = setInterval(() => {
+            const now = new Date();
+            totalTime = Math.round((now - startTime) / 1000); // 초 단위
+            document.getElementById("timer").innerText = formatTime(totalTime); // 타이머 업데이트
+        }, 1000);
+    }
+
+
+    function end() {
+        if (watchId) {
+            navigator.geolocation.clearWatch(watchId); // 위치 감지 종료
         }
-    
-        function end(){
-            const post = document.querySelectorAll("input");
-            post[0].value = score;
-            post[1].value = allLatitudes;
-            post[2].value = allLongitudes;
-            post[3].value = allTimestamps;
-            post[4].value = allPaces;
-            post[5].value = totalDistance;
-    
-            clearTimeout(setTimeout_id);
-        }
-    
-    </script>
+        clearInterval(timerInterval);
+        clearInterval(scoreInterval);
+
+        // 종료 시 경과 시간 계산
+        const now = new Date();
+        totalTime = Math.round((now - startTime) / 1000);
+
+        const averagePace = totalDistance > 0 ? (totalTime / 60 / totalDistance) : 0;
+        const totalTimeInMinutes = totalTime / 60;
+        const caloriesBurned = calculateCalories(WEIGHT, totalDistance, MET);
+
+        // 디버깅용 데이터 확인
+        console.log("Route Data:", route);
+        console.log("Total Distance:", totalDistance);
+        console.log("Total Time:", totalTime);
+        console.log("Score:", score);
+
+        // Form에 값 설정
+        document.getElementById("formTotalDistance").value = totalDistance.toFixed(2);
+        document.getElementById("formAveragePace").value = averagePace.toFixed(2);
+        document.getElementById("formTotalTime").value = totalTime.toFixed(0);
+        document.getElementById("formCaloriesBurned").value = caloriesBurned.toFixed(2);
+        document.getElementById("formStartTime").value = startTime.toISOString();
+        document.getElementById("formRoute").value = JSON.stringify(route);
+        document.getElementById("formScore").value = score;
+
+        // Form 제출
+        document.getElementById("resultForm").submit();
+    }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF5_7FPprcmV7r-DfjS3OQQ-UmvSFfizI&callback=initMap" async
+    defer></script>
+<script src="js/timer.
+js"></script>

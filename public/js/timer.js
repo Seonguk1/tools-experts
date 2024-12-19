@@ -1,10 +1,10 @@
 let timeElapsed = 0;  // 경과된 시간 (초)
-let timerInterval;     // 타이머 인터벌 변수
+let timer_interval;     // 타이머 인터벌 변수
 let isRunning = false; // 타이머 실행 상태
 
 function startTimer() {
     if (!isRunning) {
-        timerInterval = setInterval(() => {
+        timer_interval = setInterval(() => {
             timeElapsed++;
             updateTimerDisplay();
         }, 1000);
@@ -13,12 +13,12 @@ function startTimer() {
 }
 
 function pauseTimer() {
-    clearInterval(timerInterval);
+    clearInterval(timer_interval);
     isRunning = false;
 }
 
 function resetTimer() {
-    clearInterval(timerInterval);
+    clearInterval(timer_interval);
     timeElapsed = 0;
     isRunning = false;
     updateTimerDisplay();
