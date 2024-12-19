@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
 // const Comment = require('../models/Comment');  
-const {getPage, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts, getPosts, toggleLike, getTopPost } 
+const {getPage, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts, getPostWithComments , toggleLike, getTopPost } 
 = require("../controllers/communityController");
 
 router
@@ -11,12 +11,12 @@ router
     .get(getPage, getTopPost);
 
 router
-    .route("/myPosts")
+    .route("/mypost")
     .get(getMyPosts);  // 로그인 필요
 
  router
      .route("/post/:postId")
-     .get(getPosts);
+     .get(getPostWithComments );
 
 router
     .route("/add")
@@ -26,11 +26,11 @@ router
 router
     .route("/edit/:postId") 
     .get(getEditPost)   // 로그인 필요
-    .put(putEditPost);  // 로그인 필요
+    .post(putEditPost);  // 로그인 필요
 
 router
-    .route("/delete/:postId")
-    .delete(deletePost); // 로그인 필요
+    .route("/delete")
+    .post(deletePost); // 로그인 필요
 
 router
     .route("/post/:id/like")

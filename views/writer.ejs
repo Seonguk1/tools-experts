@@ -7,14 +7,13 @@
         </div>
     </nav>
     <section>
-        <div style="color: #D5D5D5; position: absolute; top: 152px; left: 30px;" onclick="location.href='/free_board'"><</div>
+        <div style="color: #D5D5D5; position: absolute; top: 152px; left: 30px;" onclick="location.href='/community'"><</div>
         <div style="display: flex; justify-content: center; padding-left: 20px; padding-right: 20px; padding-top: 20px;">
             <div style="font-size: 13px; font-weight: 600; color: #D5D5D5; padding-bottom: 20px;">자유게시판</div>
         </div>
     </section>
     <div style="background-color: #595959; border-radius: 10px; width: 318px; height: 39px; padding: 10px; margin: auto; margin-bottom: 30px;">
         <div style="color: #E8FFFCE5; font-size: 14px;"><%= data.nickname %></div>
-        
         <div style="font-size: 13px; font-weight: 400; color: #BDC6C5; margin-bottom: 15px;"><%= new Date(data.created_at).toISOString().replace('T', ' ').slice(0, 16) %></div>
     </div>
     <article>
@@ -24,145 +23,136 @@
                 <%= data.body %>
             </div>
             <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                    <!-- 좋아요 버튼 -->
-                    <div style="cursor: pointer;" data-post-id="<%= data._id %>" onclick="toggleLike(this)" class="like-button">
-                        <img width="17px" height="17px" src="../../images/vector.png" alt="like">
-                        <span style="font-size: 12px; color: #DFEEEC;"><%= data.likes %></span>
-                    </div>
-                    <!-- 댓글 버튼 -->
-                    <div>
-                        <img width="17px" height="17px" src="../../images/Chat_alt_light.png" alt="comment">
-                        <span style="font-size: 12px; color: #DFEEEC;">3</span>
-                    </div>
+                <!-- 좋아요 버튼 -->
+                <div style="cursor: pointer; display: flex; align-items: center; gap: 5px;" data-post-id="<%= data._id %>" onclick="toggleLike(this)" class="like-button">
+                    <img width="17px" height="17px" src="../../images/vector.png" alt="like">
+                    <span style="font-size: 12px; color: #DFEEEC;"> <%= data.likes %></span>
                 </div>
-                
+                <div>
+                    <img width="17px" height="17px" src="../../images/Chat_alt_light.png" alt="comment">
+                    <span style="font-size: 12px; color: #DFEEEC;" id="comment-count"></span>
+                </div>
+            </div>
+        </div>
     </article>
-    <div id="data-container"></div>
-    <div id="pagination"></div>
-    <script>
-        const itemsPerPage = 5;
-        const totalItems = 52; // 예제에서는 총 52개의 항목이 있다고 가정
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        let currentPage = 1;
-        const pagesToShow = 10; // 한 번에 보이는 페이지 번호 수
 
-        const items = Array.from({ length: totalItems }, (_, i) => ({
-        title: `익명${i}`,
-        date: `2024/04/28 21:15`,
-        content: `어우 너무너무 충격인데요?`
-        }));
+    <!-- 댓글 영역 -->
+    <div id="comments" style="padding: 30px;"></div>
 
-        function displayItems(page) {
-            const start = (page - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedItems = items.slice(start, end);
+    <!-- 댓글 페이지네이션 -->
+    <div id="comment-pagination" style="text-align: center; margin-bottom: 20px;"></div>
 
-            const container = document.getElementById("data-container");
-            container.innerHTML = paginatedItems.map(item => `
-                <div class="board_write2">
-                    <div style="display: flex; flex-direction: column; gap: 5px">
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="padding-left: 10px; font-size: 13px;">${item.title}</div>
-                            <div style="padding-left: 10px; font-size: 11px;">${item.date}</div>
-                        </div>
-                        <div style="padding-left: 10px; font-size: 13px; padding-top: 5px; width: 308px;">${item.content}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function displayPagination() {
-        const paginationContainer = document.getElementById("pagination");
-        paginationContainer.innerHTML = '';
-
-        const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
-        const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
-
-        const prevButton = document.createElement("button");
-        prevButton.textContent = '<';
-        prevButton.className = currentPage === 1 ? 'disabled' : '';
-        prevButton.disabled = currentPage === 1;
-        prevButton.addEventListener("click", () => {
-            if (currentPage > 1) {
-            currentPage--;
-            displayItems(currentPage);
-            displayPagination();
-            }
-        });
-        paginationContainer.appendChild(prevButton);
-
-        for (let i = startPage; i <= endPage; i++) {
-            const button = document.createElement("button");
-            button.textContent = i;
-            if (i === currentPage) {
-            button.style.fontWeight = 'bold';
-            }
-            button.addEventListener("click", () => {
-            currentPage = i;
-            displayItems(currentPage);
-            displayPagination();
-            });
-            paginationContainer.appendChild(button);
-        }
-
-        const nextButton = document.createElement("button");
-            nextButton.textContent = '>';
-            nextButton.className = currentPage === totalPages ? 'disabled' : '';
-            nextButton.disabled = currentPage === totalPages;
-            nextButton.addEventListener("click", () => {
-                if (currentPage < totalPages) {
-                currentPage++;
-                displayItems(currentPage);
-                displayPagination();
-                }
-            });
-            paginationContainer.appendChild(nextButton);
-        }
-
-        displayPagination();
-        displayItems(currentPage);
-
-
-//추천
-function toggleLike(button) {
-    const likeCountElement = button.querySelector('span'); // 좋아요 숫자 엘리먼트
-    const postId = button.getAttribute('data-post-id'); // 게시물 ID
-    const isLiked = button.classList.contains('liked'); // 현재 좋아요 상태
-
-    // 서버로 좋아요 요청 보내기
-    fetch(`/community/post/${postId}/like`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ isLiked }),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Failed to toggle like');
-            }
-            return response.json();
-        })
-        .then((data) => {
-            if (data.message === 'Toggle like successful') {
-                // 좋아요 상태 업데이트
-                if (button.classList.contains('liked')) {
-                    button.classList.remove('liked');
-                } else {
-                    button.classList.add('liked');
-                }
-                // 좋아요 수 업데이트
-                likeCountElement.textContent = data.likes;
-            } else {
-                alert('Failed to toggle like');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error); // 에러 로깅
-            alert('An error occurred while toggling like');
-        });
-}
-
-    </script>
+    <!-- 댓글 작성 -->
+    <div style="padding: 30px;">
+        <textarea id="comment-content" placeholder="댓글을 입력해주세요." style="width: 100%; height: 80px; border-radius: 5px; border: none; padding: 10px;"></textarea>
+        <button onclick="submitComment('<%= data._id %>')" style="margin-top: 10px; padding: 10px 20px; background-color: #66FFE3; color: #2d2d2d; border: none; border-radius: 5px;">댓글 작성</button>
+    </div>
 </div>
+
+<script>
+    let currentCommentPage = 1; // 현재 댓글 페이지
+    const commentsPerPage = 4; // 페이지당 댓글 수
+
+    // 댓글 가져오기
+    async function fetchComments(postId, page) {
+        try {
+            const response = await fetch(`/comments/${postId}?page=${page}&limit=${commentsPerPage}`);
+            if (response.ok) {
+                const { comments, pagination } = await response.json();
+                displayComments(comments);
+                displayCommentPagination(pagination);
+                document.getElementById('comment-count').textContent = pagination.totalComments;
+            } else {
+                console.error('Failed to fetch comments');
+            }
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    }
+
+    // 댓글 렌더링
+    function displayComments(comments) {
+        const container = document.getElementById('comments');
+        if (comments.length === 0) {
+            container.innerHTML = `<div style="color: #BDC6C5; text-align: center;">댓글이 없습니다.</div>`;
+            return;
+        }
+
+        container.innerHTML = comments.map(comment => `
+            <div style="background-color: #454545; margin-bottom: 10px; padding: 10px; border-radius: 5px;">
+                <div style="font-size: 13px; color: #CCD9D8;">${comment.userId.nickname || '익명'}</div>
+                <div style="font-size: 14px; color: #E8FFFCE5;">${comment.content}</div>
+                <div style="font-size: 11px; color: #BDC6C5;">${new Date(comment.created_at).toISOString().replace('T', ' ').slice(0, 16)}</div>
+            </div>
+        `).join('');
+    }
+
+    // 댓글 페이지네이션
+    function displayCommentPagination(pagination) {
+        const container = document.getElementById('comment-pagination');
+        container.innerHTML = '';
+
+        for (let i = 1; i <= pagination.totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.style.margin = '0 5px';
+            button.disabled = i === pagination.currentPage;
+            button.addEventListener('click', () => {
+                currentCommentPage = i;
+                fetchComments('<%= data._id %>', currentCommentPage);
+            });
+            container.appendChild(button);
+        }
+    }
+
+    // 댓글 작성
+    async function submitComment(postId) {
+        const content = document.getElementById('comment-content').value.trim();
+        if (!content) {
+            alert('댓글 내용을 입력해주세요.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/comments', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content, postId }),
+            });
+
+            if (response.ok) {
+                alert('댓글이 작성되었습니다.');
+                fetchComments(postId, currentCommentPage); // 댓글 갱신
+                document.getElementById('comment-content').value = ''; // 입력 필드 초기화
+            } else {
+                console.error('Failed to submit comment');
+            }
+        } catch (error) {
+            console.error('Error submitting comment:', error);
+        }
+    }
+
+    // 좋아요 토글
+    async function toggleLike(button) {
+        const postId = button.getAttribute('data-post-id');
+        try {
+            const response = await fetch(`/community/post/${postId}/like`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const likeSpan = button.querySelector('span');
+                likeSpan.textContent = `${data.likes}`;
+            } else {
+                console.error('Failed to toggle like');
+            }
+        } catch (error) {
+            console.error('Error toggling like:', error);
+        }
+    }
+
+    // 초기 댓글 로드
+    fetchComments('<%= data._id %>', currentCommentPage);
+</script>
