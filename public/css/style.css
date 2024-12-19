@@ -200,6 +200,22 @@ body {
   font-weight: 700;
   font-size: 15px;
 }
+.comunity_nav_2 {
+  display: flex;
+  justify-content: center;
+  background-color: #2d2d2d;
+  border-bottom: solid #6D6D6D 1px;
+}
+.comunity_nav_2>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #989898;
+  width: 177.5px;
+  height: 50px;
+  font-weight: 700;
+  font-size: 15px;
+}
 .runningmate_main {
   display: flex;
   justify-content: center;
