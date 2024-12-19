@@ -72,7 +72,7 @@ app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
-app.use("/information",require("./routes/profile"));
+app.use("/setting",require("./routes/profile"));
 // app.get("/information", (req,res)=>{
 //     res.render("information",{layout:informationLayout});
 // })
@@ -82,9 +82,7 @@ app.get("/free_board", (req,res)=>{
 app.get("/home2", (req,res)=>{
     res.render("home2",{layout:startLayout});
 })
-app.get("/myPost", (req,res)=>{
-    res.render("myPost",{layout:mainLayout});
-})
+
 app.get("/writeBoard", (req,res)=>{
     res.render("writeBoard",{layout:mainLayout});
 })
