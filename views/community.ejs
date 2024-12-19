@@ -1,4 +1,147 @@
 <div style="width: 100%; height: 1100px; background-color: #2d2d2d;">
+    <div style="width: 100%; height: 1100px; background-color: #2d2d2d;">
+        <div style="width: 296px; height: 550px; background-color: #424242; justify-content: right; padding-top: 20px; border-radius: 0 0 0 10px;" id="hamburger" class="modal">
+            <div style="font-family: Pretendard Variable;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 14px;
+            letter-spacing: -0.5px;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            ">
+            <div onclick="location.href='/information';" style="margin-top: 7px; margin-left: 23px; color: #D9D9D9; ">
+                나의 러닝프로필
+            </div>
+            <div onclick="location.href='/friends';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                    나의 러닝메이트
+                </div>
+                <div onclick="location.href='/course';"style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                    러닝코스
+                </div>
+                <div onclick="location.href='/community';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                    게시판
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <img src="images/Line 3.png" alt="" style="margin-top: 35px;">
+            </div>
+            <div style="font-family: Pretendard Variable;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 14px;
+            letter-spacing: -0.5px;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            ">
+                <div onclick="location.href='/record';" style="margin-top: 35px; margin-left: 23px; color: #D9D9D9;">
+                    나의 러닝기록
+                </div>
+                <div onclick="location.href='';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                    GPS
+                </div>
+                <div onclick="location.href='';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                    랭킹
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <img src="images/Line 3.png" alt="" style="margin-top: 35px;">
+            </div>
+            <div style="font-family: Pretendard Variable;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 14px;
+            letter-spacing: -0.5px;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            ">
+                <div onclick="location.href='/setting';"style="margin-top: 35px; margin-left: 23px; color: #D9D9D9;">
+                    설정
+                </div>
+                <div onclick="location.href='';"style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                    로그아웃
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="comunity_nav">
+                <div style="cursor: default;" onclick="location.href='/friends';">나의 러닝메이트</div>
+                <div style="cursor: default;" onclick="location.href='/course';">러닝 코스</div>
+                <div style="color: #ffffff; border-bottom: solid #747474 2px; cursor: default;" onclick="location.href='/community';">게시판</div>
+            </div>
+        </nav>
+        <section>
+            <div style="display: flex; justify-content: space-between; padding-left: 20px; padding-right: 20px; padding-top: 30px;">
+                <div style="font-size: 20px; font-weight: 600; color: #CAFFF7;">게시판</div>
+                <div style="color: #E4F2F0; font-size: 14px;">더보기 ></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-left: 20px; margin-right: 20px;">
+                <div class="board_menu1">
+                    <div class="board_menu2" onclick="location.href='/free_board';">
+                        <div style="width: 50px; height: 50px;"><img src="images/Chat_alt_light.png" alt=""></div>
+                    </div>
+                    <div style="color: #CAFFF7; font-size: 14px;">자유게시판</div>
+                </div>
+                <div class="board_menu1">
+                    <div class="board_menu2">
+                        <div style="width: 50px; height: 50px;"><img src="images/notebook_light.png" alt=""></div>
+                    </div>
+                    <div style="color: #CAFFF7; font-size: 14px;">대회 일정</div>
+                </div>
+                <div class="board_menu1">
+                    <div class="board_menu2">
+                        <div style="width: 50px; height: 50px;"><img src="images/Send_light.png" alt=""></div>
+                    </div>
+                    <div style="color: #CAFFF7; font-size: 14px;">코스 공유</div>
+                </div>
+                <div class="board_menu1">
+                    <div class="board_menu2">
+                        <div style="width: 50px; height: 43px;"><img src="images/Vector.png" alt=""></div>
+                    </div>
+                    <div style="color: #CAFFF7; font-size: 14px;">러닝 팁</div>
+                </div>
+            </div>
+            <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">오늘의 전체 인기글</div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+        
+        <a href="/community/post/<%= post._id %>" style="text-decoration: none; color: inherit;">
+            <div class="board_write1" style="background-color: #454545; border-radius: 10px;">
+                <div style="display: flex; flex-direction: column;">
+                    <div style="display: flex; padding-left: 10px;">
+                        <div><img src="images/Fire_light.png" alt=""></div>
+                        <div>
+                            <div style="padding-left: 10px; font-size: 18px; font-weight: 600; color: #E4F2F0;"><%= post.title %></div>
+                            <div style="padding-left: 10px; font-size: 14px; padding-top: 5px; color: #B0B0B0;"><%= post.body.substring(0, 30) %>...</div>
+                        </div>
+                    </div>
+                    <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7;"><%= post.nickname || '익명' %></div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+            <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">최신 게시글</div>
+            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+                <% data.forEach(function(post) { %>
+                    <div class="board_write1" onclick="location.href='/community/post/<%= post._id %>'" style="cursor: pointer;">
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="display: flex; padding-left: 10px;">
+                                <div><img src="images/Fire_light.png" alt=""></div>
+                                <div>
+                                    <div style="padding-left: 10px; font-size: 18px;"><%= post.title %></div>
+                                    <div style="padding-left: 10px; font-size: 14px; padding-top: 5px;"><%= post.body.substring(0, 30) %>...</div>
+                                </div>
+                            </div>
+                            <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7; display: flex; justify-content: space-between; align-items: center;">
+                                <span><%= post.userId.nickname || '익명' %></span>
+                                <span style="font-size: 12px; color: #B0B0B0; margin-right: 10px;"><%= new Date(post.created_at).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %></span>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
+    </div>
+        
     <nav>
         <div class="comunity_nav">
             <div style="cursor: default;" onclick="location.href='/friends';">나의 러닝메이트</div>
@@ -39,6 +182,7 @@
         </div>
         <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">오늘의 전체 인기글</div>
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+    
     <a href="/community/post/<%= post._id %>" style="text-decoration: none; color: inherit;">
         <div class="board_write1" style="background-color: #454545; border-radius: 10px;">
             <div style="display: flex; flex-direction: column;">

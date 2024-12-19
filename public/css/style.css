@@ -594,3 +594,9 @@ width: 50%;
 height: 100%;
 border: 0;
 }
+.modal{
+  position: fixed;
+  top: 80px;
+  left: 94px;
+  display: none;
+}
