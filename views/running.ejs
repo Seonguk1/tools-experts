@@ -28,11 +28,11 @@
                     <div onclick="start()" style="cursor: pointer; margin: 0 20px;">
                         <img src="images/Polygon 1.png" alt="" style="background-color: #646464;">
                     </div>
-                    <button onclick="end()">
+                    <div onclick="end()">
                         <div style="cursor: pointer; margin: 0 20px;">
                             <img src="images/Group 8635.png" alt="" style="background-color: #646464;">
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,9 +134,9 @@
         totalDistance = 0;
         totalTime = 0;
         score = 0;
-        document.getElementById("realTimeDistance").innerText = "0.00";
-        document.getElementById("realTimePace").innerText = "0.00";
-        document.getElementById("realTimeCalories").innerText = "0.00";
+        document.getElementById("realTimeDistance").innerText = "0.00" + "km";
+        document.getElementById("realTimePace").innerText = "0.00" + "km/h";
+        document.getElementById("realTimeCalories").innerText = "0.00" + "kcal";
 
         startTime = new Date(); // 시작 시간 기록
 
