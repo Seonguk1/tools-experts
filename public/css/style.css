@@ -325,15 +325,15 @@ body {
 }
 .comunity1_article2 {
   width: 350px;
-  height: 80px;
+  height: 70px;
   background-color: #9AA8A5B2;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
   color: #E8FFFCE5;
   padding-top: 10px;
   padding-left: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 .comunity2_article2 {
   width: 153px;
