@@ -89,8 +89,8 @@ app.get("/setting", (req,res)=>{
 app.get("/details", (req,res)=>{
     res.render("details",{layout:informationLayout});
 })
-app.get("/hamburger", (req,res)=>{
-    res.render("hamburger",{layout:startLayout});
+app.get("/gps", (req,res)=>{
+    res.render("gps",{layout:mainLayout});
 })
 app.get("/writer", (req,res)=>{
     res.render("writer",{layout:mainLayout});
