@@ -31,7 +31,7 @@ const getUserInfo = asyncHandler(async (req, res) => {
     }
 
     // 사용자 정보를 렌더링에 전달
-    res.render("information", {
+    res.render("setting", {
         title: "사용자 정보",
         user: {
             nickname: user.nickname || "미입력",

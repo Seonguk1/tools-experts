@@ -66,8 +66,8 @@
                     <button>프로필 편집하기</button>                    
                 </div>
                 <div>
-                    <div class="my_name" style="font-size: 18px;">땟물땟물  @gilD1032</div>
-                    <div class="my_name" style="justify-content: flex-start;"><span style="font-weight: 700; color: #66FFE3; font-size: 28px;">신짱구</span> 님</div>
+                    <div class="my_name" style="font-size: 18px;"><%=user.nickname%>  <%=user.email%></div>
+                    <div class="my_name" style="justify-content: flex-start;"><span style="font-weight: 700; color: #66FFE3; font-size: 28px;"><%=user.realname%></span> 님</div>
                     <div class="gauge">
                         <progress class="progress" style="width: 160px; height: 10px;" id="progress" value="60" min="0" max="100"></progress>
                     </div>
@@ -81,33 +81,33 @@
                 <div class="my_profile" style="height: 126px;">
                     <div class="my_profile_detail">
                         <div>이름</div>
-                        <div class="my_profile_infor">신짱구</div>
+                        <div class="my_profile_infor"><%=user.realname%></div>
                     </div>
                     <div class="my_profile_detail">
                         <div>생년월일</div>
-                        <div class="my_profile_infor">1994.05.05</div>
+                        <div class="my_profile_infor"><%=user.birthdate%></div>
                     </div>
                     <div class="my_profile_detail">
                         <div>전화번호</div>
-                        <div class="my_profile_infor">010-1234-1234</div>
+                        <div class="my_profile_infor"><%=user.phone%></div>
                     </div>
                     <div class="my_profile_detail">
                         <div>거주지</div>
-                        <div class="my_profile_infor">서울특별시 노원구 과기아파트</div>
+                        <div class="my_profile_infor"><%=user.address%></div>
                     </div>
                 </div>
                 <div class="my_profile">
                     <div class="my_profile_detail">
                         <div>키</div>
-                        <div class="my_profile_infor">105.9cm</div>
+                        <div class="my_profile_infor"><%=user.height%>cm</div>
                     </div>
                     <div class="my_profile_detail">
                         <div>몸무게</div>
-                        <div class="my_profile_infor">22.8kg</div>
+                        <div class="my_profile_infor"><%=user.weight%>kg</div>
                     </div>
                     <div class="my_profile_detail">
                         <div>성별</div>
-                        <div class="my_profile_infor">남</div>
+                        <div class="my_profile_infor"><%=user.gender%></div>
                     </div>
                 </div>
                 <div class="my_profile" style="height: 33px;">
