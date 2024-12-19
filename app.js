@@ -10,7 +10,8 @@ const cors = require('cors');
 const mainLayout = "../views/layouts/main.ejs";
 const startLayout ="../views/layouts/start.ejs";
 const informationLayout ="../views/layouts/information.ejs";
-
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET;
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
@@ -18,7 +19,13 @@ connectDB();
     
 app.use(cors());
 
-app.use(express.static("public"));
+app.use((req, res, next) => {
+    // 특정 경로 제외
+    if (req.path.startsWith("/information/update-profile")) {
+        return next();
+    }
+    express.static("public")(req, res, next);
+});
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -38,7 +45,25 @@ app.use(expressLayouts);
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
-app.use("/", require("./routes/home"));
+// app.use("/", require("./routes/home"));
+app.get("/", (req,res)=>{
+    
+    const token = req.cookies.token;
+    
+    // 토큰 검증 및 리디렉션 처리
+    if (!token) {
+        return res.redirect("/login");
+    }
+    
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.userID = decoded.id;
+    } catch (error) {
+        return;  // 여기에서 응답을 보내지 않도록 종료합니다.
+    }
+
+    res.redirect("/running")
+})
 app.use("/", require("./routes/record"));
 app.use("/community", require("./routes/community"));
 app.use("/comments", require("./routes/comment"));
@@ -47,30 +72,23 @@ app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));
 app.use("/course", require("./routes/course"));
 app.use("/start",require("./routes/start"));
-app.get("/information", (req,res)=>{
-    res.render("information",{layout:informationLayout});
-})
+app.use("/setting",require("./routes/profile"));
+// app.get("/information", (req,res)=>{
+//     res.render("information",{layout:informationLayout});
+// })
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
 })
 app.get("/home2", (req,res)=>{
     res.render("home2",{layout:startLayout});
 })
-app.get("/myPost", (req,res)=>{
-    res.render("myPost",{layout:mainLayout});
-})
+
 app.get("/writeBoard", (req,res)=>{
     res.render("writeBoard",{layout:mainLayout});
 })
-app.get("/friendsList", (req,res)=>{
-    res.render("friendsList",{layout:mainLayout});
-})
-app.get("/friends_list", (req,res)=>{
-    res.render("friends_list",{layout:mainLayout});
-})
-app.get("/find_friends", (req,res)=>{
-    res.render("find_friends",{layout:mainLayout});
-})
+// app.get("/friendsList", (req,res)=>{
+//     res.render("friendsList",{layout:mainLayout});
+// })
 app.get("/course_list", (req,res)=>{
     res.render("course_list",{layout:mainLayout});
 })

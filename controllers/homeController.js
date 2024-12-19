@@ -23,6 +23,7 @@ const getHome = asyncHandler(async (req, res) => {
     // }
     
     // console.log("Rendering home page"); // 홈 페이지 렌더링 직전 로그
+    
     const locals = {
         title: "Home",
     };

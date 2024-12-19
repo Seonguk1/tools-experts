@@ -9,36 +9,9 @@
     </nav>
     <section>
         <div style="display: flex; justify-content: space-between; padding-left: 20px; padding-right: 20px; padding-top: 30px;">
-            <div style="font-size: 20px; font-weight: 600; color: #CAFFF7;">게시판</div>
-            <div style="color: #E4F2F0; font-size: 14px;">더보기 ></div>
+            <div style="font-size: 20px; font-weight: 600; color: #CAFFF7;">오늘의 인기글</div>
+            <div onclick="location.href='/writeBoard'" style="color: #E4F2F0; font-size: 14px; background-color: #647A75; width: 76px; height: 27px; text-align: center; border-radius: 50px; line-height: 27px;">글쓰기</div>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-left: 20px; margin-right: 20px;">
-            <div class="board_menu1">
-                <div class="board_menu2" onclick="location.href='/free_board';">
-                    <div style="width: 50px; height: 50px;"><img src="images/Chat_alt_light.png" alt=""></div>
-                </div>
-                <div style="color: #CAFFF7; font-size: 14px;">자유게시판</div>
-            </div>
-            <div class="board_menu1">
-                <div class="board_menu2">
-                    <div style="width: 50px; height: 50px;"><img src="images/notebook_light.png" alt=""></div>
-                </div>
-                <div style="color: #CAFFF7; font-size: 14px;">대회 일정</div>
-            </div>
-            <div class="board_menu1">
-                <div class="board_menu2">
-                    <div style="width: 50px; height: 50px;"><img src="images/Send_light.png" alt=""></div>
-                </div>
-                <div style="color: #CAFFF7; font-size: 14px;">코스 공유</div>
-            </div>
-            <div class="board_menu1">
-                <div class="board_menu2">
-                    <div style="width: 50px; height: 43px;"><img src="images/Vector.png" alt=""></div>
-                </div>
-                <div style="color: #CAFFF7; font-size: 14px;">러닝 팁</div>
-            </div>
-        </div>
-        <div style="font-size: 20px; font-weight: 600; margin-left: 20px; margin-top: 35px; color: #CAFFF7;">오늘의 인기글</div>
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
     <% if (post) { %>
         <a href="/community/post/<%= post._id %>" style="text-decoration: none; color: inherit;">
@@ -152,7 +125,7 @@
     <% if (pagination.totalPages > 1) { %>
         <% for (let i = 1; i <= pagination.totalPages; i++) { %>
             <a href="/community?page=<%= i %>" 
-               style="margin: 0 5px; padding: 5px 10px; background-color: <%= i === pagination.currentPage ? '#CAFFF7' : '#3a3a3a' %>; color: <%= i === pagination.currentPage ? '#2d2d2d' : '#CAFFF7' %>; border-radius: 5px; text-decoration: none;">
+               style="margin: 0 5px; padding: 5px 10px; background-color: <%= i === pagination.currentPage ? '#CAFFF7' : '#3a3a3a' %>; color: <%= i === pagination.currentPage ? '#2d2d2d' : '#CAFFF7' %>; border-radius: 5px; text-decoration: none;>
                <%= i %>
             </a>
         <% } %>
