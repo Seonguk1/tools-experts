@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 
 connectDB();
     
-app.use(cors());
+app.use(cors());    
 
 app.use((req, res, next) => {
     // 특정 경로 제외
@@ -120,3 +120,4 @@ app.get("/courseshare", (req,res)=>{
 app.listen(port, () => {
     console.log(`server listened for ${port}`);
 })
+ 
