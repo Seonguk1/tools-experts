@@ -69,8 +69,11 @@
                         <div><img src="images/Fire_light.png" alt=""></div>
                         <div>
                             <div style="padding-left: 10px; font-size: 18px;"><%= post.title %></div>
-                            <div style="padding-left: 10px; font-size: 14px; padding-top: 5px;"><%= post.body.substring(0, 30) %>...</div>
+                            <div style="padding-left: 10px; font-size: 14px; padding-top: 5px;">
+                                <%= post.body.length > 25 ? post.body.substring(0, 25) + "..." : post.body %>
+                            </div>
                         </div>
+                        
                     </div>
                     <div style="padding-left: 10px; border-radius: 0 0 10px 10px; position: relative; top: 7px; line-height: 30px; width: 356px; background-color: #3a3a3a; font-size: 14px; color: #CAFFF7; display: flex; justify-content: space-between; align-items: center;">
                         <span><%= post.userId.nickname || '익명' %></span>
