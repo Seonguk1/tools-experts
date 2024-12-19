@@ -60,7 +60,7 @@ app.get("/", (req,res)=>{
 })
 app.use("/", require("./routes/record"));
 app.use("/community", require("./routes/community"));
-app.use("/community", require("./routes/comment"));
+app.use("/comments", require("./routes/comment"));
 app.use("/", require("./routes/login"));
 app.use("/", require("./routes/register"));
 app.use("/friends", require("./routes/Friends"));
@@ -71,6 +71,12 @@ app.get("/information", (req,res)=>{
 })
 app.get("/free_board", (req,res)=>{
     res.render("free_board",{layout:mainLayout});
+})
+app.get("/home2", (req,res)=>{
+    res.render("home2",{layout:startLayout});
+})
+app.get("/myPost", (req,res)=>{
+    res.render("myPost",{layout:mainLayout});
 })
 app.get("/writeBoard", (req,res)=>{
     res.render("writeBoard",{layout:mainLayout});
@@ -101,8 +107,8 @@ app.get("/setting", (req,res)=>{
 app.get("/details", (req,res)=>{
     res.render("details",{layout:informationLayout});
 })
-app.get("/hamburger", (req,res)=>{
-    res.render("hamburger",{layout:informationLayout});
+app.get("/gps", (req,res)=>{
+    res.render("gps",{layout:mainLayout});
 })
 app.get("/writer", (req,res)=>{
     res.render("writer",{layout:mainLayout});

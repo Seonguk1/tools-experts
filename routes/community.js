@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
 // const Comment = require('../models/Comment');  
-const {getPage, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts, getPosts, toggleLike, getTopPost } 
+const {getPage, getAddPost, postAddPost, getEditPost, putEditPost, deletePost, getMyPosts, getPostWithComments , toggleLike, getTopPost } 
 = require("../controllers/communityController");
 
 router
@@ -16,7 +16,7 @@ router
 
  router
      .route("/post/:postId")
-     .get(getPosts);
+     .get(getPostWithComments );
 
 router
     .route("/add")

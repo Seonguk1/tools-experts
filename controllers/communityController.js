@@ -50,29 +50,45 @@ const getPage = asyncHandler(async (req, res, next) => {
 
 const getTopPost = asyncHandler(async (req, res) => {
     try {
-        const topPost = await Post.findOne()
-            .sort({ likes: -1, created_at: -1 })
+        // 오늘 날짜 범위 계산
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // 오늘 0시로 설정
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1); // 내일 0시로 설정
+
+        // 좋아요가 0보다 크고 오늘 작성된 게시물 중 가장 인기 있는 게시물 가져오기
+        const topPost = await Post.findOne({
+            created_at: { $gte: today, $lt: tomorrow }, // 오늘 작성된 게시물만
+            likes: { $gt: 0 }, // 좋아요가 0보다 큰 조건 추가
+        })
+            .sort({ likes: -1, created_at: -1 }) // 좋아요 순 및 작성일 순 정렬
             .populate('userId', 'nickname');
 
+        // 최신 게시글과 페이지네이션 데이터 가져오기
+        const { data: posts = [], pagination = {} } = req.pageData || {};
+
+        // 인기글이 없을 경우 처리
         if (!topPost) {
-            return res.status(404).render('error', {
-                message: 'No posts found',
+            return res.render('community', {
+                post: null, // 인기 게시물 없음
+                data: posts, // 최신 게시글
+                pagination, // 페이지네이션 데이터
+                locals: {
+                    title: 'Community',
+                    message: '오늘의 인기글이 없습니다.', // 메시지 추가
+                },
                 layout: mainLayout,
             });
         }
-
-        // `getPage`에서 전달된 데이터 가져오기
-        const { data: posts = [], pagination = {} } = req.pageData || {};
-
-        const locals = {
-            title: 'Community',
-        };
 
         res.render('community', {
             post: topPost, // 인기 게시물
             data: posts, // 최신 게시글
             pagination, // 페이지네이션 데이터
-            locals, // 페이지 메타데이터
+            locals: {
+                title: 'Community',
+            },
             layout: mainLayout,
         });
     } catch (error) {
@@ -84,16 +100,57 @@ const getTopPost = asyncHandler(async (req, res) => {
     }
 });
 
-const getPosts = asyncHandler(async (req, res) => {
-    const locals = { title: "게시물" };
+
+
+// const getPosts = asyncHandler(async (req, res) => {
+//     const locals = { title: "게시물" };
  
-    // await를 사용해 데이터를 가져옴
-    const data = await Post.findOne({ _id: req.params.postId }).populate('userId', 'nickname');
+//     // await를 사용해 데이터를 가져옴
+//     const data = await Post.findOne({ _id: req.params.postId }).populate('userId', 'nickname');
     
  
-    // 렌더링 시 data를 전달
-    res.render("writer", { locals, data, layout: mainLayout });
- });
+//     // 렌더링 시 data를 전달
+//     res.render("writer", { locals, data, layout: mainLayout });
+//  });
+
+
+const getPostWithComments = asyncHandler(async (req, res) => {
+    try {
+        const locals = { title: "게시물" };
+
+        // 게시물 데이터를 가져옴
+        const post = await Post.findOne({ _id: req.params.postId }).populate('userId', 'nickname');
+        if (!post) {
+            return res.status(404).render('error', {
+                message: '게시물을 찾을 수 없습니다.',
+                layout: mainLayout,
+            });
+        }
+
+        // 댓글 데이터를 가져옴
+        const comments = await Comment.find({ postId: req.params.postId })
+            .populate('userId', 'nickname')
+            .sort({ created_at: -1 });
+
+        // 디버깅 로그 추가
+
+        // 렌더링 시 데이터 전달
+        res.render("writer", {
+            locals,
+            data: post,
+            comments, // 댓글 데이터 전달
+            commentsMessage: comments.length === 0 ? '댓글이 없습니다.' : null,
+            layout: mainLayout,
+        });
+    } catch (error) {
+        console.error('Error fetching post details:', error);
+        res.status(500).render('error', {
+            message: '게시물 정보를 가져오는 중 오류가 발생했습니다.',
+            layout: mainLayout,
+        });
+    }
+});
+
  
  const getMyPosts = asyncHandler(async (req, res) => {
     try {
@@ -376,7 +433,7 @@ module.exports = {
     putEditPost,
     deletePost,
     getMyPosts,
-    getPosts,
+    getPostWithComments ,
     toggleLike,
     getTopPost
 };
