@@ -2,7 +2,7 @@
 <img src="images/Vector 9.png" alt="" style="width: 14px; height: 28px; margin-top: 15px; margin-left: 10px;">
 <img src="images/Line 1.png" alt="">
 <div style="font-family: Pretendard Variable; font-size: 13px; font-weight: 500; line-height: 14px; letter-spacing: -0.5px; color:#E8FFFC; margin-left: 29px; padding-top: 8px;">
-    <%= newRunning.date.getFullYear()%>. <%= newRunning.date.getMonth()+1%>. <%= newRunning.date.getDate()%>.
+    <%= newRunning.date.getFullYear()%>. <%= newRunning.date.getMonth()+1%>. <%= newRunning.date.getDate()%>. <%= newRunning.date.getHours().toString().padStart(2, "0") %>:<%= newRunning.date.getMinutes().toString().padStart(2, "0") %>
 </div>
 <div style="display: flex;">
     <div style="font-family: Pretendard Variable; font-size: 23px; font-weight: 900; line-height: 14px; letter-spacing: -0.5px; color:#E8FFFC; margin-left: 26px; padding-top: 12px;">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div style="margin: 0 20px; font-family: Pretendard Variable; font-size: 23px; font-weight: 600; line-height: 14px; letter-spacing: -0.5px; text-align: left; color: #66FFE3;">
-        16:14
+        <%= locals.formattedElapsedTime %>
         <div style="font-size: 13px; text-align: left; padding-top: 8px;">
             시간
         </div>
@@ -57,7 +57,7 @@
     </div>
 </div>
 </div>
-<!--
+
 <script>const user_score = <%- JSON.stringify(newRunning.score)%> </script>
--->
+
 <script src="js/score.js"></script>
