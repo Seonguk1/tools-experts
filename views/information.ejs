@@ -1,37 +1,59 @@
 <div style="width: 100%; height: 844px; background-color: #2d2d2d;">
     
+    
     <section>
         <article>
             <div class="infor_article1">
                 <div class="infor_image"><img style="width: 75px; height: 75px;" src="images/Group 32.png" alt="infor"></div>
-                <div class="my_name">끝까지 달리는 러너 <span style="font-weight: 700; color: #66FFE3;">XXX</span> 님</div>
+                <div class="my_name">끝까지 달리는 러너,<span style="font-weight: 700; color: #66FFE3;">&nbsp;<%=user.nickname %></span> 님</div>
+
                 <div class="gauge">
                     <progress class="progress" id="progress" value="60" min="0" max="100"></progress>
                 </div>
-                <div class="temporate" style="margin-bottom: 10px;">나의 러닝 온도 <span style="color: #66FFE3;">&nbsp67°</span></div>
+                <!-- <div class="temporate" style="margin-bottom: 10px;">나의 러닝 온도 <span style="color: #66FFE3;">&nbsp67°</span></div> -->
             </div>
         </article>
         <hr style="width: 388px; border: 1px solid #6D6D6D">
         <article>
             <div class="infor_nav">
                 <div style="margin-left: 20px; font-weight: 600; font-size: 18px; color: #A4E3D8;">나의 러너 프로필</div>
-                <div class="my_profile">
+                <div class="my_profile" style="height: 126px;">
                     <div class="my_profile_detail">
                         <div>거주지</div>
-                        <div class="my_profile_infor">서울특별시 노원구 과기아파트</div>
+                        <div class="my_profile_infor" onclick="editField('address', this)">
+                            <%=user.address %>
+                        </div>
                     </div>
                     <div class="my_profile_detail">
                         <div>러닝 지역</div>
                         <div style="display: flex;">
-                            <div class="my_profile_infor">노원구</div>
-                            <div class="my_profile_infor">서초구</div>
+                            <div class="my_profile_infor" onclick="editField('runningArea', this)">
+                                <%=user.runningArea%>
+                            </div>
+                            <!-- <div class="my_profile_infor">서초구</div> -->
                         </div>
                     </div>
                     <div class="my_profile_detail">
                         <div>목표 거리</div>
-                        <div class="my_profile_infor">월 20km</div>
+                        <div class="my_profile_infor" onclick="editField('goalDistance', this)">
+                            <%=user.goalDistance%>
+                        </div>
                     </div>
+                    <div class="my_profile_detail">
+                        <div>성별</div>
+                        <div class="my_profile_infor" onclick="editField('gender', this)">
+                            <% if (user.gender === 'Male') { %>
+                                남성
+                            <% } else if (user.gender === 'Female') { %>
+                                여성
+                            <% } else { %>
+                                기타
+                            <% } %>
+                        </div>
+                    </div>
+                    
                 </div>
+            </div>
                 <div class="my_profile" style="height: 126px;">
                     <div class="my_profile_detail">
                         <div>최고기록</div>
@@ -55,7 +77,13 @@
                 <div class="my_profile" style="height: 40px;">
                     <div class="my_profile_detail">
                         <div>나의 글</div>
-                        <div onclick="location.href='/myPost'" class="my_profile_infor">나의 글 불러오기</div>
+                        <div onclick="location.href='community/mypost'" class="my_profile_infor">나의 글 불러오기</div>
+                    </div>
+                </div>
+                <div class="my_profile" style="height: 40px;">
+                    <div class="my_profile_detail">
+                        <div>프로필 편집하기</div>
+                        <div onclick="location.href='community/mypost'" class="my_profile_infor">편집하기</div>
                     </div>
                 </div>
             </div>
@@ -119,4 +147,105 @@
                 로그아웃
             </div>
         </div>
+    <div style="width: 296px; height: 550px; background-color: #2d2d2d; justify-content: right; padding-top: 20px; border-radius: 0 0 0 10px;" id="hamburger" class="modal">
+        <div style="font-family: Pretendard Variable;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 14px;
+        letter-spacing: -0.5px;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        ">
+        <div onclick="location.href='/information';" style="margin-top: 7px; margin-left: 23px; color: #D9D9D9; ">
+            나의 러닝프로필
+        </div>
+        <div onclick="location.href='/friends';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                나의 러닝메이트
+            </div>
+            <div onclick="location.href='/course';"style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                러닝코스
+            </div>
+            <div onclick="location.href='/community';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                게시판
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <img src="images/Line 3.png" alt="" style="margin-top: 35px;">
+        </div>
+        <div style="font-family: Pretendard Variable;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 14px;
+        letter-spacing: -0.5px;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        ">
+            <div onclick="location.href='/record';" style="margin-top: 35px; margin-left: 23px; color: #D9D9D9;">
+                나의 러닝기록
+            </div>
+            <div onclick="location.href='/gps';" style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                GPS
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <img src="images/Line 3.png" alt="" style="margin-top: 35px;">
+        </div>
+        <div style="font-family: Pretendard Variable;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 14px;
+        letter-spacing: -0.5px;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        ">
+            <div onclick="location.href='/setting';"style="margin-top: 35px; margin-left: 23px; color: #D9D9D9;">
+                설정
+            </div>
+            <div onclick="location.href='';"style="margin-top: 22px; margin-left: 23px; color: #D9D9D9;">
+                로그아웃
+            </div>
+        </div>
 </div>
+<script>
+    function editField(field, element) {
+        const currentValue = element.innerText.trim();
+        const input = document.createElement("input");
+
+        // 입력 필드 설정
+        input.type = field === "goalDistance" ? "number" : "text";
+        input.value = currentValue;
+        input.style.width = "100%";
+        input.style.border = "none";
+        input.style.backgroundColor = "transparent";
+        input.style.color = "white";
+
+        // 입력 필드에서 포커스가 벗어났을 때 처리
+        input.onblur = function () {
+            const newValue = input.value.trim();
+            element.innerText = newValue || currentValue; // 값이 비었으면 이전 값 유지
+
+            // 서버에 변경된 값을 전송
+            fetch("/information/update-profile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ field: "address", value: "서울특별시" }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        alert("프로필이 성공적으로 업데이트되었습니다.");
+                    } else {
+                        alert("프로필 업데이트에 실패했습니다.");
+                        element.innerText = currentValue; // 실패 시 기존 값 복구
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    element.innerText = currentValue; // 네트워크 오류 시 복구
+                });
+        };
+
+        element.innerHTML = ""; // 기존 텍스트 제거
+        element.appendChild(input); // 입력 필드 추가
+        input.focus(); // 입력 필드에 포커스
+    }
+</script>
