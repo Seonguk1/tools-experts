@@ -59,9 +59,6 @@ const userSchema = new mongoose.Schema({
     runningTemp:{
         type: Number,
     },
-    residence:{
-        type: String,
-    },
     runningArea:{
         type: String,
     },

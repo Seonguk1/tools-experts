@@ -6,13 +6,16 @@ const{
     addFriends, 
     requestFriends, 
     putFriends,
-    deleteFriends
+    deleteFriends,
+    getHome
     } = require("../controllers/FriendsController");
 
-router
-    .route("/")
-    .get(getFriends)
-    // .put(putFriends)
+router.route("/friendslist").get(getFriends);
+
+router.route("/").get(getHome);
+
+
+    
 
 router
     .route("/add")
