@@ -125,7 +125,7 @@
     <% if (pagination.totalPages > 1) { %>
         <% for (let i = 1; i <= pagination.totalPages; i++) { %>
             <a href="/community?page=<%= i %>" 
-               style="margin: 0 5px; padding: 5px 10px; background-color: <%= i === pagination.currentPage ? '#CAFFF7' : '#3a3a3a' %>; color: <%= i === pagination.currentPage ? '#2d2d2d' : '#CAFFF7' %>; border-radius: 5px; text-decoration: none;">
+               style="margin: 0 5px; padding: 5px 10px; background-color: <%= i === pagination.currentPage ? '#CAFFF7' : '#3a3a3a' %>; color: <%= i === pagination.currentPage ? '#2d2d2d' : '#CAFFF7' %>; border-radius: 5px; text-decoration: none;>
                <%= i %>
             </a>
         <% } %>

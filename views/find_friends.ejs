@@ -8,54 +8,44 @@
     </nav>
     <div style="font-size: 20px; font-weight: 600; color: #66FFE3; padding-left: 20px; margin-top: 20px; margin-bottom: 20px;">러닝메이트 찾기</div>
     <div style="margin: 15px 0px 30px 30px; display: flex; align-items: center;">
-        <input id="searchInput" type="text" placeholder="이름 검색" style="width: 200px; height: 27px; padding-left: 10px; border-radius: 5px; border: 1px solid #646464; font-size: 13px; background-color: #646464;">
-        <button onclick="searchByName()" style="margin-left: 10px; font-size: 13px; padding: 5px 10px; border-radius: 5px; background-color: #A4E3D8; border: none; cursor: pointer;">검색</button>
+        <form id="searchForm" method="POST" action="/friends/search" style="display: flex; align-items: center;">
+            <input name="friend" id="searchInput" type="text" placeholder="이름 검색" style="width: 200px; height: 27px; padding-left: 10px; border-radius: 5px; border: 1px solid #646464; font-size: 13px; background-color: #646464;">
+            <button type="submit" style="margin-left: 10px; font-size: 13px; padding: 5px 10px; border-radius: 5px; background-color: #A4E3D8; border: none; cursor: pointer;">검색</button>
+        </form>
     </div>
-    <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px; overflow-y: auto;" id="data-container">
-        <!-- 데이터가 이곳에 렌더링됩니다 -->
+    <div id="data-container" style="width: 326px; min-height: 200px; max-height: 420px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #A4E3D8 #646464;">
+        <% if (friends && friends.length > 0) { %>
+            <% friends.forEach(friend => { %>
+                <div class="friendslist" style="margin-bottom: 10px; color: #FFFFFF; background-color: #5A5A5A; padding: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 14px; font-weight: bold;"><%= friend %></span>
+                    <form action="/friends/add" method="POST" style="margin: 0;">
+                        <input type="hidden" name="request" value="<%= friend %>">
+                        <button type="submit" style="font-size: 13px; padding: 5px 10px; border-radius: 5px; background-color: #A4E3D8; border: none; cursor: pointer;">친구 요청</button>
+                    </form>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div style="color: #ffffff; text-align: center;">검색 결과가 없습니다.</div>
+        <% } %>
     </div>
-    <script>
-        // 데이터 배열 생성
-        const totalItems = 52;
-        const items = Array.from({ length: totalItems }, (_, i) => ({
-            title: `이름 ${i + 1}`, // "이름 1"부터 "이름 52"
-            content: `지역 ${i + 11}°`
-        }));
-
-        let filteredItems = [...items]; // 필터링된 데이터 저장 (초기값은 전체 데이터)
-
-        // 데이터 렌더링 함수
-        function renderItems(data) {
-            const container = document.getElementById("data-container");
-            container.innerHTML = ""; // 기존 내용을 지움
-
-            if (data.length === 0) {
-                container.innerHTML = `<div style="color: #ffffff; text-align: center;">검색 결과가 없습니다.</div>`;
-                return;
-            }
-
-            data.forEach(item => {
-                const listItem = document.createElement("div");
-                listItem.className = "friendslist";
-                listItem.style = "margin-bottom: 10px; color: #FFFFFF;";
-                listItem.innerHTML = `
-                    <div style="display: flex; justify-content: space-between;">
-                        <div>${item.title}</div>
-                        <div>${item.content}</div>
-                    </div>
-                `;
-                container.appendChild(listItem);
-            });
-        }
-
-        // 검색 기능
-        function searchByName() {
-            const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
-            filteredItems = items.filter(item => item.title.toLowerCase().includes(searchInput));
-            renderItems(filteredItems); // 검색 결과 렌더링
-        }
-
-        // 초기 데이터 렌더링
-        renderItems(filteredItems);
-    </script>
 </div>
+
+<script>
+    // 친구 수에 따라 박스 크기와 스크롤 설정
+    document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("data-container");
+    const friends = container.querySelectorAll(".friendslist");
+    const friendCount = friends.length;
+
+    if (friendCount > 0 && friendCount <= 6) {
+        // 친구 수가 6명 이하인 경우 동적 높이 설정
+        container.style.height = `${friendCount * 60 + 60}px`;
+        container.style.overflowY = "hidden"; // 스크롤 비활성화
+    } else if (friendCount > 6) {
+        // 친구 수가 6명 초과일 경우 고정 높이 및 스크롤 활성화
+        container.style.height = "500px"; // 고정 높이
+        container.style.overflowY = "auto"; // 스크롤 활성화
+    }
+});
+
+</script>

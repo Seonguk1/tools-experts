@@ -8,29 +8,22 @@
     </nav>
     <div style="font-size: 20px; font-weight: 600; color: #66FFE3; padding-left: 20px; margin-top: 20px;">나의 러닝메이트</div>
     <div style="display: flex; background-color: #698882; width: 110px; height: 27px; border-radius: 50px; margin: 15px 0px 20px 30px;">
-        <div id="sortByTemperature" onclick="sortByTemperature()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; background-color: #A4E3D8; line-height: 27px; text-align: center; border-radius: 50px;">온도순</div>
-        <div id="sortByName" onclick="sortByName()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; line-height: 27px; text-align: center; border-radius: 50px;">이름순</div>
+        <div id="sortByName" onclick="sortByName()" style="font-size: 13px; font-weight: 600; width: 63.82px; height: 27px; line-height: 27px; text-align: center; border-radius: 50px; background-color: #A4E3D8;">이름순</div>
     </div>
     <div style="width: 326px; height: 419px; background-color: #646464; border-radius: 10px; margin: auto; padding: 15px 10px; overflow-y: auto;" id="data-container">
         <!-- 모든 데이터를 한 번에 출력 -->
     </div>
     <script>
-        const totalItems = 52;
+        const items = <%- JSON.stringify(friendsList) %>;
 
-        // 초기 데이터 배열 생성
-        let items = Array.from({ length: totalItems }, (_, i) => ({
-            title: `이름 ${i + 1}`, // 여기서 i + 1로 시작 번호 보장
-            content: `지역 ${i + 11}°`
-        }));
-
-        // 전체 데이터를 한 번에 렌더링
+        // 데이터를 렌더링
         function displayAllItems() {
             const container = document.getElementById("data-container");
             container.innerHTML = items.map(item => `
-                <div class="friendslist" style="margin-bottom: 10px;">
-                    <div style="display: flex; justify-content: space-between; color: #FFFFFF;">
-                        <div>${item.title}</div>
-                        <div>${item.content}</div>
+                <div class="friendslist">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>${item.nickname}</div>
+                        <div>${item.location}</div>
                     </div>
                 </div>
             `).join('');
@@ -39,22 +32,15 @@
         // 정렬 기능
         function setActiveButton(activeButtonId) {
             document.getElementById("sortByName").style.backgroundColor = activeButtonId === "sortByName" ? "#A4E3D8" : "#698882";
-            document.getElementById("sortByTemperature").style.backgroundColor = activeButtonId === "sortByTemperature" ? "#A4E3D8" : "#698882";
         }
 
         function sortByName() {
-            items.sort((a, b) => a.title.localeCompare(b.title));
+            items.sort((a, b) => a.nickname.localeCompare(b.nickname));
             displayAllItems(); // 정렬 후 전체 다시 렌더링
             setActiveButton("sortByName");
         }
 
-        function sortByTemperature() {
-            items.sort((a, b) => parseInt(a.content.split(' ')[1]) - parseInt(b.content.split(' ')[1]));
-            displayAllItems(); // 정렬 후 전체 다시 렌더링
-            setActiveButton("sortByTemperature");
-        }
-
-        // 초기 렌더링
-        displayAllItems();
+        // 초기 렌더링: 이름순으로 정렬된 상태
+        sortByName();
     </script>
 </div>
