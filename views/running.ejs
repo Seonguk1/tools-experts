@@ -17,7 +17,9 @@
         <div style="background-color: #646464; width: 346px; height: 133px; border-radius: 10px; margin-top: 15px;">
             <div
                 style="font-size: 16px; color: #E8FFFC; margin-left: 10px; margin-top: 10px; font-weight: 500; font-family: Pretendard Variable;">
-                <div id="timer" style="display: flex; justify-content: center; font-size: 30px; color: #A4E3D8; font-weight: 700; margin-top: 15px;">00:00:00</div>
+                <div id="timer"
+                    style="display: flex; justify-content: center; font-size: 30px; color: #A4E3D8; font-weight: 700; margin-top: 15px;">
+                    00:00:00</div>
                 <img src="images/Line 4.png" alt="" style="background-color: #646464;">
                 <div style="display: flex; justify-content: center; margin-top: 15px;">
                     <div id="resetButton" style="cursor: pointer; margin: 0 20px;">
@@ -82,15 +84,30 @@
         const secs = (seconds % 60).toString().padStart(2, '0');
         return `${hrs}:${mins}:${secs}`;
     }
+    function addPoint(lat, lng) {
+        // 점(원) 표시
+        new google.maps.Circle({
+            strokeColor: "##66FFE3", // 외곽선 색상
+            strokeOpacity: 0.8,    // 외곽선 투명도
+            strokeWeight: 2,       // 외곽선 두께
+            fillColor: "##66FFE3",  // 내부 채우기 색상
+            fillOpacity: 0.6,      // 내부 투명도
+            map: map,              // 추가할 지도 객체
+            center: { lat: lat, lng: lng }, // 원 중심 좌표
+            radius: 5,             // 반경 (미터 단위, 점처럼 작게 설정)
+        });
+    }
 
 
+    // 지도 초기화 및 현재 위치에 마커 추가
     function initMap() {
         // 기본 지도 설정 (임시 위치: 서울시청)
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: 37.5665, lng: 126.9780 }, // 임시 중심 좌표
             zoom: 18,
         });
-        polyline = new google.maps.Polyline({ path: route, map: map, strokeColor: "#FF0000", strokeWeight: 3 });
+
+        polyline = new google.maps.Polyline({ path: route, map: map, strokeColor: "#66FFE3", strokeWeight: 3 });
 
         // Geolocation API로 현재 위치 가져오기
         if (navigator.geolocation) {
@@ -98,12 +115,14 @@
                 (position) => {
                     const { latitude, longitude } = position.coords;
 
+                    // 현재 위치를 나타내는 마커 추가
+                    const currentLocation = { lat: latitude, lng: longitude };
+                    
+                    addPoint(latitude, longitude);
+
                     // 지도 중심을 현재 위치로 이동
-                    const userLocation = { lat: latitude, lng: longitude };
-                    map.setCenter(userLocation);
-
-
-                    console.log("Map initialized at current location:", userLocation);
+                    map.setCenter(currentLocation);
+                    console.log("Map initialized at current location:", currentLocation);
                 },
                 (error) => {
                     console.error("Error getting current location:", error);

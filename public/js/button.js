@@ -18,7 +18,7 @@ function handleButtonClick(event) {
         if (clickedButton.getAttribute('value') === '0') {
             con = document.getElementById("s_Daily");
         } else if (clickedButton.getAttribute('value') === '1') {
-            con = document.getElementById("s_Weekly");
+            con = document.getElementById("s_Weekly");  
         } else if (clickedButton.getAttribute('value') === '2') {
             con = document.getElementById("s_Month");
         }

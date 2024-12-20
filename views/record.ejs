@@ -43,7 +43,7 @@
     <div style="font-size: 20px; color: #A4E3D8; font-weight: 700; margin: 25px 10px;">나의 최근 기록</div>
     <div style="display: flex; justify-content: center;">
         <% if (running && running.length> 0) { %>
-            <% const latestRun=running[running.length - 1]; %>
+            <% const latestRun=running[0]; %>
                 <div
                     style="background-color: #646464; width: 360px; height: 65px; border-radius: 10px; margin-top: 15px;">
                     <div style="font-size: 14px; color: #E8FFFC; padding-top: 6px; margin-left: 10px;">
@@ -75,12 +75,12 @@
     <!-- 버튼 -->
     <div class="s_container-1"
         style="margin: 20px 7%; background-color: #D9D9D9; border-radius: 999px; height: 35px; border: 1px solid #E3E3E3;">
-        <button class="s_button-1" value="0">1일</button>
-        <button class="s_button-1" value="1">1주</button>
-        <button class="s_button-1" value="2">1개월</button>
+        <button class="s_button-1" value="0">이번 주</button>
+        <button class="s_button-1" value="1">이번 달</button>
+        <button class="s_button-1" value="2">이번 연도</button>
     </div>
     <div id="s_Daily" class="s_mode">
-        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">오늘 이만큼 달렸어요.
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번 주, 이만큼 달렸어요.
         </div>
         <div style="display: flex; justify-content: center;">
             <div style="background-color: #646464; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
@@ -89,7 +89,7 @@
         </div>
     </div>
     <div id="s_Weekly" class="s_mode" class="s_buttoncontainer">
-        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번주 이만큼
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번 달, 이만큼
             달렸어요.</div>
         <div style="display: flex; justify-content: center;">
             <div style="background-color: #646464; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
@@ -98,7 +98,7 @@
         </div>
     </div>
     <div id="s_Month" class="s_mode">
-        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번달 이만큼
+        <div style="font-size: 20px; color: #595959; font-weight: 700; margin-left: 9px; margin-top: 25px;">이번 연도, 이만큼
             달렸어요.</div>
         <div style="display: flex; justify-content: center;">
             <div style="background-color: #646464; width: 360px; height: 230px; border-radius: 10px; margin-top: 15px;">
