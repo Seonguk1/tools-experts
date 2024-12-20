@@ -153,7 +153,7 @@
         score = 0;
         document.getElementById("realTimeDistance").innerText = "0.00" + "km";
         document.getElementById("realTimePace").innerText = "0.00" + "km/h";
-        document.getElementById("realTimeCalories").innerText = "0.00" + "kcal";
+        document.getElementById("realTimeCalories").innerText = "0.00" + "cal";
 
         startTime = new Date(); // 시작 시간 기록
 
@@ -198,9 +198,9 @@
                         const caloriesBurned = calculateCalories(WEIGHT, totalDistance, MET);
 
                         // 실시간 값 업데이트
-                        document.getElementById("realTimeDistance").innerText = totalDistance.toFixed(2);
-                        document.getElementById("realTimePace").innerText = averagePace.toFixed(2);
-                        document.getElementById("realTimeCalories").innerText = caloriesBurned.toFixed(2);
+                        document.getElementById("realTimeDistance").innerText = totalDistance.toFixed(2) + "km";
+                        document.getElementById("realTimePace").innerText = averagePace.toFixed(2) +"km/h";
+                        document.getElementById("realTimeCalories").innerText = caloriesBurned.toFixed(2)+"cal";
                     }
 
                     // 경로에 새 점 추가
